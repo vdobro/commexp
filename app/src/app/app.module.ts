@@ -19,20 +19,26 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.05
  */
-@SpringBootTest
-class CommExpApplicationTests {
-
-	@Test
-	fun contextLoads() {
-	}
-
+@NgModule({
+	declarations: [
+		AppComponent
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule
+	],
+	providers: [],
+	bootstrap: [AppComponent]
+})
+export class AppModule {
 }

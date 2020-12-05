@@ -19,20 +19,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
+const routes: Routes = [];
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.05
  */
-@SpringBootTest
-class CommExpApplicationTests {
-
-	@Test
-	fun contextLoads() {
-	}
-
+@NgModule({
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule]
+})
+export class AppRoutingModule {
 }

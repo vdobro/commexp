@@ -19,20 +19,28 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+// This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
+import 'zone.js/dist/zone-testing';
+import { getTestBed } from '@angular/core/testing';
+import {
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting
+} from '@angular/platform-browser-dynamic/testing';
 
-/**
- * @author Vitalijus Dobrovolskis
- * @since 2020.12.05
- */
-@SpringBootTest
-class CommExpApplicationTests {
+declare const require: {
+  context(path: string, deep?: boolean, filter?: RegExp): {
+    keys(): string[];
+    <T>(id: string): T;
+  };
+};
 
-	@Test
-	fun contextLoads() {
-	}
-
-}
+// First, initialize the Angular testing environment.
+getTestBed().initTestEnvironment(
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting()
+);
+// Then we find all the tests.
+const context = require.context('./', true, /\.spec\.ts$/);
+// And load the modules.
+context.keys().map(context);

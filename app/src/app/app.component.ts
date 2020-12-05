@@ -19,20 +19,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
-
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
+import {Component} from '@angular/core';
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.05
  */
-@SpringBootTest
-class CommExpApplicationTests {
-
-	@Test
-	fun contextLoads() {
-	}
-
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+	title = 'commexp';
 }

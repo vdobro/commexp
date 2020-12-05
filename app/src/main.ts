@@ -19,20 +19,21 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+import {enableProdMode} from '@angular/core';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
+import {AppModule} from './app/app.module';
+import {environment} from './environments/environment';
 
-/**
- * @author Vitalijus Dobrovolskis
- * @since 2020.12.05
- */
-@SpringBootTest
-class CommExpApplicationTests {
+// @ts-ignore
+import Icons from 'uikit/dist/js/uikit-icons';
 
-	@Test
-	fun contextLoads() {
-	}
-
+if (environment.production) {
+	enableProdMode();
 }
+
+// @ts-ignore
+UIkit.use(Icons);
+
+platformBrowserDynamic().bootstrapModule(AppModule)
+	.catch(err => console.error(err));

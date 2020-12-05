@@ -10,13 +10,16 @@
 	</parent>
 	<groupId>com.dobrovolskis</groupId>
 	<artifactId>commexp</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>CommExp</name>
+	<version>0.1-SNAPSHOT</version>
+	<name>commexp</name>
 	<description>Communal expenses manager</description>
 
 	<properties>
-		<java.version>15</java.version>
+		<java.version>1.8</java.version>
 		<kotlin.version>1.4.10</kotlin.version>
+		<node.version>v15.3.0</node.version>
+		<npm.version>7.0.4</npm.version>
+		<serialization.version>1.0.0-RC</serialization.version>
 	</properties>
 
 	<dependencies>
@@ -63,9 +66,19 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlinx</groupId>
+			<artifactId>kotlinx-serialization-core</artifactId>
+			<version>${serialization.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.projectreactor</groupId>
@@ -81,6 +94,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<layers>
+						<enabled>true</enabled>
+					</layers>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
@@ -92,6 +110,7 @@
 					<compilerPlugins>
 						<plugin>spring</plugin>
 						<plugin>jpa</plugin>
+						<plugin>kotlinx-serialization</plugin>
 					</compilerPlugins>
 				</configuration>
 				<dependencies>
@@ -105,7 +124,56 @@
 						<artifactId>kotlin-maven-noarg</artifactId>
 						<version>${kotlin.version}</version>
 					</dependency>
+					<dependency>
+						<groupId>org.jetbrains.kotlin</groupId>
+						<artifactId>kotlin-maven-serialization</artifactId>
+						<version>${kotlin.version}</version>
+					</dependency>
 				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.9.1</version>
+				<configuration>
+					<workingDirectory>${project.basedir}/app</workingDirectory>
+					<nodeVersion>${node.version}</nodeVersion>
+					<npmVersion>${npm.version}</npmVersion>
+					<nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
+					<npmDownloadRoot>https://registry.npmjs.org/npm/-/</npmDownloadRoot>
+
+					<installDirectory>./</installDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+					</execution>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>ci --loglevel=error</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm build</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run package</arguments>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
