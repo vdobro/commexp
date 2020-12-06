@@ -19,19 +19,24 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+package com.dobrovolskis.commexp.service
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import com.dobrovolskis.commexp.repository.UserRepository
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.stereotype.Service
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.05
+ * @since 2020.12.06
  */
-@SpringBootApplication
-class CommExpApplication
-
-@Suppress("SpreadOperator") // used only on startup
-fun main(args: Array<String>) {
-	runApplication<CommExpApplication>(*args)
+@Service
+class ApplicationUserDetailsService(private val repository: UserRepository) : UserDetailsService {
+	override fun loadUserByUsername(name: String): UserDetails {
+		if (!repository.existsByUsername(username = name)) {
+			throw UsernameNotFoundException(name)
+		}
+		return repository.findByUsername(username = name)!!
+	}
 }

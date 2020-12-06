@@ -19,19 +19,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
-
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+package com.dobrovolskis.commexp.config
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.05
+ * @since 2020.12.06
  */
-@SpringBootApplication
-class CommExpApplication
 
-@Suppress("SpreadOperator") // used only on startup
-fun main(args: Array<String>) {
-	runApplication<CommExpApplication>(*args)
-}

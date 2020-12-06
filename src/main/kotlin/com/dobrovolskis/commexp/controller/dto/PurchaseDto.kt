@@ -19,19 +19,19 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+package com.dobrovolskis.commexp.controller.dto
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import java.time.ZonedDateTime
+import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.05
+ * @since 2020.12.06
  */
-@SpringBootApplication
-class CommExpApplication
-
-@Suppress("SpreadOperator") // used only on startup
-fun main(args: Array<String>) {
-	runApplication<CommExpApplication>(*args)
-}
+data class PurchaseDto(
+	val id: UUID,
+	val shopId: UUID,
+	val time: ZonedDateTime,
+	val creation: ZonedDateTime,
+	val doneBy: UUID
+)

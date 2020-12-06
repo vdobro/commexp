@@ -19,19 +19,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+package com.dobrovolskis.commexp.controller.usecase
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import com.dobrovolskis.commexp.model.User
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.05
+ * @since 2020.12.06
  */
-@SpringBootApplication
-class CommExpApplication
-
-@Suppress("SpreadOperator") // used only on startup
-fun main(args: Array<String>) {
-	runApplication<CommExpApplication>(*args)
+interface BaseRequestHandler<T, Result> {
+	operator fun invoke(currentUser: User, request: T) : Result
 }

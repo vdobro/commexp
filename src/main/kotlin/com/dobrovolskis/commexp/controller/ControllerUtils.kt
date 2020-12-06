@@ -19,19 +19,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+package com.dobrovolskis.commexp.controller
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import com.dobrovolskis.commexp.model.User
+import org.springframework.security.core.context.SecurityContextHolder
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.05
+ * @since 2020.12.06
  */
-@SpringBootApplication
-class CommExpApplication
 
-@Suppress("SpreadOperator") // used only on startup
-fun main(args: Array<String>) {
-	runApplication<CommExpApplication>(*args)
+fun getCurrentUser() : User {
+	return SecurityContextHolder.getContext().authentication.principal as User
 }

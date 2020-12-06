@@ -19,19 +19,24 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+package com.dobrovolskis.commexp.model
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import com.dobrovolskis.commexp.config.TABLE_SHOPS
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
+import javax.validation.constraints.NotEmpty
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.05
  */
-@SpringBootApplication
-class CommExpApplication
+@Entity
+@Table(name = TABLE_SHOPS)
+class Shop(
 
-@Suppress("SpreadOperator") // used only on startup
-fun main(args: Array<String>) {
-	runApplication<CommExpApplication>(*args)
-}
+	@NotEmpty
+	@Column(name = "name")
+	var name: String
+
+) : IdEntity()

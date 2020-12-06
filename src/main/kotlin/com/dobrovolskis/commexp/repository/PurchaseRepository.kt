@@ -19,19 +19,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+package com.dobrovolskis.commexp.repository
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import com.dobrovolskis.commexp.model.Purchase
+import org.springframework.data.repository.CrudRepository
+import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.05
  */
-@SpringBootApplication
-class CommExpApplication
-
-@Suppress("SpreadOperator") // used only on startup
-fun main(args: Array<String>) {
-	runApplication<CommExpApplication>(*args)
-}
+interface PurchaseRepository : CrudRepository<Purchase, UUID>
