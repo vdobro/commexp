@@ -45,12 +45,12 @@ class PurchaseController(
 		return mapToDto(result)
 	}
 
-	fun mapToDto(purchase: Purchase): PurchaseDto {
+	private fun mapToDto(purchase: Purchase): PurchaseDto {
 		return PurchaseDto(
 			id = purchase.id()!!,
 			shopId = purchase.shop.id()!!,
 			time = purchase.shoppingTime,
-			creation = purchase.created!!,
+			creation = purchase.created,
 			doneBy = purchase.doneBy.id()!!
 		)
 	}

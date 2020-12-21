@@ -21,11 +21,12 @@
 
 package com.dobrovolskis.commexp.model
 
-import com.dobrovolskis.commexp.config.TABLE_USER_BALANCE
+import com.dobrovolskis.commexp.config.TABLE_INVOICES
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter.BASIC_ISO_DATE
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.FetchType
+import javax.persistence.FetchType.LAZY
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.Table
@@ -36,8 +37,8 @@ import javax.validation.constraints.NotNull
  * @since 2020.12.05
  */
 @Entity
-@Table(name = TABLE_USER_BALANCE)
-class UserBalance(
+@Table(name = TABLE_INVOICES)
+class Invoice(
 
 	@NotNull
 	@Column(
@@ -58,19 +59,43 @@ class UserBalance(
 	var to: ZonedDateTime,
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(
-		name = "user_id",
+		name = "payer_id",
 		nullable = false,
 		updatable = false
 	)
-	var user: User,
+	var payer: User,
+
+	@NotNull
+	@ManyToOne(fetch = LAZY)
+	@JoinColumn(
+		name = "receiver_id",
+		nullable = false,
+		updatable = false
+	)
+	var receiver: User,
+
+	@NotNull
+	@ManyToOne(fetch = LAZY)
+	@JoinColumn(
+		name = "group_id",
+		nullable = false,
+		updatable = false
+	)
+	var group: UserGroup,
 
 	@NotNull
 	@Column(
-		name = "overpaid",
+		name = "due_cents",
 		nullable = false
 	)
-	var overpaidCents: Int,
+	var paymentDueCents: Int,
 
-	) : IdEntity()
+	) : IdEntity() {
+	override fun toString(): String {
+		return "${payer.name}'s invoice for ${from.format(OUTPUT_FORMATTER)} - ${to.format(OUTPUT_FORMATTER)}"
+	}
+}
+
+private val OUTPUT_FORMATTER = BASIC_ISO_DATE

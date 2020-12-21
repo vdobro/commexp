@@ -29,6 +29,6 @@ import org.springframework.security.core.context.SecurityContextHolder
  * @since 2020.12.06
  */
 
-fun getCurrentUser() : User {
+internal fun getCurrentUser() : User {
 	return SecurityContextHolder.getContext().authentication.principal as User
 }

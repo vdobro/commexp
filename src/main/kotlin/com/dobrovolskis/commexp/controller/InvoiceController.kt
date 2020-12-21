@@ -21,10 +21,10 @@
 
 package com.dobrovolskis.commexp.controller
 
-import com.dobrovolskis.commexp.controller.request.UserCreationRequest
-import com.dobrovolskis.commexp.controller.dto.UserDto
-import com.dobrovolskis.commexp.model.User
-import com.dobrovolskis.commexp.service.UserService
+import com.dobrovolskis.commexp.controller.dto.InvoiceDto
+import com.dobrovolskis.commexp.controller.request.InvoiceRequest
+import com.dobrovolskis.commexp.controller.usecase.AssembleInvoices
+import com.dobrovolskis.commexp.model.Invoice
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -32,28 +32,27 @@ import org.springframework.web.bind.annotation.RestController
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2020.12.14
  */
 @RestController
-@RequestMapping("/users")
-class UserController(private val userService: UserService) {
+@RequestMapping("/invoices")
+class InvoiceController(
+	private val assembleInvoices: AssembleInvoices) {
 
 	@RequestMapping(method = [RequestMethod.POST])
-	fun create(@RequestBody request: UserCreationRequest): UserDto {
-		val user = userService.addUser(
-			name = request.name,
-			username = request.username,
-			password = request.password
-		)
-		return mapToDto(user)
+	fun requestInvoice(@RequestBody request: InvoiceRequest): List<InvoiceDto> {
+		val user = getCurrentUser()
+		return assembleInvoices(user, request).map { mapToDto(it) }
 	}
 
-	private fun mapToDto(user: User): UserDto {
-		return UserDto(
-			id = user.id()!!,
-			username = user.username,
-			name = user.name,
-			groups = user.userGroups.map { it.id()!! }
-		)
+	private fun mapToDto(invoice: Invoice) : InvoiceDto {
+		return InvoiceDto(
+			id = invoice.id()!!,
+			payerId = invoice.payer.id()!!,
+			receiverId = invoice.receiver.id()!!,
+			groupId = invoice.group.id()!!,
+			from = invoice.from,
+			to = invoice.to,
+			sum = invoice.paymentDueCents)
 	}
 }

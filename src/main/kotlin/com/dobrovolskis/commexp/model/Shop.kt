@@ -36,7 +36,7 @@ import javax.validation.constraints.NotEmpty
 class Shop(
 
 	@NotEmpty
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	var name: String
 
 ) : IdEntity()

@@ -22,8 +22,8 @@
 package com.dobrovolskis.commexp.model
 
 import com.dobrovolskis.commexp.config.TABLE_USER_GROUP_INVITATIONS
-import org.hibernate.annotations.CreationTimestamp
 import java.time.ZonedDateTime
+import java.time.ZonedDateTime.now
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType
@@ -74,12 +74,8 @@ class UserInvitation(
 		updatable = false,
 		nullable = false
 	)
-	@CreationTimestamp
-	var created: ZonedDateTime? = null
+	var created: ZonedDateTime = now()
 
-	@Column(
-		name = "accepted",
-		nullable = true
-	)
+	@Column(name = "accepted")
 	var accepted: ZonedDateTime? = null
 }

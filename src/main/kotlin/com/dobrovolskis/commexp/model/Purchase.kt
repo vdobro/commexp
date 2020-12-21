@@ -23,7 +23,9 @@ package com.dobrovolskis.commexp.model
 
 import com.dobrovolskis.commexp.config.TABLE_PURCHASES
 import org.hibernate.annotations.CreationTimestamp
+import java.time.LocalDateTime
 import java.time.ZonedDateTime
+import java.time.ZonedDateTime.now
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -44,39 +46,26 @@ import javax.validation.constraints.NotNull
 class Purchase(
 	@NotNull
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "shop_id")
+	@JoinColumn(name = "shop_id", nullable = false)
 	var shop: Shop,
 
 	@NotNull
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(
-		name = "user_id",
-		nullable = false
-	)
+	@JoinColumn(name = "user_id", nullable = false)
 	var doneBy: User,
 
 	@NotNull
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(
-		name = "creator_id",
-		nullable = false
-	)
+	@JoinColumn(name = "creator_id", nullable = false)
 	var createdBy: User,
 
 	@NotNull
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(
-		name = "group_id",
-		nullable = false,
-		updatable = false,
-	)
+	@JoinColumn(name = "group_id", nullable = false, updatable = false)
 	var group: UserGroup,
 
 	@NotNull
-	@Column(
-		name = "shopping_timestamp",
-		nullable = false
-	)
+	@Column(name = "shopping_time", nullable = false)
 	val shoppingTime: ZonedDateTime,
 
 	) : IdEntity() {
@@ -87,8 +76,7 @@ class Purchase(
 		updatable = false,
 		nullable = false
 	)
-	@CreationTimestamp
-	var created: ZonedDateTime? = null
+	var created: ZonedDateTime = now()
 
 	@OneToMany(
 		targetEntity = PurchaseItem::class,

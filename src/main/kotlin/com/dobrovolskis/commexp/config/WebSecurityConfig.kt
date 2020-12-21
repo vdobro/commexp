@@ -30,6 +30,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 
 
 /**
@@ -37,28 +38,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
  * @since 2020.12.06
  */
 @EnableWebSecurity
-class WebSecurityConfig : WebSecurityConfigurerAdapter() {
-
-	@Bean
-	fun userDetailsService(repository: UserRepository): UserDetailsService {
-		return ApplicationUserDetailsService(repository)
-	}
-
-	@Bean
-	fun passwordEncoder(): BCryptPasswordEncoder {
-		return BCryptPasswordEncoder()
-	}
+class WebSecurityConfig(
+	private val userDetailsService: UserDetailsService,
+	private val passwordEncoder: PasswordEncoder,
+) : WebSecurityConfigurerAdapter() {
 
 	override fun configure(auth: AuthenticationManagerBuilder) {
-		auth.userDetailsService(userDetailsService())
-			.passwordEncoder(passwordEncoder())
+		auth.userDetailsService(userDetailsService)
+			.passwordEncoder(passwordEncoder)
 	}
 
 	override fun configure(http: HttpSecurity) {
 		http
+			.antMatcher("/**")
 			.authorizeRequests()
-				.antMatchers("/users").permitAll()
-				.anyRequest().authenticated()
+				.antMatchers("/users")
+					.permitAll()
+				.anyRequest()
+					.authenticated()
 			.and()
 				.httpBasic()
 			.and()

@@ -19,23 +19,26 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+package com.dobrovolskis.commexp.controller.usecase.item
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import com.dobrovolskis.commexp.controller.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.model.PurchaseItem
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.service.PurchaseItemService
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.05
+ * @since 2020.12.14
  */
-@SpringBootApplication
-@EnableJpaRepositories
-@EnableConfigurationProperties
-class CommExpApplication
-
-@Suppress("SpreadOperator") // used only on startup
-fun main(args: Array<String>) {
-	runApplication<CommExpApplication>(*args)
+@Service
+@Transactional
+class MarkItemAsUsedUp(private val itemService: PurchaseItemService)
+	: BaseRequestHandler<UUID, PurchaseItem> {
+	override fun invoke(currentUser: User, request: UUID): PurchaseItem {
+		val item = itemService.find(request)
+		return itemService.markAsUsedBy(item = item, user = currentUser)
+	}
 }

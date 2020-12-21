@@ -19,24 +19,34 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.service
+package com.dobrovolskis.commexp.controller.usecase
 
-import com.dobrovolskis.commexp.repository.UserRepository
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.core.userdetails.UsernameNotFoundException
+import com.dobrovolskis.commexp.controller.request.InvoiceRequest
+import com.dobrovolskis.commexp.model.Invoice
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.service.InvoiceService
+import com.dobrovolskis.commexp.service.UserGroupService
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2020.12.14
  */
 @Service
-class ApplicationUserDetailsService(private val repository: UserRepository)
-	: UserDetailsService {
+@Transactional
+class AssembleInvoices(
+	private val groupService: UserGroupService,
+	private val invoiceService: InvoiceService
+) : BaseRequestHandler<InvoiceRequest, Iterable<Invoice>> {
 
-	override fun loadUserByUsername(name: String): UserDetails {
-		return repository.findByUsername(username = name)
-			?: throw UsernameNotFoundException(name)
+	override operator fun invoke(currentUser: User, request: InvoiceRequest): Iterable<Invoice> {
+		val group = groupService.find(request.groupId)
+		return invoiceService.assembleForUser(
+			user = currentUser,
+			group = group,
+			from = request.start,
+			to = request.end
+		)
 	}
 }

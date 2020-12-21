@@ -19,10 +19,20 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.config
+package com.dobrovolskis.commexp.controller.dto
+
+import java.time.ZonedDateTime
+import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2020.12.14
  */
-
+data class InvoiceDto(
+	val id: UUID,
+	val payerId: UUID,
+	val receiverId: UUID,
+	val groupId: UUID,
+	val from: ZonedDateTime,
+	val to: ZonedDateTime,
+	val sum: Int)

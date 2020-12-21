@@ -24,12 +24,10 @@ package com.dobrovolskis.commexp.model
 import com.dobrovolskis.commexp.config.ID_COLUMN_NAME
 import com.dobrovolskis.commexp.config.TABLE_PURCHASE_ITEMS
 import com.dobrovolskis.commexp.config.TABLE_USERS_USE_PURCHASE_ITEMS
-import java.util.UUID
 import javax.persistence.CascadeType.ALL
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType.LAZY
-import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
@@ -48,38 +46,42 @@ import javax.validation.constraints.NotNull
 class PurchaseItem(
 
 	@NotEmpty
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	var name: String,
 
 	@NotNull
-	@Column(name = "price")
+	@Column(name = "price", nullable = false)
 	var priceCents: Int,
 
 	@NotNull
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "purchase_id")
+	@JoinColumn(name = "purchase_id", nullable = false)
 	var purchase: Purchase,
 
-) : IdEntity() {
+	) : IdEntity() {
 
 	@NotNull
-	@Column(name = "description")
+	@Column(name = "description", nullable = false)
 	var description: String = ""
 
 	@NotNull
-	@Column(name = "used_up")
+	@Column(name = "used_up", nullable = false)
 	var usedUp: Boolean = false
+
+	@NotNull
+	@Column(name = "payment_cleared", nullable = false)
+	var paymentCleared: Boolean = false
 
 	@ManyToMany(targetEntity = User::class, cascade = [ALL], fetch = LAZY)
 	@JoinTable(
 		name = TABLE_USERS_USE_PURCHASE_ITEMS,
-		joinColumns = [JoinColumn(name = "purchase_item_id", referencedColumnName = ID_COLUMN_NAME)],
-		inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = ID_COLUMN_NAME)],
+		joinColumns = [JoinColumn(name = "purchase_item_id", referencedColumnName = ID_COLUMN_NAME, nullable = false, updatable = false)],
+		inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = ID_COLUMN_NAME, nullable = false, updatable = false)],
 	)
 	private val _usedBy: MutableList<User> = mutableListOf()
 
 	@Transient
-	fun usedBy() : List<User> = _usedBy.toList()
+	fun usedBy(): List<User> = _usedBy.toList()
 
 	fun addUser(user: User) {
 		if (_usedBy.contains(user)) {

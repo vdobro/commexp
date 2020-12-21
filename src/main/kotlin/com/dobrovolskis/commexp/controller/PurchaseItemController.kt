@@ -25,6 +25,7 @@ import com.dobrovolskis.commexp.controller.dto.PurchaseItemDto
 import com.dobrovolskis.commexp.controller.request.ItemCreationRequest
 import com.dobrovolskis.commexp.controller.request.ItemUsageChangeRequest
 import com.dobrovolskis.commexp.controller.usecase.item.AddPurchaseItem
+import com.dobrovolskis.commexp.controller.usecase.item.MarkItemAsUsedUp
 import com.dobrovolskis.commexp.controller.usecase.item.RemovePurchaseItem
 import com.dobrovolskis.commexp.controller.usecase.item.UpdateItemUsageByUser
 import com.dobrovolskis.commexp.model.PurchaseItem
@@ -45,7 +46,8 @@ import java.util.UUID
 class PurchaseItemController(
 	private val addItem: AddPurchaseItem,
 	private val removeItem: RemovePurchaseItem,
-	private val updateItemUsage: UpdateItemUsageByUser
+	private val updateItemUsage: UpdateItemUsageByUser,
+	private val markItemAsUsedUp: MarkItemAsUsedUp,
 ) {
 
 	@RequestMapping(method = [POST])
@@ -64,17 +66,26 @@ class PurchaseItemController(
 
 	@RequestMapping(
 		method = [POST],
-		path = ["/{id}/usage"]
+		path = ["/{id}/use/by"]
 	)
 	fun editItemUsage(
 		@PathVariable id: UUID,
 		@RequestBody request: ItemUsageChangeRequest
 	): PurchaseItemDto {
-		val result = updateItemUsage.invoke(getCurrentUser(), request)
+		val result = updateItemUsage(getCurrentUser(), request)
 		return mapToDto(result)
 	}
 
-	fun mapToDto(purchaseItem: PurchaseItem): PurchaseItemDto {
+	@RequestMapping(
+		method = [POST],
+		path = ["/{id}/use/up"]
+	)
+	fun markAsUsedUp(@PathVariable id: UUID): PurchaseItemDto {
+		val result = markItemAsUsedUp(getCurrentUser(), request = id)
+		return mapToDto(result)
+	}
+
+	private fun mapToDto(purchaseItem: PurchaseItem): PurchaseItemDto {
 		return PurchaseItemDto(
 			id = purchaseItem.id()!!,
 			name = purchaseItem.name,

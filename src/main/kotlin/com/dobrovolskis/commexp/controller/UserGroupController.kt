@@ -68,14 +68,14 @@ class UserGroupController(
 		return mapToDto(acceptInvitationToGroup(getCurrentUser(), id))
 	}
 
-	fun mapToDto(userGroup: UserGroup): UserGroupDto {
+	private fun mapToDto(userGroup: UserGroup): UserGroupDto {
 		return UserGroupDto(
 			id = userGroup.id()!!,
 			name = userGroup.name
 		)
 	}
 
-	fun mapToDto(invitation: UserInvitation) : UserInvitationDto {
+	private fun mapToDto(invitation: UserInvitation) : UserInvitationDto {
 		return UserInvitationDto(
 			code = invitation.id()!!.toString(),
 			invitedUser = invitation.target.id()!!,

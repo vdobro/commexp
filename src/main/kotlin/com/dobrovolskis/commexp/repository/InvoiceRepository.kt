@@ -21,9 +21,14 @@
 
 package com.dobrovolskis.commexp.repository
 
-import com.dobrovolskis.commexp.model.UserBalance
+import com.dobrovolskis.commexp.model.Invoice
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.model.UserGroup
+import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
+import java.time.ZonedDateTime
 import java.util.UUID
 
 /**
@@ -31,4 +36,11 @@ import java.util.UUID
  * @since 2020.12.06
  */
 @Repository
-interface UserBalanceRepository : CrudRepository<UserBalance, UUID>
+interface InvoiceRepository : CrudRepository<Invoice, UUID> {
+
+	@Query("from Invoice i where i.payer = :payer and i.group = :group and i.from <= :date and i.to >= :date")
+	fun findAllWithDateWithinBounds(@Param("date") date: ZonedDateTime,
+	                                @Param("payer") payer: User,
+	                                @Param("group") group: UserGroup
+	) : List<Invoice>
+}

@@ -1,0 +1,384 @@
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="CE-1-a"
+	           author="vd">
+		<createTable tableName="cx_shop">
+			<column name="id"
+			        type="${type.id}">
+				<constraints nullable="false"
+				             primaryKey="true"
+				             primaryKeyName="pk_cx_shop"/>
+			</column>
+			<column name="name"
+			        type="${type.text.short}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="CE-1-b"
+	           author="vd">
+		<createTable tableName="cx_invoice">
+			<column name="id"
+			        type="${type.id}">
+				<constraints nullable="false"
+				             primaryKey="true"
+				             primaryKeyName="px_cx_invoice"/>
+			</column>
+			<column name="period_start"
+			        type="${type.time}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="due_cents"
+			        type="${type.int}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="period_end"
+			        type="${type.time}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="payer_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="receiver_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="group_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="CE-1-c"
+	           author="vd">
+		<createTable tableName="cx_purchase_item__user">
+			<column name="user_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="purchase_item_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="CE-1-d"
+	           author="vd">
+		<createTable tableName="cx_user_group__user">
+			<column name="user_group_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="user_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-e">
+		<createTable tableName="cx_purchase">
+			<column name="id"
+			        type="${type.id}">
+				<constraints nullable="false"
+				             primaryKey="true"
+				             primaryKeyName="px_cx_purchase"/>
+			</column>
+			<column name="created"
+			        type="${type.time}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="shopping_time"
+			        type="${type.time}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="creator_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="user_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="group_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="shop_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="CE-1-f"
+	           author="vd">
+		<createTable tableName="cx_user">
+			<column name="id"
+			        type="${type.id}">
+				<constraints nullable="false"
+				             primaryKey="true"
+				             primaryKeyName="px_cx_user"/>
+			</column>
+			<column name="non_expired"
+			        type="${type.boolean}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="non_locked"
+			        type="${type.boolean}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="credentials_not_expired"
+			        type="${type.boolean}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="enabled"
+			        type="${type.boolean}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="name"
+			        type="${type.text.short}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="password"
+			        type="${type.text.short}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="username"
+			        type="${type.text.short}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-g">
+		<createTable tableName="cx_purchase_item">
+			<column name="id"
+			        type="${type.id}">
+				<constraints nullable="false"
+				             primaryKey="true"
+				             primaryKeyName="px_cx_purchase_item"/>
+			</column>
+			<column name="description"
+			        type="${type.text.medium}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="name"
+			        type="${type.text.short}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="price"
+			        type="${type.int}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="used_up"
+			        type="${type.boolean}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="payment_cleared"
+			        type="${type.boolean}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="purchase_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-h">
+		<createTable tableName="cx_user_group_invitation">
+			<column name="id"
+			        type="${type.id}">
+				<constraints nullable="false"
+				             primaryKey="true"
+				             primaryKeyName="px_cx_user_group_invitation"/>
+			</column>
+			<column name="accepted"
+			        type="${type.time}"/>
+			<column name="created"
+			        type="${type.time}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="creator_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="group_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="target_user_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-i">
+		<createTable tableName="cx_user_group">
+			<column name="id"
+			        type="${type.id}">
+				<constraints nullable="false"
+				             primaryKey="true"
+				             primaryKeyName="px_cx_user_group"/>
+			</column>
+			<column name="name"
+			        type="${type.text.short}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-j">
+		<addForeignKeyConstraint
+				baseColumnNames="shop_id"
+				baseTableName="cx_purchase"
+				constraintName="fk_cx_purchase_shop_id_cx_shop_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_shop"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-k">
+		<addForeignKeyConstraint
+				baseColumnNames="purchase_id"
+				baseTableName="cx_purchase_item"
+				constraintName="fk_cx_purchase_item_purchase_id_cx_purchase_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_purchase"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-l">
+		<addForeignKeyConstraint
+				baseColumnNames="user_id"
+				baseTableName="cx_user_group__user"
+				constraintName="fk_cx_user_group__user_user_id_cx_user_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-m">
+		<addForeignKeyConstraint
+				baseColumnNames="creator_id"
+				baseTableName="cx_user_group_invitation"
+				constraintName="fk_cx_user_group__invitation_creator_id_cx_user_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-n">
+		<addForeignKeyConstraint
+				baseColumnNames="target_user_id"
+				baseTableName="cx_user_group_invitation"
+				constraintName="fk_cx_user_group_invitation_target_user_id_cx_user_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-o">
+		<addForeignKeyConstraint
+				baseColumnNames="payer_id"
+				baseTableName="cx_invoice"
+				constraintName="fk_cx_invoice_payer_id_cx_user_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user"/>
+		<addForeignKeyConstraint
+				baseColumnNames="receiver_id"
+				baseTableName="cx_invoice"
+				constraintName="fk_cx_invoice_receiver_id_cx_user_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user"/>
+		<addForeignKeyConstraint
+				baseColumnNames="group_id"
+				baseTableName="cx_invoice"
+				constraintName="fk_cx_invoice_group_id_cx_user_group_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user_group"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-p">
+		<addForeignKeyConstraint
+				baseColumnNames="user_id"
+				baseTableName="cx_purchase"
+				constraintName="fk_cx_purchase_user_id_cx_user_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-q">
+		<addForeignKeyConstraint
+				baseColumnNames="user_id"
+				baseTableName="cx_purchase_item__user"
+				constraintName="fk_cx_purchase_item__user_user_id_cx_user_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-r">
+		<addForeignKeyConstraint
+				baseColumnNames="creator_id"
+				baseTableName="cx_purchase"
+				constraintName="fk_cx_purchase_creator_creator_id_cx_user_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-s">
+		<addUniqueConstraint
+				columnNames="username"
+				constraintName="uq_cx_user_username"
+				tableName="cx_user"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-t">
+		<addForeignKeyConstraint
+				baseColumnNames="purchase_item_id"
+				baseTableName="cx_purchase_item__user"
+				constraintName="fk_cx_purchase_item__user_purchase_item_id_cx_purchase_item_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_purchase_item"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-u">
+		<addForeignKeyConstraint
+				baseColumnNames="user_group_id"
+				baseTableName="cx_user_group__user"
+				constraintName="fk_cx_user_group__user_user_group_id_cx_user_group_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user_group"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-v">
+		<addForeignKeyConstraint
+				baseColumnNames="group_id"
+				baseTableName="cx_user_group_invitation"
+				constraintName="fk_cx_user_group_invitation_group_id_cx_user_group_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user_group"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-w">
+		<addForeignKeyConstraint
+				baseColumnNames="group_id"
+				baseTableName="cx_purchase"
+				constraintName="fk_cx_purchase_group_id_cx_user_group_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user_group"/>
+	</changeSet>
+	<changeSet id="CE-1-x"
+	           author="vd">
+		<addPrimaryKey tableName="cx_user_group__user"
+		               columnNames="user_group_id, user_id"
+		               constraintName="pk_cx_user_group__user"/>
+	</changeSet>
+	<changeSet id="CE-1-y"
+	           author="vd">
+		<addPrimaryKey tableName="cx_purchase_item__user"
+		               columnNames="user_id, purchase_item_id"
+		               constraintName="pk_cx_purchase_item__user"/>
+	</changeSet>
+</databaseChangeLog>

@@ -43,7 +43,8 @@ class UserGroupService(
 ) {
 
 	fun find(id: UUID): UserGroup {
-		return repository.findByIdOrNull(id) ?: throw Error("User group $id not found")
+		return repository.findByIdOrNull(id) ?:
+		throw IllegalArgumentException("User group $id not found")
 	}
 
 	fun createGroup(name: String): UserGroup {
@@ -59,7 +60,7 @@ class UserGroupService(
 			"Group does not exist"
 		}
 		if (group.users().contains(user)) {
-			return group;
+			return group
 		}
 		group.addUser(user)
 		return repository.save(group)

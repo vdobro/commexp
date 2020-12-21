@@ -46,7 +46,7 @@ class PurchaseService(
 ) {
 	fun find(id: UUID): Purchase {
 		return repository.findByIdOrNull(id)
-			?: throw Error("Purchase list $id not found")
+			?: throw IllegalArgumentException("Purchase list $id not found")
 	}
 
 	fun createNew(

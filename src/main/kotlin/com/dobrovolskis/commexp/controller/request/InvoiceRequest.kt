@@ -19,23 +19,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp
+package com.dobrovolskis.commexp.controller.request
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import java.time.ZonedDateTime
+import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.05
+ * @since 2020.12.14
  */
-@SpringBootApplication
-@EnableJpaRepositories
-@EnableConfigurationProperties
-class CommExpApplication
-
-@Suppress("SpreadOperator") // used only on startup
-fun main(args: Array<String>) {
-	runApplication<CommExpApplication>(*args)
-}
+data class InvoiceRequest(
+	val groupId: UUID,
+	val start: ZonedDateTime,
+	val end: ZonedDateTime
+)
