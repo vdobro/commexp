@@ -22,11 +22,16 @@
 package com.dobrovolskis.commexp.repository
 
 import com.dobrovolskis.commexp.model.Purchase
+import com.dobrovolskis.commexp.model.UserGroup
 import org.springframework.data.repository.CrudRepository
+import org.springframework.stereotype.Repository
 import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.05
  */
-interface PurchaseRepository : CrudRepository<Purchase, UUID>
+@Repository
+interface PurchaseRepository : CrudRepository<Purchase, UUID> {
+	fun findAllByGroup(userGroup: UserGroup): List<Purchase>
+}

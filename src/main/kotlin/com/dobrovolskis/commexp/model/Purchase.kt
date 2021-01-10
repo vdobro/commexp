@@ -22,8 +22,6 @@
 package com.dobrovolskis.commexp.model
 
 import com.dobrovolskis.commexp.config.TABLE_PURCHASES
-import org.hibernate.annotations.CreationTimestamp
-import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.ZonedDateTime.now
 import javax.persistence.CascadeType

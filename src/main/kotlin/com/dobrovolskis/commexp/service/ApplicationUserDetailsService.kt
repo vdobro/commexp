@@ -21,10 +21,8 @@
 
 package com.dobrovolskis.commexp.service
 
-import com.dobrovolskis.commexp.repository.UserRepository
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 /**
@@ -32,11 +30,9 @@ import org.springframework.stereotype.Service
  * @since 2020.12.06
  */
 @Service
-class ApplicationUserDetailsService(private val repository: UserRepository)
-	: UserDetailsService {
+class ApplicationUserDetailsService(private val userService: UserService) : UserDetailsService {
 
 	override fun loadUserByUsername(name: String): UserDetails {
-		return repository.findByUsername(username = name)
-			?: throw UsernameNotFoundException(name)
+		return userService.findByUsername(username = name)
 	}
 }

@@ -26,14 +26,14 @@ import {AppModule} from './app/app.module';
 import {environment} from './environments/environment';
 
 // @ts-ignore
-import Icons from 'uikit/dist/js/uikit-icons';
+//import Icons from 'uikit/dist/js/uikit-icons';
 
 if (environment.production) {
 	enableProdMode();
 }
 
 // @ts-ignore
-UIkit.use(Icons);
+//UIkit.use(Icons);
 
 platformBrowserDynamic().bootstrapModule(AppModule)
 	.catch(err => console.error(err));

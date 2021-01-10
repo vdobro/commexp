@@ -21,9 +21,13 @@
 
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {HeaderComponent} from './header/header.component';
+import {MenubarModule} from "primeng/menubar";
+import {HomeComponent} from './home/home.component';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -31,13 +35,16 @@ import {AppComponent} from './app.component';
  */
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		HeaderComponent,
+		HomeComponent
 	],
 	imports: [
 		BrowserModule,
-		AppRoutingModule
+		AppRoutingModule,
+		MenubarModule
 	],
-	providers: [],
+	providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
 	bootstrap: [AppComponent]
 })
 export class AppModule {

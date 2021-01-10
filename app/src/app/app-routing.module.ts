@@ -22,14 +22,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+	{path: 'groups', loadChildren: () => import('./groups/groups.module').then(m => m.GroupsModule)},
+	{path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)}
+];
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.05
  */
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes, {useHash: true})],
 	exports: [RouterModule]
 })
 export class AppRoutingModule {

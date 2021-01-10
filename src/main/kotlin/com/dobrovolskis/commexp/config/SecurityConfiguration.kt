@@ -21,12 +21,13 @@
 
 package com.dobrovolskis.commexp.config
 
-import com.dobrovolskis.commexp.repository.UserRepository
 import com.dobrovolskis.commexp.service.ApplicationUserDetailsService
+import com.dobrovolskis.commexp.service.UserService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.session.HttpSessionEventPublisher
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -36,12 +37,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 class SecurityConfiguration {
 
 	@Bean
-	fun userDetailsService(repository: UserRepository): UserDetailsService {
+	fun userDetailsService(repository: UserService): UserDetailsService {
 		return ApplicationUserDetailsService(repository)
 	}
 
 	@Bean
 	fun passwordEncoder(): BCryptPasswordEncoder {
 		return BCryptPasswordEncoder()
+	}
+
+	@Bean
+	fun httpSessionEventPublisher(): HttpSessionEventPublisher {
+		return HttpSessionEventPublisher()
 	}
 }

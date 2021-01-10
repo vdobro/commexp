@@ -28,8 +28,7 @@ import com.dobrovolskis.commexp.model.UserGroup
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
-import java.time.LocalDate
-import java.time.LocalDateTime
+import org.springframework.stereotype.Repository
 import java.time.ZonedDateTime
 import java.util.UUID
 
@@ -37,15 +36,18 @@ import java.util.UUID
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.05
  */
+@Repository
 interface PurchaseItemRepository : CrudRepository<PurchaseItem, UUID> {
 	fun getAllByPurchase(purchase: Purchase): List<PurchaseItem>
 
-	@Query("select i from PurchaseItem i join i.purchase p join i._usedBy u " +
-			"where u = :usedBy and i.usedUp = true and p.doneBy <> :usedBy and p.shoppingTime between :from and :until and p.group = :group")
+	@Query(
+		"select i from PurchaseItem i join i.purchase p join i._usedBy u " +
+				"where u = :usedBy and i.usedUp = true and p.doneBy <> :usedBy and :from <= p.shoppingTime and p.shoppingTime <= :until and p.group = :group"
+	)
 	fun getUsedUpItemsByPurchaseDoneWithin(
 		@Param("from") from: ZonedDateTime,
 		@Param("until") until: ZonedDateTime,
 		@Param("usedBy") usedBy: User,
 		@Param("group") group: UserGroup,
-	) : List<PurchaseItem>
+	): List<PurchaseItem>
 }

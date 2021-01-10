@@ -22,6 +22,7 @@
 package com.dobrovolskis.commexp.repository
 
 import com.dobrovolskis.commexp.model.Shop
+import com.dobrovolskis.commexp.model.UserGroup
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID
@@ -31,4 +32,6 @@ import java.util.UUID
  * @since 2020.12.06
  */
 @Repository
-interface ShopRepository : CrudRepository<Shop, UUID>
+interface ShopRepository : CrudRepository<Shop, UUID> {
+	fun getAllByGroup(userGroup: UserGroup): List<Shop>
+}

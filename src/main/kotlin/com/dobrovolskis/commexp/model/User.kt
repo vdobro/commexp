@@ -124,7 +124,11 @@ class User(
 		mutableSetOf(SimpleGrantedAuthority("user"))
 
 	@Transient
-	fun isInGroup(group: UserGroup) : Boolean {
+	fun isInGroup(group: UserGroup): Boolean {
 		return group.containsUser(this)
+	}
+
+	override fun toString(): String {
+		return "User[$username]"
 	}
 }

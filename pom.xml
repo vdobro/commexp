@@ -23,7 +23,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<jvm.version>1.8</jvm.version>
-		<kotlin.version>1.4.10</kotlin.version>
+		<kotlin.version>1.4.21</kotlin.version>
 		<node.version>v15.3.0</node.version>
 		<npm.version>7.0.4</npm.version>
 		<serialization.version>1.0.0-RC</serialization.version>
@@ -49,6 +49,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>

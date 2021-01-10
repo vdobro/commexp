@@ -24,6 +24,7 @@ package com.dobrovolskis.commexp.model
 import com.dobrovolskis.commexp.config.ID_COLUMN_NAME
 import com.dobrovolskis.commexp.config.TABLE_PURCHASE_ITEMS
 import com.dobrovolskis.commexp.config.TABLE_USERS_USE_PURCHASE_ITEMS
+import java.math.BigDecimal
 import javax.persistence.CascadeType.ALL
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -34,6 +35,7 @@ import javax.persistence.ManyToMany
 import javax.persistence.ManyToOne
 import javax.persistence.Table
 import javax.persistence.Transient
+import javax.validation.constraints.Digits
 import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 
@@ -51,7 +53,8 @@ class PurchaseItem(
 
 	@NotNull
 	@Column(name = "price", nullable = false)
-	var priceCents: Int,
+	@Digits(integer = 10, fraction = 2)
+	var price: BigDecimal,
 
 	@NotNull
 	@ManyToOne(fetch = LAZY)
@@ -67,10 +70,6 @@ class PurchaseItem(
 	@NotNull
 	@Column(name = "used_up", nullable = false)
 	var usedUp: Boolean = false
-
-	@NotNull
-	@Column(name = "payment_cleared", nullable = false)
-	var paymentCleared: Boolean = false
 
 	@ManyToMany(targetEntity = User::class, cascade = [ALL], fetch = LAZY)
 	@JoinTable(

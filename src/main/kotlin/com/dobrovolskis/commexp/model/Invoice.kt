@@ -22,14 +22,16 @@
 package com.dobrovolskis.commexp.model
 
 import com.dobrovolskis.commexp.config.TABLE_INVOICES
+import java.math.BigDecimal
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter.BASIC_ISO_DATE
+import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType.LAZY
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.Table
+import javax.validation.constraints.Digits
 import javax.validation.constraints.NotNull
 
 /**
@@ -87,10 +89,11 @@ class Invoice(
 
 	@NotNull
 	@Column(
-		name = "due_cents",
+		name = "sum",
 		nullable = false
 	)
-	var paymentDueCents: Int,
+	@Digits(integer = 10, fraction = 2)
+	var sum: BigDecimal,
 
 	) : IdEntity() {
 	override fun toString(): String {
@@ -98,4 +101,4 @@ class Invoice(
 	}
 }
 
-private val OUTPUT_FORMATTER = BASIC_ISO_DATE
+private val OUTPUT_FORMATTER = ISO_LOCAL_DATE

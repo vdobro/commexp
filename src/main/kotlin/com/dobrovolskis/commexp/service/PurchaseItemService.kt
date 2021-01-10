@@ -37,29 +37,29 @@ import java.util.UUID
 @Transactional
 class PurchaseItemService(private val repository: PurchaseItemRepository) {
 
-	fun find(id: UUID) : PurchaseItem {
+	fun find(id: UUID): PurchaseItem {
 		return repository.findByIdOrNull(id) ?: throw Error("Purchase item $id not found")
 	}
 
-	fun markAsUsedUp(purchaseItem: PurchaseItem) : PurchaseItem {
-		require(!purchaseItem.usedUp) {
+	fun markAsUsedUp(item: PurchaseItem): PurchaseItem {
+		require(!item.usedUp) {
 			"Item already used up"
 		}
-		purchaseItem.usedUp = true
-		return repository.save(purchaseItem)
+		item.usedUp = true
+		return repository.save(item)
 	}
 
-	fun markAsUsedBy(item: PurchaseItem, user: User) : PurchaseItem {
+	fun markAsUsedBy(item: PurchaseItem, user: User): PurchaseItem {
 		item.addUser(user)
 		return repository.save(item)
 	}
 
-	fun markAsUnusedBy(item: PurchaseItem, user: User) : PurchaseItem {
+	fun markAsUnusedBy(item: PurchaseItem, user: User): PurchaseItem {
 		item.removeUser(user)
 		return repository.save(item)
 	}
 
-	fun userHasAccessTo(purchaseItem: PurchaseItem, user: User) : Boolean {
+	fun userHasAccessTo(purchaseItem: PurchaseItem, user: User): Boolean {
 		return purchaseItem.purchase.group.containsUser(user)
 	}
 

@@ -17,6 +17,10 @@
 			        type="${type.text.short}">
 				<constraints nullable="false"/>
 			</column>
+			<column name="group_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
 		</createTable>
 	</changeSet>
 	<changeSet id="CE-1-b"
@@ -32,8 +36,8 @@
 			        type="${type.time}">
 				<constraints nullable="false"/>
 			</column>
-			<column name="due_cents"
-			        type="${type.int}">
+			<column name="sum"
+			        type="${type.decimal}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="period_end"
@@ -172,14 +176,10 @@
 				<constraints nullable="false"/>
 			</column>
 			<column name="price"
-			        type="${type.int}">
+			        type="${type.decimal}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="used_up"
-			        type="${type.boolean}">
-				<constraints nullable="false"/>
-			</column>
-			<column name="payment_cleared"
 			        type="${type.boolean}">
 				<constraints nullable="false"/>
 			</column>
@@ -380,5 +380,55 @@
 		<addPrimaryKey tableName="cx_purchase_item__user"
 		               columnNames="user_id, purchase_item_id"
 		               constraintName="pk_cx_purchase_item__user"/>
+	</changeSet>
+	<changeSet id="CE-1-z"
+	           author="vd">
+		<addForeignKeyConstraint baseTableName="cx_shop"
+		                         baseColumnNames="group_id"
+		                         constraintName="fk_cx_shop_group_id_cx_user_group_id"
+		                         referencedTableName="cx_user_group"
+		                         referencedColumnNames="id"/>
+	</changeSet>
+	<changeSet id="CE-1-aa"
+	           author="vd">
+		<createTable tableName="cx_payment">
+			<column name="id"
+			        type="${type.id}">
+				<constraints nullable="false"
+				             primaryKey="true"
+				             primaryKeyName="px_cx_payment"/>
+			</column>
+			<column name="payer_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="receiver_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="sum"
+			        type="${type.decimal}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created"
+			        type="${type.time}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="CE-1-ab"
+	           author="vd">
+		<addForeignKeyConstraint
+				baseColumnNames="payer_id"
+				baseTableName="cx_payment"
+				constraintName="cx_payment_payer_id_cx_user_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user"/>
+		<addForeignKeyConstraint
+				baseColumnNames="receiver_id"
+				baseTableName="cx_payment"
+				constraintName="cx_payment_receiver_id_cx_user_id"
+				referencedColumnNames="id"
+				referencedTableName="cx_user"/>
 	</changeSet>
 </databaseChangeLog>

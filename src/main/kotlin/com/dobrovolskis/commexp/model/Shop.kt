@@ -22,10 +22,16 @@
 package com.dobrovolskis.commexp.model
 
 import com.dobrovolskis.commexp.config.TABLE_SHOPS
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.FetchType
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
 import javax.persistence.Table
 import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotNull
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -37,6 +43,21 @@ class Shop(
 
 	@NotEmpty
 	@Column(name = "name", nullable = false)
-	var name: String
+	var name: String,
 
-) : IdEntity()
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "group_id", nullable = false, updatable = false)
+	var group: UserGroup,
+
+	) : IdEntity() {
+
+	@OneToMany(
+		targetEntity = Purchase::class,
+		fetch = FetchType.LAZY,
+		mappedBy = "shop",
+		orphanRemoval = true,
+		cascade = [CascadeType.ALL]
+	)
+	val purchases: List<Purchase> = mutableListOf()
+}

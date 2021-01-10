@@ -38,9 +38,28 @@ import java.util.UUID
 @Repository
 interface InvoiceRepository : CrudRepository<Invoice, UUID> {
 
-	@Query("from Invoice i where i.payer = :payer and i.group = :group and i.from <= :date and i.to >= :date")
-	fun findAllWithDateWithinBounds(@Param("date") date: ZonedDateTime,
-	                                @Param("payer") payer: User,
-	                                @Param("group") group: UserGroup
-	) : List<Invoice>
+	fun findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroupAndPayer(
+		from: ZonedDateTime, to: ZonedDateTime, group: UserGroup, payer: User
+	): Iterable<Invoice>
+
+	fun findByFromAndToAndPayerAndReceiverAndGroup(
+		from: ZonedDateTime, to: ZonedDateTime, payer: User, receiver: User, group: UserGroup
+	): Invoice?
+
+	@Query("from Invoice i where i.group = :group and i.from <= :date and i.to >= :date")
+	fun findAllWithDateIn(
+		@Param("date") date: ZonedDateTime,
+		@Param("group") group: UserGroup
+	): List<Invoice>
+
+	@Query(
+		"from Invoice i where i.group = :group " +
+				"and i.payer = :payer and i.receiver = :receiver and i.from <= :date and :date <= i.to"
+	)
+	fun existsAnyForUserPairWithDateIn(
+		@Param("date") date: ZonedDateTime,
+		@Param("group") group: UserGroup,
+		@Param("payer") payer: User,
+		@Param("receiver") receiver: User,
+	): List<Invoice>
 }

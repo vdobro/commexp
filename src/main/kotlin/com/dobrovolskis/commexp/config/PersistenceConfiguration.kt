@@ -43,5 +43,6 @@ const val TABLE_PURCHASE_ITEMS = "${TABLE_PREFIX}purchase_item"
 const val TABLE_USERS_USE_PURCHASE_ITEMS = "${TABLE_PREFIX}purchase_item__user"
 const val TABLE_SHOPS = "${TABLE_PREFIX}shop"
 const val TABLE_INVOICES = "${TABLE_PREFIX}invoice"
+const val TABLE_PAYMENTS = "${TABLE_PREFIX}payment"
 
 const val ID_COLUMN_NAME = "id"

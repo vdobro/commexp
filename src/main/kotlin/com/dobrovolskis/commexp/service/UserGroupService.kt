@@ -43,8 +43,7 @@ class UserGroupService(
 ) {
 
 	fun find(id: UUID): UserGroup {
-		return repository.findByIdOrNull(id) ?:
-		throw IllegalArgumentException("User group $id not found")
+		return repository.findByIdOrNull(id) ?: throw IllegalArgumentException("User group $id not found")
 	}
 
 	fun createGroup(name: String): UserGroup {
@@ -73,6 +72,14 @@ class UserGroupService(
 	): UserInvitation {
 		require(!userToInvite.isInGroup(group)) {
 			"User is already in the group"
+		}
+		require(
+			!invitationRepository.existsByTargetAndGroupAndAcceptedIsNull(
+				target = userToInvite,
+				group = group
+			)
+		) {
+			"User already invited to the group"
 		}
 		require(invitedBy.isInGroup(group)) {
 			"User cannot invite to a group they are not a part of"

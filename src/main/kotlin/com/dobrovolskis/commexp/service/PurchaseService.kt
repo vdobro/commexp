@@ -31,6 +31,7 @@ import com.dobrovolskis.commexp.repository.PurchaseRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.util.UUID
 
@@ -49,6 +50,10 @@ class PurchaseService(
 			?: throw IllegalArgumentException("Purchase list $id not found")
 	}
 
+	fun getAllForGroup(group: UserGroup): List<Purchase> {
+		return repository.findAllByGroup(group)
+	}
+
 	fun createNew(
 		creator: User,
 		user: User,
@@ -65,11 +70,11 @@ class PurchaseService(
 		)
 	)
 
-	fun addItem(purchase: Purchase, itemName: String, price: Int): PurchaseItem =
+	fun addItem(purchase: Purchase, itemName: String, price: BigDecimal): PurchaseItem =
 		itemRepository.save(
 			PurchaseItem(
 				name = itemName,
-				priceCents = price,
+				price = price,
 				purchase = find(purchase.id()!!),
 			)
 		)
