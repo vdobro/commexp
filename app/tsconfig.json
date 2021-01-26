@@ -20,6 +20,10 @@
 			"es2018",
 			"dom"
 		],
+		"paths": {
+			"@app/*": ["src/app/*"],
+			"@environments/*": ["src/environments/*"]
+		},
 		"typeRoots": [
 			"node_modules/@types"
 		]

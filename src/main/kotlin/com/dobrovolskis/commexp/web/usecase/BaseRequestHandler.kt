@@ -28,5 +28,5 @@ import com.dobrovolskis.commexp.model.User
  * @since 2020.12.06
  */
 interface BaseRequestHandler<T, Result> {
-	operator fun invoke(currentUser: User, request: T) : Result
+	operator fun invoke(currentUser: User, request: T): Result
 }

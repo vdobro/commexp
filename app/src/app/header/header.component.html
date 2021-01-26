@@ -1,1 +1,5 @@
-<p-menubar [model]="items"></p-menubar>
+<p-menubar [model]="(headerService.$items | async) || []">
+	<ng-template pTemplate="end">
+		<a *ngIf="userLoggedIn">Eingeloggt als: {{name}}</a>
+	</ng-template>
+</p-menubar>

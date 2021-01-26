@@ -32,7 +32,7 @@ import java.util.UUID
  */
 @Repository
 interface UserRepository : CrudRepository<User, UUID> {
-	fun existsByUsername(username: String) : Boolean
+	fun existsByUsername(username: String): Boolean
 
 	fun findByUsername(username: String): User?
 }

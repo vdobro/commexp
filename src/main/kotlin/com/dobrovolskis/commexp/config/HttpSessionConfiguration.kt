@@ -21,12 +21,9 @@
 
 package com.dobrovolskis.commexp.config
 
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
-import org.springframework.session.web.http.HeaderHttpSessionIdResolver
-import org.springframework.session.web.http.HttpSessionIdResolver
-
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -34,10 +31,5 @@ import org.springframework.session.web.http.HttpSessionIdResolver
  */
 @Configuration
 @EnableRedisHttpSession
-class HttpSessionConfiguration {
-
-	@Bean
-	fun httpSessionIdResolver(): HttpSessionIdResolver {
-		return HeaderHttpSessionIdResolver.xAuthToken()
-	}
-}
+@Profile("cache")
+class HttpSessionConfiguration

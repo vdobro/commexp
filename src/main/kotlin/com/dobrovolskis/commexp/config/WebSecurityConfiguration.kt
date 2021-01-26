@@ -29,7 +29,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
-
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -47,15 +47,19 @@ class WebSecurityConfiguration(
 	}
 
 	override fun configure(http: HttpSecurity) {
-		http.antMatcher("$ROOT_PATH/**")
+		http.cors()
+			.and()
+			.antMatcher("$ROOT_PATH/**")
 			.authorizeRequests { authorize ->
 				authorize
 					.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-					.permitAll()
+						.permitAll()
+					.antMatchers(PATH_SESSION)
+						.permitAll()
 					.antMatchers(HttpMethod.POST, PATH_USERS)
-					.permitAll()
+						.permitAll()
 					.anyRequest()
-					.authenticated()
+						.authenticated()
 			}
 			.httpBasic()
 			.and()
@@ -63,12 +67,14 @@ class WebSecurityConfiguration(
 				it.disable()
 			}
 			.csrf {
-				it.disable()
+				it.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 			}
 			.logout {
-				it.invalidateHttpSession(true)
-					.deleteCookies("JSESSIONID")
+				it
 					.logoutUrl("$ROOT_PATH/logout")
+					.logoutSuccessUrl("/")
 			}
 	}
+
+
 }

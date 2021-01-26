@@ -1,0 +1,55 @@
+<div class="p-grid">
+	<div class="p-col-12 p-lg-3 p-md-4 p-sm-6">
+		<form #registrationForm="ngForm" (ngSubmit)="submit()" class="p-fluid">
+			<span class="p-float-label p-mt-3">
+				<input id="name"
+				       required
+				       type="text"
+				       [(ngModel)]="model.name"
+				       name="name"
+				       pInputText>
+				<label for="username">Anzeigename</label>
+			</span>
+			<span class="p-float-label p-mt-4">
+				<input id="username"
+				       required
+				       type="text"
+				       [(ngModel)]="model.username"
+				       name="username"
+				       pInputText>
+				<label for="username">Nutzername</label>
+				<small *ngIf="usernameUnavailable"
+				       id="username-help"
+				       class="p-error">Nutzername nicht verfügbar.</small>
+			</span>
+			<span class="p-float-label p-mt-4">
+				<input id="password"
+				       type="password"
+				       required
+				       [(ngModel)]="model.password"
+				       name="password"
+				       pInputText>
+				<label for="password">Passwort</label>
+			</span>
+			<span class="p-float-label p-my-4">
+				<input id="password-confirmation"
+				       type="password"
+				       required
+				       [(ngModel)]="model.passwordConfirmation"
+				       name="passwordConfirmation"
+				       pInputText>
+				<label for="password-confirmation">Passwort wiederholen</label>
+				<small *ngIf="passwordMismatch"
+				       id="password-help"
+				       class="p-error">Passwörter müssen übereinstimmen.</small>
+			</span>
+			<p-message *ngIf="error" severity="error"
+			           class="p-mb-4"
+			           text="{{error}}"></p-message>
+			<button pButton
+			        type="submit"
+			        label="Anmelden"
+			        [disabled]="!registrationForm.form.valid"></button>
+		</form>
+	</div>
+</div>

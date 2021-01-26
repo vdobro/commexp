@@ -1,27 +1,64 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "../../authentication.service";
-import {HttpClient} from "@angular/common/http";
+/*
+ * Copyright (C) 2020 Vitalijus Dobrovolskis
+ *
+ * This file is part of commexp.
+ *
+ * commexp is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, version 3 of the License.
+ *
+ * commexp is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with commexp; see the file LICENSE. If not,
+ * see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
+import {Component, OnInit} from '@angular/core';
+import {CredentialsError} from "@app/util/SessionUtils";
+import {AuthService} from "@app/service/auth.service";
+
+/**
+ * @author Vitalijus Dobrovolskis
+ * @since 2021.01.10
+ */
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-	title = 'Demo';
-	greeting = {};
 
-	constructor(private app: AuthenticationService,
-	            private http: HttpClient) {
-		http.get('resource').subscribe(data => this.greeting = data);
+	model = {
+		username: '',
+		password: '',
+	};
+
+	credentialsError = false;
+	serverError = false;
+
+	constructor(private readonly authService: AuthService) {
+
 	}
 
 	ngOnInit(): void {
 	}
 
-
-	authenticated() {
-		return this.app.authenticated;
+	async submit() {
+		try {
+			await this.authService.tryLogin(this.model.username,
+				this.model.password)
+		} catch (e) {
+			if (e instanceof CredentialsError) {
+				this.credentialsError = true;
+			} else {
+				this.serverError = true;
+			}
+		}
 	}
-
 }

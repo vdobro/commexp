@@ -59,11 +59,11 @@ class UserService(
 
 	fun getById(id: UUID): User {
 		return repository.findByIdOrNull(id)
-			?: throw Error("User not found")
+			?: throw IllegalArgumentException("User not found")
 	}
 
 	fun findByUsername(username: String): User {
 		return repository.findByUsername(username)
-			?: throw Error("Not found")
+			?: throw IllegalArgumentException("User not found")
 	}
 }

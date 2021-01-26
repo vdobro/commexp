@@ -73,11 +73,11 @@ class User(
 
 	@NotNull
 	@Column(name = "credentials_not_expired", nullable = false)
-	var credentialsNonExpired : Boolean = true
+	var credentialsNonExpired: Boolean = true
 
 	@NotNull
 	@Column(name = "enabled", nullable = false)
-	var enabled : Boolean = true
+	var enabled: Boolean = true
 
 	@OneToMany(
 		targetEntity = Purchase::class,

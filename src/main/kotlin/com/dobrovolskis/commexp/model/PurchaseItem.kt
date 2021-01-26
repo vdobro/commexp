@@ -74,8 +74,18 @@ class PurchaseItem(
 	@ManyToMany(targetEntity = User::class, cascade = [ALL], fetch = LAZY)
 	@JoinTable(
 		name = TABLE_USERS_USE_PURCHASE_ITEMS,
-		joinColumns = [JoinColumn(name = "purchase_item_id", referencedColumnName = ID_COLUMN_NAME, nullable = false, updatable = false)],
-		inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = ID_COLUMN_NAME, nullable = false, updatable = false)],
+		joinColumns = [JoinColumn(
+			name = "purchase_item_id",
+			referencedColumnName = ID_COLUMN_NAME,
+			nullable = false,
+			updatable = false
+		)],
+		inverseJoinColumns = [JoinColumn(
+			name = "user_id",
+			referencedColumnName = ID_COLUMN_NAME,
+			nullable = false,
+			updatable = false
+		)],
 	)
 	private val _usedBy: MutableList<User> = mutableListOf()
 

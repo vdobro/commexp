@@ -28,6 +28,11 @@ import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import {MenubarModule} from "primeng/menubar";
 import {HomeComponent} from './home/home.component';
+import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
+import {InputTextModule} from "primeng/inputtext";
+import {SharedModule} from "primeng/api";
+import {HttpErrorInterceptor} from "@app/util/HttpErrorInterceptor";
+import {XsrfInterceptor} from "@app/util/XsrfInterceptor";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -41,10 +46,18 @@ import {HomeComponent} from './home/home.component';
 	],
 	imports: [
 		BrowserModule,
+		HttpClientModule,
+		HttpClientXsrfModule,
 		AppRoutingModule,
-		MenubarModule
+		MenubarModule,
+		InputTextModule,
+		SharedModule
 	],
-	providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+	providers: [
+		{provide: LocationStrategy, useClass: HashLocationStrategy},
+		{provide: HTTP_INTERCEPTORS, useClass: XsrfInterceptor, multi: true},
+		{provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -41,8 +41,10 @@ class AddPurchaseItem(
 	private val invoiceService: InvoiceService,
 ) : BaseRequestHandler<ItemCreationRequest, PurchaseItem> {
 
-	override operator fun invoke(currentUser: User,
-	                             request: ItemCreationRequest): PurchaseItem {
+	override operator fun invoke(
+		currentUser: User,
+		request: ItemCreationRequest
+	): PurchaseItem {
 		validateRequest(currentUser, request)
 
 		val purchase = purchaseService.find(request.purchaseId)

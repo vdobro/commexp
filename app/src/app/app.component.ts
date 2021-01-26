@@ -20,6 +20,7 @@
  */
 
 import {Component} from '@angular/core';
+import {NavigationService} from "@app/service/navigation.service";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -32,4 +33,8 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
 	title = 'commexp';
+
+	constructor(
+		private readonly navigation: NavigationService) {
+	}
 }

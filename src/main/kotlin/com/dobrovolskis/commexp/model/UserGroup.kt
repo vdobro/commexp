@@ -42,8 +42,10 @@ import javax.validation.constraints.NotEmpty
 class UserGroup(
 
 	@NotEmpty
-	@Column(name = "name",
-		nullable = false)
+	@Column(
+		name = "name",
+		nullable = false
+	)
 	var name: String = ""
 
 ) : IdEntity() {
@@ -57,10 +59,10 @@ class UserGroup(
 	private val _users: MutableList<User> = mutableListOf()
 
 	@Transient
-	fun users() : List<User> = this._users.toList()
+	fun users(): List<User> = this._users.toList()
 
 	@Transient
-	fun containsUser(user: User) : Boolean {
+	fun containsUser(user: User): Boolean {
 		return _users.contains(user)
 	}
 

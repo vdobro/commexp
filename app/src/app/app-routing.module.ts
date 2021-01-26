@@ -21,10 +21,13 @@
 
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {HomeComponent} from "@app/home/home.component";
+import {ROOT_GROUPS, ROOT_USER} from "@app/util/UrlConfig";
 
 const routes: Routes = [
-	{path: 'groups', loadChildren: () => import('./groups/groups.module').then(m => m.GroupsModule)},
-	{path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)}
+	{path: ROOT_GROUPS, loadChildren: () => import('./groups/groups.module').then(m => m.GroupsModule)},
+	{path: ROOT_USER, loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
+	{path: '', component: HomeComponent, pathMatch: 'full'},
 ];
 
 /**
