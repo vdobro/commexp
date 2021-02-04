@@ -21,12 +21,22 @@
 
 package com.dobrovolskis.commexp.web.request
 
+import com.dobrovolskis.commexp.config.Constraints.Strings.LENGTH_SHORT
+import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.Size
+
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.06
  */
 data class UserCreationRequest(
+	@NotEmpty
+	@Size(max = LENGTH_SHORT)
 	val username: String,
+	@NotEmpty
+	@Size(max = LENGTH_SHORT)
 	val name: String,
+	@NotEmpty
+	@Size(max = LENGTH_SHORT)
 	val password: String
 )

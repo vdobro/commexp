@@ -21,7 +21,10 @@
 
 package com.dobrovolskis.commexp.web.request
 
+import com.dobrovolskis.commexp.config.Constraints.Strings.LENGTH_SHORT
 import java.util.UUID
+import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.Size
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -29,5 +32,7 @@ import java.util.UUID
  */
 data class ShopCreationRequest(
 	val groupId: UUID,
+	@NotEmpty
+	@Size(max = LENGTH_SHORT)
 	val name: String
 )

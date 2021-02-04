@@ -21,7 +21,7 @@
 
 package com.dobrovolskis.commexp.model
 
-import com.dobrovolskis.commexp.config.TABLE_INVOICES
+import com.dobrovolskis.commexp.config.Table.INVOICES
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
@@ -39,7 +39,7 @@ import javax.validation.constraints.NotNull
  * @since 2020.12.05
  */
 @Entity
-@Table(name = TABLE_INVOICES)
+@Table(name = INVOICES)
 class Invoice(
 
 	@NotNull

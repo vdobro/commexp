@@ -25,6 +25,7 @@ import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.service.InvoiceService
 import com.dobrovolskis.commexp.service.PurchaseItemService
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToItem
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -43,16 +44,14 @@ class RemovePurchaseItem(
 	override fun invoke(currentUser: User, request: UUID) {
 		validateRequest(currentUser, request)
 
-		val item = itemService.find(request)
+		val existingItem = itemService.find(request)
 
 		itemService.removeItem(request)
-		invoiceService.reassembleIfAnyExistForChangedItem(item)
+		invoiceService.reassembleIfAnyExistForChangedItem(existingItem)
 	}
 
 	private fun validateRequest(user: User, request: UUID) {
 		val item = itemService.find(request)
-		require(itemService.userHasAccessTo(user = user, purchaseItem = item)) {
-			"User ${user.username} denied access to item $request"
-		}
+		verifyAccessToItem(user = user, purchaseItem = item)
 	}
 }

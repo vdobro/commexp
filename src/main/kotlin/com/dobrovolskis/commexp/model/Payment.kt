@@ -21,7 +21,7 @@
 
 package com.dobrovolskis.commexp.model
 
-import com.dobrovolskis.commexp.config.TABLE_PAYMENTS
+import com.dobrovolskis.commexp.config.Table.PAYMENTS
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.time.ZonedDateTime.now
@@ -39,7 +39,7 @@ import javax.validation.constraints.NotNull
  * @since 2021.01.10
  */
 @Entity
-@Table(name = TABLE_PAYMENTS)
+@Table(name = PAYMENTS)
 class Payment(
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)

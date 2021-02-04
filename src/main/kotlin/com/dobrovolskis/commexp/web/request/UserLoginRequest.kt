@@ -21,11 +21,15 @@
 
 package com.dobrovolskis.commexp.web.request
 
+import javax.validation.constraints.NotEmpty
+
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2021.01.09
  */
 data class UserLoginRequest(
+	@NotEmpty
 	val username: String,
+	@NotEmpty
 	val password: String,
 )

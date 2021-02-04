@@ -21,8 +21,14 @@
 
 package com.dobrovolskis.commexp.web.request
 
+import com.dobrovolskis.commexp.config.Constraints.Strings.DIGITS_FRACTION
+import com.dobrovolskis.commexp.config.Constraints.Strings.DIGITS_INTEGER
+import com.dobrovolskis.commexp.config.Constraints.Strings.LENGTH_SHORT
 import java.math.BigDecimal
 import java.util.UUID
+import javax.validation.constraints.Digits
+import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.Size
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -30,6 +36,9 @@ import java.util.UUID
  */
 data class ItemCreationRequest(
 	val purchaseId: UUID,
+	@NotEmpty
+	@Size(max = LENGTH_SHORT)
 	val name: String,
+	@Digits(integer = DIGITS_INTEGER, fraction = DIGITS_FRACTION)
 	val price: BigDecimal,
 )

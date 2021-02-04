@@ -21,9 +21,10 @@
 
 package com.dobrovolskis.commexp.model
 
-import com.dobrovolskis.commexp.config.TABLE_USERS
-import com.dobrovolskis.commexp.config.TABLE_USERS_USE_PURCHASE_ITEMS
-import com.dobrovolskis.commexp.config.TABLE_USER_GROUPS_USERS
+import com.dobrovolskis.commexp.config.Constraints.Strings.LENGTH_SHORT
+import com.dobrovolskis.commexp.config.Table.USERS
+import com.dobrovolskis.commexp.config.Table.USERS_USE_PURCHASE_ITEMS
+import com.dobrovolskis.commexp.config.Table.USER_GROUPS_USERS
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -39,6 +40,7 @@ import javax.persistence.Table
 import javax.persistence.Transient
 import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 
 /**
@@ -46,19 +48,22 @@ import javax.validation.constraints.NotNull
  * @since 2020.12.05
  */
 @Entity
-@Table(name = TABLE_USERS)
+@Table(name = USERS)
 class User(
 
 	@NotEmpty
 	@Column(name = "name", nullable = false)
+	@Size(max = LENGTH_SHORT)
 	var name: String,
 
 	@NotEmpty
 	@Column(name = "username", nullable = false, unique = true)
+	@Size(max = LENGTH_SHORT)
 	private var username: String,
 
 	@NotEmpty
 	@Column(name = "password", nullable = false)
+	@Size(max = LENGTH_SHORT)
 	private var password: String,
 
 	) : IdEntity(), UserDetails {
@@ -99,7 +104,7 @@ class User(
 
 	@ManyToMany(targetEntity = PurchaseItem::class, fetch = LAZY)
 	@JoinTable(
-		name = TABLE_USERS_USE_PURCHASE_ITEMS,
+		name = USERS_USE_PURCHASE_ITEMS,
 		joinColumns = [JoinColumn(name = "user_id")],
 		inverseJoinColumns = [JoinColumn(name = "purchase_item_id")],
 	)
@@ -107,7 +112,7 @@ class User(
 
 	@ManyToMany(targetEntity = UserGroup::class, fetch = LAZY)
 	@JoinTable(
-		name = TABLE_USER_GROUPS_USERS,
+		name = USER_GROUPS_USERS,
 		joinColumns = [JoinColumn(name = "user_id")],
 		inverseJoinColumns = [JoinColumn(name = "user_group_id")],
 	)

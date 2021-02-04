@@ -27,14 +27,19 @@ import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.web.ControllerUtils
 import com.dobrovolskis.commexp.web.dto.PurchaseDto
 import com.dobrovolskis.commexp.web.request.PurchaseCreationRequest
-import com.dobrovolskis.commexp.web.request.PurchaseListRequest
 import com.dobrovolskis.commexp.web.usecase.purchase.CreatePurchase
 import com.dobrovolskis.commexp.web.usecase.purchase.GetPurchasesInGroup
+import com.dobrovolskis.commexp.web.usecase.purchase.RemovePurchase
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod.DELETE
 import org.springframework.web.bind.annotation.RequestMethod.GET
 import org.springframework.web.bind.annotation.RequestMethod.POST
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
+import javax.validation.Valid
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -46,17 +51,24 @@ class PurchaseController(
 	private val createPurchase: CreatePurchase,
 	private val purchaseList: GetPurchasesInGroup,
 	private val controllerUtils: ControllerUtils,
+	private val removePurchase: RemovePurchase,
 ) {
 	@RequestMapping(method = [POST])
-	fun createNew(@RequestBody creationRequest: PurchaseCreationRequest): PurchaseDto {
+	fun createNew(@RequestBody @Valid creationRequest: PurchaseCreationRequest): PurchaseDto {
 		val result = createPurchase(getUser(), creationRequest)
 		return mapToDto(result)
 	}
 
 	@RequestMapping(method = [GET])
-	fun getAll(@RequestBody request: PurchaseListRequest): List<PurchaseDto> {
-		val result = purchaseList(getUser(), request)
+	fun getAll(@RequestParam(required = true) groupId: UUID): List<PurchaseDto> {
+		val result = purchaseList(getUser(), groupId)
 		return result.map(this::mapToDto)
+	}
+
+	@RequestMapping(method = [DELETE],
+		path = ["/{id}"])
+	fun removePurchase(@PathVariable id: UUID) {
+		removePurchase(getUser(), id)
 	}
 
 	private fun mapToDto(purchase: Purchase): PurchaseDto {

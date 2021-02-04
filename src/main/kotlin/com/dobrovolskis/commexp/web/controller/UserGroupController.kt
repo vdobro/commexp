@@ -32,6 +32,7 @@ import com.dobrovolskis.commexp.web.request.GroupCreationRequest
 import com.dobrovolskis.commexp.web.request.GroupUserRequest
 import com.dobrovolskis.commexp.web.usecase.user.AcceptInvitationToGroup
 import com.dobrovolskis.commexp.web.usecase.user.CreateGroup
+import com.dobrovolskis.commexp.web.usecase.user.FindGroup
 import com.dobrovolskis.commexp.web.usecase.user.GetUserGroupList
 import com.dobrovolskis.commexp.web.usecase.user.InviteUserToGroup
 import org.springframework.web.bind.annotation.PathVariable
@@ -41,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestMethod.GET
 import org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
+import javax.validation.Valid
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -53,30 +55,36 @@ class UserGroupController(
 	private val inviteUser: InviteUserToGroup,
 	private val acceptInvitationToGroup: AcceptInvitationToGroup,
 	private val getUserGroupList: GetUserGroupList,
+	private val findGroup: FindGroup,
 	private val controllerUtils: ControllerUtils,
 ) {
 
 	@RequestMapping(method = [POST])
-	fun createNew(@RequestBody creationRequest: GroupCreationRequest): UserGroupDto =
+	fun createNew(@RequestBody @Valid creationRequest: GroupCreationRequest): UserGroupDto =
 		mapToDto(createGroup(getUser(), creationRequest))
 
 	@RequestMapping(method = [GET])
 	fun getMyGroups(): List<UserGroupDto> =
 		getUserGroupList(getUser()).map(this::mapToDto)
 
+	@RequestMapping(method = [GET], path = ["/{id}"])
+	fun get(@PathVariable id: UUID) : UserGroupDto {
+		return mapToDto(findGroup(getUser(), id))
+	}
+
 	@RequestMapping(
 		method = [POST],
 		path = ["/invite"]
 	)
-	fun inviteUserToGroup(@RequestBody request: GroupUserRequest): UserInvitationDto =
+	fun inviteUserToGroup(@RequestBody @Valid request: GroupUserRequest): UserInvitationDto =
 		mapToDto(inviteUser(getUser(), request))
 
 	@RequestMapping(
 		method = [POST],
-		path = ["/acceptInvitation/{id}"]
+		path = ["/join/{invitationId}"]
 	)
-	fun acceptInvitation(@PathVariable id: UUID): UserGroupDto =
-		mapToDto(acceptInvitationToGroup(getUser(), id))
+	fun acceptInvitation(@PathVariable invitationId: UUID): UserGroupDto =
+		mapToDto(acceptInvitationToGroup(getUser(), invitationId))
 
 	private fun mapToDto(userGroup: UserGroup): UserGroupDto {
 		return UserGroupDto(

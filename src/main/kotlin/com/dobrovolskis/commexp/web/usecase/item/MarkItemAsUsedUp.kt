@@ -26,6 +26,7 @@ import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.service.InvoiceService
 import com.dobrovolskis.commexp.service.PurchaseItemService
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToItem
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -42,6 +43,7 @@ class MarkItemAsUsedUp(
 ) : BaseRequestHandler<UUID, PurchaseItem> {
 	override fun invoke(currentUser: User, request: UUID): PurchaseItem {
 		val item = itemService.find(request)
+		verifyAccessToItem(currentUser, item)
 		val result = itemService.markAsUsedUp(item = item)
 
 		invoiceService.reassembleIfAnyExistForChangedItem(result)

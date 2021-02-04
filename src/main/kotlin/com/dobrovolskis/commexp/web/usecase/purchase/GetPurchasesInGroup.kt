@@ -25,10 +25,11 @@ import com.dobrovolskis.commexp.model.Purchase
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.service.PurchaseService
 import com.dobrovolskis.commexp.service.UserGroupService
-import com.dobrovolskis.commexp.web.request.PurchaseListRequest
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -39,13 +40,11 @@ import org.springframework.transaction.annotation.Transactional
 class GetPurchasesInGroup(
 	private val groupService: UserGroupService,
 	private val purchaseService: PurchaseService
-) : BaseRequestHandler<PurchaseListRequest, List<Purchase>> {
-	override operator fun invoke(currentUser: User, request: PurchaseListRequest): List<Purchase> {
-		val groupId = request.groupId
-		val group = groupService.find(groupId)
-		require(currentUser.isInGroup(group)) {
-			"User not in group"
-		}
+) : BaseRequestHandler<UUID, List<Purchase>> {
+	override operator fun invoke(currentUser: User, request: UUID): List<Purchase> {
+		val group = groupService.find(request)
+		verifyAccessToGroup(user = currentUser, group = group)
+
 		return purchaseService.getAllForGroup(group)
 	}
 }

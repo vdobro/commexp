@@ -25,7 +25,7 @@ import com.dobrovolskis.commexp.model.Invoice
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.service.InvoiceService
 import com.dobrovolskis.commexp.service.UserGroupService
-import com.dobrovolskis.commexp.web.request.InvoiceRequest
+import com.dobrovolskis.commexp.web.request.InvoiceAssemblyRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -38,9 +38,9 @@ import org.springframework.transaction.annotation.Transactional
 class AssembleInvoices(
 	private val groupService: UserGroupService,
 	private val invoiceService: InvoiceService
-) : BaseRequestHandler<InvoiceRequest, Iterable<Invoice>> {
+) : BaseRequestHandler<InvoiceAssemblyRequest, Iterable<Invoice>> {
 
-	override operator fun invoke(currentUser: User, request: InvoiceRequest): Iterable<Invoice> {
+	override operator fun invoke(currentUser: User, request: InvoiceAssemblyRequest): Iterable<Invoice> {
 		val group = groupService.find(request.groupId)
 		invoiceService.assembleForGroup(
 			group = group,

@@ -19,14 +19,25 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.request
+package com.dobrovolskis.commexp.web.usecase.user
 
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.model.UserGroup
+import com.dobrovolskis.commexp.service.UserGroupService
+import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.09
+ * @since 2021.02.03
  */
-data class ItemListRequest(
-	val purchaseId: UUID
-)
+@Service
+@Transactional(readOnly = true)
+class FindGroup(private val groupService: UserGroupService)
+	: BaseRequestHandler<UUID, UserGroup> {
+	override operator fun invoke(currentUser: User, request: UUID): UserGroup {
+		return groupService.find(request)
+	}
+}

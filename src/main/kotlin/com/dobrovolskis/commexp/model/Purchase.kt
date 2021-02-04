@@ -21,7 +21,7 @@
 
 package com.dobrovolskis.commexp.model
 
-import com.dobrovolskis.commexp.config.TABLE_PURCHASES
+import com.dobrovolskis.commexp.config.Table.PURCHASES
 import java.time.ZonedDateTime
 import java.time.ZonedDateTime.now
 import javax.persistence.CascadeType
@@ -40,7 +40,7 @@ import javax.validation.constraints.NotNull
  * @since 2020.12.05
  */
 @Entity
-@Table(name = TABLE_PURCHASES)
+@Table(name = PURCHASES)
 class Purchase(
 	@NotNull
 	@ManyToOne(fetch = LAZY)

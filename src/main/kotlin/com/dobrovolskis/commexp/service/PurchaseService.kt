@@ -81,4 +81,7 @@ class PurchaseService(
 
 	fun removeItem(purchaseItem: PurchaseItem) =
 		itemRepository.delete(purchaseItem)
+
+	fun removeList(purchase: Purchase) =
+		repository.delete(purchase)
 }

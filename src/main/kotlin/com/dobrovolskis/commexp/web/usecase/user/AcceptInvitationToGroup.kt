@@ -21,8 +21,10 @@
 
 package com.dobrovolskis.commexp.web.usecase.user
 
+import com.dobrovolskis.commexp.exception.ResourceAccessError
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserGroup
+import com.dobrovolskis.commexp.model.UserInvitation
 import com.dobrovolskis.commexp.repository.UserInvitationRepository
 import com.dobrovolskis.commexp.service.UserGroupService
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
@@ -44,18 +46,24 @@ class AcceptInvitationToGroup(
 ) : BaseRequestHandler<UUID, UserGroup> {
 
 	override fun invoke(currentUser: User, request: UUID): UserGroup {
-		val invitation = invitationRepository.findByIdOrNull(request)
-			?: throw Error("Invitation $request not found")
-		require(invitation.target == currentUser) {
-			"User denied access to invitation"
-		}
-		require(invitation.accepted == null) {
-			"Invitation already accepted"
-		}
+		val invitation = validate(currentUser, request)
 		val group = invitation.group
 		invitation.accepted = ZonedDateTime.now()
 		val resultingGroup = userGroupService.addUser(group, currentUser)
 		invitationRepository.save(invitation)
 		return resultingGroup
+	}
+
+	private fun validate(user: User, request: UUID): UserInvitation {
+		val invitation = invitationRepository.findByIdOrNull(request)
+			?: throw Error("Invitation $request not found")
+		if (invitation.target != user) {
+			throw ResourceAccessError("User denied access to invitation")
+		}
+
+		require(invitation.accepted == null) {
+			"Invitation already accepted"
+		}
+		return invitation
 	}
 }

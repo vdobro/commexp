@@ -21,9 +21,13 @@
 
 package com.dobrovolskis.commexp.model
 
+import com.dobrovolskis.commexp.config.Constraints.Strings.DIGITS_FRACTION
+import com.dobrovolskis.commexp.config.Constraints.Strings.DIGITS_INTEGER
+import com.dobrovolskis.commexp.config.Constraints.Strings.LENGTH_MEDIUM
+import com.dobrovolskis.commexp.config.Constraints.Strings.LENGTH_SHORT
 import com.dobrovolskis.commexp.config.ID_COLUMN_NAME
-import com.dobrovolskis.commexp.config.TABLE_PURCHASE_ITEMS
-import com.dobrovolskis.commexp.config.TABLE_USERS_USE_PURCHASE_ITEMS
+import com.dobrovolskis.commexp.config.Table.PURCHASE_ITEMS
+import com.dobrovolskis.commexp.config.Table.USERS_USE_PURCHASE_ITEMS
 import java.math.BigDecimal
 import javax.persistence.CascadeType.ALL
 import javax.persistence.Column
@@ -38,22 +42,24 @@ import javax.persistence.Transient
 import javax.validation.constraints.Digits
 import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.05
  */
 @Entity
-@Table(name = TABLE_PURCHASE_ITEMS)
+@Table(name = PURCHASE_ITEMS)
 class PurchaseItem(
 
 	@NotEmpty
 	@Column(name = "name", nullable = false)
+	@Size(max = LENGTH_SHORT)
 	var name: String,
 
 	@NotNull
 	@Column(name = "price", nullable = false)
-	@Digits(integer = 10, fraction = 2)
+	@Digits(integer = DIGITS_INTEGER, fraction = DIGITS_FRACTION)
 	var price: BigDecimal,
 
 	@NotNull
@@ -65,6 +71,7 @@ class PurchaseItem(
 
 	@NotNull
 	@Column(name = "description", nullable = false)
+	@Size(max = LENGTH_MEDIUM)
 	var description: String = ""
 
 	@NotNull
@@ -73,7 +80,7 @@ class PurchaseItem(
 
 	@ManyToMany(targetEntity = User::class, cascade = [ALL], fetch = LAZY)
 	@JoinTable(
-		name = TABLE_USERS_USE_PURCHASE_ITEMS,
+		name = USERS_USE_PURCHASE_ITEMS,
 		joinColumns = [JoinColumn(
 			name = "purchase_item_id",
 			referencedColumnName = ID_COLUMN_NAME,

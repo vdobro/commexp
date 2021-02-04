@@ -27,7 +27,6 @@ import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserGroup
 import com.dobrovolskis.commexp.repository.InvoiceRepository
 import com.dobrovolskis.commexp.repository.PurchaseItemRepository
-import com.dobrovolskis.commexp.repository.PurchaseRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
@@ -41,7 +40,6 @@ import java.time.ZonedDateTime
 @Transactional
 class InvoiceService(
 	private val invoiceRepository: InvoiceRepository,
-	private val purchaseRepository: PurchaseRepository,
 	private val itemRepository: PurchaseItemRepository
 ) {
 	fun assembleForGroup(
@@ -58,8 +56,7 @@ class InvoiceService(
 	fun getPaidBy(
 		user: User, group: UserGroup,
 		from: ZonedDateTime, to: ZonedDateTime
-	)
-			: Iterable<Invoice> {
+	): Iterable<Invoice> {
 		return invoiceRepository.findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroupAndPayer(
 			from = from, to = to, group = group, payer = user
 		)

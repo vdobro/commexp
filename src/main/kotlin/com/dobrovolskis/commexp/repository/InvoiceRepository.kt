@@ -53,8 +53,7 @@ interface InvoiceRepository : CrudRepository<Invoice, UUID> {
 	): List<Invoice>
 
 	@Query(
-		"from Invoice i where i.group = :group " +
-				"and i.payer = :payer and i.receiver = :receiver and i.from <= :date and :date <= i.to"
+		"from Invoice i where i.group = :group and i.payer = :payer and i.receiver = :receiver and i.from <= :date and :date <= i.to"
 	)
 	fun existsAnyForUserPairWithDateIn(
 		@Param("date") date: ZonedDateTime,

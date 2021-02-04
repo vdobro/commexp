@@ -19,18 +19,32 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.request
+package com.dobrovolskis.commexp.web.usecase
 
-import com.dobrovolskis.commexp.config.Constraints.Strings.LENGTH_SHORT
-import javax.validation.constraints.NotEmpty
-import javax.validation.constraints.Size
+import com.dobrovolskis.commexp.exception.ResourceAccessError
+import com.dobrovolskis.commexp.model.Purchase
+import com.dobrovolskis.commexp.model.PurchaseItem
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.model.UserGroup
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2021.02.04
  */
-data class GroupCreationRequest(
-	@NotEmpty
-	@Size(max = LENGTH_SHORT)
-	val name: String
-)
+fun verifyAccessToGroup(user: User, group: UserGroup) {
+	if (!user.isInGroup(group)) {
+		throw ResourceAccessError("User not in group")
+	}
+}
+
+fun verifyAccessToItem(user: User, purchaseItem: PurchaseItem) {
+	if (!user.isInGroup(purchaseItem.purchase.group)) {
+		throw ResourceAccessError("Access denied to purchase item")
+	}
+}
+
+fun verifyAccessToPurchase(purchase: Purchase, user: User) {
+	if (!user.isInGroup(purchase.group)) {
+		throw ResourceAccessError("Access denied to purchase")
+	}
+}

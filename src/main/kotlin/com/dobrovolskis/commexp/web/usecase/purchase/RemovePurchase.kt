@@ -19,14 +19,28 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.request
+package com.dobrovolskis.commexp.web.usecase.purchase
 
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.service.PurchaseService
+import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToPurchase
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.09
+ * @since 2021.02.03
  */
-data class PurchaseListRequest(
-	val groupId: UUID
-)
+@Service
+@Transactional
+class RemovePurchase(private val purchaseService: PurchaseService)
+	: BaseRequestHandler<UUID, Unit> {
+	override operator fun invoke(currentUser: User, request: UUID) {
+		val item = purchaseService.find(request)
+		verifyAccessToPurchase(user = currentUser, purchase = item)
+
+		purchaseService.removeList(item)
+	}
+}

@@ -21,6 +21,7 @@
 
 package com.dobrovolskis.commexp.web.usecase.item
 
+import com.dobrovolskis.commexp.exception.ResourceAccessError
 import com.dobrovolskis.commexp.model.PurchaseItem
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.service.InvoiceService
@@ -56,8 +57,8 @@ class AddPurchaseItem(
 
 	private fun validateRequest(user: User, request: ItemCreationRequest) {
 		val purchase = purchaseService.find(request.purchaseId)
-		require(purchase.group.containsUser(user)) {
-			"Access to purchase $request.purchaseId denied"
+		if (!purchase.group.containsUser(user)) {
+			throw ResourceAccessError("Access to purchase ${request.purchaseId} denied")
 		}
 	}
 }

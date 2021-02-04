@@ -27,6 +27,7 @@ import com.dobrovolskis.commexp.service.UserGroupService
 import com.dobrovolskis.commexp.service.UserService
 import com.dobrovolskis.commexp.web.request.GroupUserRequest
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -42,11 +43,10 @@ class InviteUserToGroup(
 ) : BaseRequestHandler<GroupUserRequest, UserInvitation> {
 	override fun invoke(currentUser: User, request: GroupUserRequest): UserInvitation {
 		val group = groupService.find(request.groupId)
-		require(currentUser.isInGroup(group)) {
-			"Current user has no access to group ${request.groupId}"
-		}
+		verifyAccessToGroup(currentUser, group)
+
 		require(currentUser.username != request.username) {
-			"User cannot add itself to another group"
+			"User cannot add themselves to another group"
 		}
 		val userToInvite = userService.findByUsername(request.username)
 		return groupService.inviteUser(

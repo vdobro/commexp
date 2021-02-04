@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -46,7 +47,7 @@ class UserController(
 ) {
 
 	@RequestMapping(method = [RequestMethod.POST])
-	fun create(@RequestBody request: UserCreationRequest) {
+	fun create(@RequestBody @Valid request: UserCreationRequest) {
 		userService.addUser(
 			name = request.name,
 			username = request.username,
@@ -59,7 +60,7 @@ class UserController(
 		return mapUserToDto(controllerUtils.getCurrentUser())
 	}
 
-	fun mapUserToDto(user: User): UserDto {
+	private fun mapUserToDto(user: User): UserDto {
 		return UserDto(
 			id = user.id()!!,
 			username = user.username,

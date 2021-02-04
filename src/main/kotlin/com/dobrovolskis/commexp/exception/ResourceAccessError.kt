@@ -19,17 +19,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.request
-
-import java.time.ZonedDateTime
-import java.util.UUID
+package com.dobrovolskis.commexp.exception
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.14
+ * @since 2021.02.03
  */
-data class InvoiceRequest(
-	val groupId: UUID,
-	val start: ZonedDateTime,
-	val end: ZonedDateTime
-)
+class ResourceAccessError(message: String = "No access to requested resource") : RuntimeException(message)

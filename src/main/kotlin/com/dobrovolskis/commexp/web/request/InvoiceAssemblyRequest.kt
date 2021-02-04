@@ -21,12 +21,15 @@
 
 package com.dobrovolskis.commexp.web.request
 
+import java.time.ZonedDateTime
 import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.09
+ * @since 2020.12.14
  */
-data class ShopListRequest(
-	val groupId: UUID
+data class InvoiceAssemblyRequest(
+	val groupId: UUID,
+	val start: ZonedDateTime,
+	val end: ZonedDateTime
 )

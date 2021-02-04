@@ -22,12 +22,14 @@
 package com.dobrovolskis.commexp.web.request
 
 import java.util.UUID
+import javax.validation.constraints.NotEmpty
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.06
  */
 data class GroupUserRequest(
+	@NotEmpty
 	val username: String,
 	val groupId: UUID
 )

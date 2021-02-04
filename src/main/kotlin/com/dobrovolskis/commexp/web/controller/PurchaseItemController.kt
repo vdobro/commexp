@@ -27,7 +27,6 @@ import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.web.ControllerUtils
 import com.dobrovolskis.commexp.web.dto.PurchaseItemDto
 import com.dobrovolskis.commexp.web.request.ItemCreationRequest
-import com.dobrovolskis.commexp.web.request.ItemListRequest
 import com.dobrovolskis.commexp.web.request.ItemUsageChangeRequest
 import com.dobrovolskis.commexp.web.usecase.item.AddPurchaseItem
 import com.dobrovolskis.commexp.web.usecase.item.GetItemsInPurchase
@@ -40,8 +39,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod.DELETE
 import org.springframework.web.bind.annotation.RequestMethod.GET
 import org.springframework.web.bind.annotation.RequestMethod.POST
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
+import javax.validation.Valid
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -59,14 +60,14 @@ class PurchaseItemController(
 ) {
 
 	@RequestMapping(method = [POST])
-	fun addNewItem(@RequestBody itemCreationRequest: ItemCreationRequest): PurchaseItemDto {
+	fun addNewItem(@RequestBody @Valid itemCreationRequest: ItemCreationRequest): PurchaseItemDto {
 		val result = addItem(getUser(), itemCreationRequest)
 		return mapToDto(result)
 	}
 
 	@RequestMapping(method = [GET])
-	fun getAllInPurchase(@RequestBody request: ItemListRequest): List<PurchaseItemDto> {
-		val result = getAllItems(getUser(), request)
+	fun getAllInPurchase(@RequestParam(required = true) purchaseId: UUID): List<PurchaseItemDto> {
+		val result = getAllItems(getUser(), purchaseId)
 		return result.map(this::mapToDto)
 	}
 
@@ -80,11 +81,11 @@ class PurchaseItemController(
 
 	@RequestMapping(
 		method = [POST],
-		path = ["/{id}/use/by"]
+		path = ["/{id}/users"]
 	)
 	fun editItemUsage(
 		@PathVariable id: UUID,
-		@RequestBody request: ItemUsageChangeRequest
+		@RequestBody @Valid request: ItemUsageChangeRequest
 	): PurchaseItemDto {
 		val result = updateItemUsage(getUser(), request)
 		return mapToDto(result)
@@ -92,7 +93,7 @@ class PurchaseItemController(
 
 	@RequestMapping(
 		method = [POST],
-		path = ["/{id}/use/up"]
+		path = ["/{id}/finish"]
 	)
 	fun markAsUsedUp(@PathVariable id: UUID): PurchaseItemDto {
 		val result = markItemAsUsedUp(getUser(), request = id)

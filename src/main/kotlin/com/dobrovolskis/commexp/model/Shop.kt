@@ -21,7 +21,7 @@
 
 package com.dobrovolskis.commexp.model
 
-import com.dobrovolskis.commexp.config.TABLE_SHOPS
+import com.dobrovolskis.commexp.config.Table.SHOPS
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -38,7 +38,7 @@ import javax.validation.constraints.NotNull
  * @since 2020.12.05
  */
 @Entity
-@Table(name = TABLE_SHOPS)
+@Table(name = SHOPS)
 class Shop(
 
 	@NotEmpty

@@ -28,6 +28,7 @@ import com.dobrovolskis.commexp.service.PurchaseItemService
 import com.dobrovolskis.commexp.service.UserService
 import com.dobrovolskis.commexp.web.request.ItemUsageChangeRequest
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToItem
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -63,8 +64,6 @@ class UpdateItemUsageByUser(
 
 	private fun validateRequest(user: User, request: ItemUsageChangeRequest) {
 		val item = itemService.find(request.itemId)
-		require(itemService.userHasAccessTo(item, user)) {
-			"User ${user.username} access to purchase item ${request.itemId} denied"
-		}
+		verifyAccessToItem(user = user, purchaseItem = item)
 	}
 }

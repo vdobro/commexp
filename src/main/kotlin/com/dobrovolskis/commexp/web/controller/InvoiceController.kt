@@ -26,12 +26,13 @@ import com.dobrovolskis.commexp.model.Invoice
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.web.ControllerUtils
 import com.dobrovolskis.commexp.web.dto.InvoiceDto
-import com.dobrovolskis.commexp.web.request.InvoiceRequest
+import com.dobrovolskis.commexp.web.request.InvoiceAssemblyRequest
 import com.dobrovolskis.commexp.web.usecase.AssembleInvoices
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -44,8 +45,8 @@ class InvoiceController(
 	private val controllerUtils: ControllerUtils,
 ) {
 
-	@RequestMapping(method = [RequestMethod.POST])
-	fun requestInvoice(@RequestBody request: InvoiceRequest): List<InvoiceDto> {
+	@RequestMapping(method = [POST])
+	fun assembleAllForGroup(@RequestBody @Valid request: InvoiceAssemblyRequest): List<InvoiceDto> {
 		val user = getUser()
 		return assembleInvoices(user, request).map { mapToDto(it) }
 	}

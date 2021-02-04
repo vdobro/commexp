@@ -27,6 +27,7 @@ import com.dobrovolskis.commexp.service.ShopService
 import com.dobrovolskis.commexp.service.UserGroupService
 import com.dobrovolskis.commexp.web.request.ShopCreationRequest
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -42,9 +43,8 @@ class RegisterShop(
 ) : BaseRequestHandler<ShopCreationRequest, Shop> {
 	override fun invoke(currentUser: User, request: ShopCreationRequest): Shop {
 		val group = groupService.find(request.groupId)
-		require(currentUser.isInGroup(group)) {
-			"User not in group"
-		}
+		verifyAccessToGroup(user = currentUser, group = group)
+
 		return shopService.createNew(group = group, name = request.name)
 	}
 }

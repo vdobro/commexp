@@ -21,7 +21,7 @@
 
 package com.dobrovolskis.commexp.model
 
-import com.dobrovolskis.commexp.config.TABLE_USER_GROUP_INVITATIONS
+import com.dobrovolskis.commexp.config.Table.USER_GROUP_INVITATIONS
 import java.time.ZonedDateTime
 import java.time.ZonedDateTime.now
 import javax.persistence.Column
@@ -37,7 +37,7 @@ import javax.validation.constraints.NotNull
  * @since 2020.12.06
  */
 @Entity
-@Table(name = TABLE_USER_GROUP_INVITATIONS)
+@Table(name = USER_GROUP_INVITATIONS)
 class UserInvitation(
 
 	@NotNull

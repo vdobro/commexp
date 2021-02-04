@@ -29,6 +29,7 @@ import com.dobrovolskis.commexp.service.UserGroupService
 import com.dobrovolskis.commexp.service.UserService
 import com.dobrovolskis.commexp.web.request.PurchaseCreationRequest
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -63,8 +64,6 @@ class CreatePurchase(
 
 	private fun validateRequest(user: User, request: PurchaseCreationRequest) {
 		val group = groupService.find(request.groupId)
-		require(user.isInGroup(group)) {
-			"User does not belong to group ${request.groupId}"
-		}
+		verifyAccessToGroup(user = user, group = group)
 	}
 }

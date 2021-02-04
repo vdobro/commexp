@@ -32,17 +32,30 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableTransactionManagement
 class PersistenceConfiguration
 
-const val TABLE_PREFIX = "cx_"
+object Table {
+	private const val PREFIX = "cx_"
 
-const val TABLE_USERS = "${TABLE_PREFIX}user"
-const val TABLE_USER_GROUPS = "${TABLE_PREFIX}user_group"
-const val TABLE_USER_GROUPS_USERS = "${TABLE_PREFIX}user_group__user"
-const val TABLE_USER_GROUP_INVITATIONS = "${TABLE_PREFIX}user_group_invitation"
-const val TABLE_PURCHASES = "${TABLE_PREFIX}purchase"
-const val TABLE_PURCHASE_ITEMS = "${TABLE_PREFIX}purchase_item"
-const val TABLE_USERS_USE_PURCHASE_ITEMS = "${TABLE_PREFIX}purchase_item__user"
-const val TABLE_SHOPS = "${TABLE_PREFIX}shop"
-const val TABLE_INVOICES = "${TABLE_PREFIX}invoice"
-const val TABLE_PAYMENTS = "${TABLE_PREFIX}payment"
+	const val USERS = "${PREFIX}user"
+	const val USER_GROUPS = "${PREFIX}user_group"
+	const val USER_GROUPS_USERS = "${PREFIX}user_group__user"
+	const val USER_GROUP_INVITATIONS = "${PREFIX}user_group_invitation"
+	const val PURCHASES = "${PREFIX}purchase"
+	const val PURCHASE_ITEMS = "${PREFIX}purchase_item"
+	const val USERS_USE_PURCHASE_ITEMS = "${PREFIX}purchase_item__user"
+	const val SHOPS = "${PREFIX}shop"
+	const val INVOICES = "${PREFIX}invoice"
+	const val PAYMENTS = "${PREFIX}payment"
+}
 
 const val ID_COLUMN_NAME = "id"
+
+object Constraints {
+	object Strings {
+		const val LENGTH_LONG = 1000
+		const val LENGTH_MEDIUM = 5000
+		const val LENGTH_SHORT = 200
+		const val LENGTH_MIN = 20
+		const val DIGITS_INTEGER = 10
+		const val DIGITS_FRACTION = 2
+	}
+}
