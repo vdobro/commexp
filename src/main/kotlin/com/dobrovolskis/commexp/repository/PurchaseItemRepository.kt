@@ -29,7 +29,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.UUID
 
 /**
@@ -46,8 +46,8 @@ interface PurchaseItemRepository : CrudRepository<PurchaseItem, UUID> {
 				+ "and p.shoppingTime between :from and :until"
 	)
 	fun getUsedUpItemsByPurchaseDoneWithin(
-		@Param("from") from: LocalDateTime,
-		@Param("until") until: LocalDateTime,
+		@Param("from") from: LocalDate,
+		@Param("until") until: LocalDate,
 		@Param("usedBy") usedBy: User,
 		@Param("group") group: UserGroup,
 	): List<PurchaseItem>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -27,4 +27,4 @@ import java.time.format.DateTimeFormatter
  * @author Vitalijus Dobrovolskis
  * @since 2021.02.16
  */
-val DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ISO_DATE
+val DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE

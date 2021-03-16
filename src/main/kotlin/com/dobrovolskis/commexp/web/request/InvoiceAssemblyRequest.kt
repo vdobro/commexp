@@ -21,7 +21,9 @@
 
 package com.dobrovolskis.commexp.web.request
 
-import java.time.LocalDateTime
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer
+import java.time.LocalDate
 import java.util.UUID
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Past
@@ -37,9 +39,11 @@ data class InvoiceAssemblyRequest(
 
 	@Past
 	@NotNull
-	val start: LocalDateTime,
+	@JsonDeserialize(using = LocalDateDeserializer::class)
+	val start: LocalDate,
 
 	@PastOrPresent
 	@NotNull
-	val end: LocalDateTime
+	@JsonDeserialize(using = LocalDateDeserializer::class)
+	val end: LocalDate
 )

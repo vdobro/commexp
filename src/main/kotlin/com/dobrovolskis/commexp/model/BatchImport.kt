@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,7 +21,6 @@
 
 package com.dobrovolskis.commexp.model
 
-import com.dobrovolskis.commexp.config.ColumnType
 import com.dobrovolskis.commexp.config.Table.IMPORTS
 import java.time.ZonedDateTime
 import java.time.ZonedDateTime.now
@@ -46,7 +45,6 @@ class BatchImport(
 	@NotNull
 	@Column(
 		name = "created",
-		columnDefinition = ColumnType.MOMENT_WITH_TIMEZONE,
 		nullable = false,
 		updatable = false
 	)

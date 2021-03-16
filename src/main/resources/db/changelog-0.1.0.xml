@@ -33,7 +33,7 @@
 				             primaryKeyName="pk_cx_invoice"/>
 			</column>
 			<column name="period_start"
-			        type="${type.time.zoneless}">
+			        type="${type.date}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="sum"
@@ -41,7 +41,7 @@
 				<constraints nullable="false"/>
 			</column>
 			<column name="period_end"
-			        type="${type.time.zoneless}">
+			        type="${type.date}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="payer_id"
@@ -94,11 +94,11 @@
 				             primaryKeyName="pk_cx_purchase"/>
 			</column>
 			<column name="created"
-			        type="${type.time.zoneless}">
+			        type="${type.time}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="shopping_time"
-			        type="${type.time.zoneless}">
+			        type="${type.date}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="creator_id"
@@ -199,9 +199,9 @@
 				             primaryKeyName="pk_cx_user_group_invitation"/>
 			</column>
 			<column name="accepted"
-			        type="${type.time.zoneless}"/>
+			        type="${type.time}"/>
 			<column name="created"
-			        type="${type.time.zoneless}">
+			        type="${type.time}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="creator_id"
@@ -411,7 +411,7 @@
 				<constraints nullable="false"/>
 			</column>
 			<column name="created"
-			        type="${type.time.zoneless}">
+			        type="${type.time}">
 				<constraints nullable="false"/>
 			</column>
 		</createTable>
@@ -441,7 +441,7 @@
 				             primaryKeyName="pk_cx_import"/>
 			</column>
 			<column name="created"
-			        type="${type.time.zoneless}">
+			        type="${type.time}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="imported_by"

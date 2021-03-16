@@ -21,10 +21,9 @@
 
 package com.dobrovolskis.commexp.model
 
-import com.dobrovolskis.commexp.config.ColumnType.MOMENT
 import com.dobrovolskis.commexp.config.Table.INVOICES
 import java.math.BigDecimal
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -46,20 +45,18 @@ class Invoice(
 	@NotNull
 	@Column(
 		name = "period_start",
-		columnDefinition = MOMENT,
 		nullable = false,
 		updatable = false
 	)
-	var from: LocalDateTime,
+	var from: LocalDate,
 
 	@NotNull
 	@Column(
 		name = "period_end",
-		columnDefinition = MOMENT,
 		nullable = false,
 		updatable = false
 	)
-	var to: LocalDateTime,
+	var to: LocalDate,
 
 	@NotNull
 	@ManyToOne(fetch = LAZY)

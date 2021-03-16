@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -88,7 +88,7 @@ class BatchImporter(
 		session: BatchImport,
 	): ImportedEntity {
 		val shop = shopService.findOrCreate(name = entry.shop!!, group = group)
-		val date = entry.date!!.atStartOfDay()
+		val date = entry.date!!
 		val doneBy = userService.findByUsername(username = entry.buyer!!)
 		verifyAccessToGroup(doneBy, group)
 

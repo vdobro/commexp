@@ -27,9 +27,11 @@ import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserGroup
 import com.dobrovolskis.commexp.repository.InvoiceRepository
 import com.dobrovolskis.commexp.repository.PurchaseItemRepository
+import com.dobrovolskis.commexp.web.usecase.invoice.DateRange
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
@@ -120,9 +122,8 @@ class InvoiceService(
 			usedBy = user,
 			group = group
 		)
-		if (items.isEmpty()) {
-			return
-		}
+		if (items.isEmpty()) return
+
 		val invoices = items
 			.groupBy { item -> item.purchase.doneBy }
 			.mapKeys { (buyer, items) ->
@@ -163,7 +164,7 @@ class InvoiceService(
 	}
 
 	private fun checkOverlap(
-		name: String, date: LocalDateTime,
+		name: String, date: LocalDate,
 		group: UserGroup, payer: User, receiver: User
 	) {
 		val result = invoiceRepository.existsAnyForUserPairWithDateIn(
@@ -174,12 +175,12 @@ class InvoiceService(
 		)
 		require(result.isEmpty()) {
 			val invoice = result.first().toString()
-			"Invoice $name date overlaps with $invoice"
+			"Invoice $name date range overlaps with $invoice"
 		}
 	}
 }
 
-data class DateRange(
+data class TimeRange(
 	val from: LocalDateTime,
 	val to: LocalDateTime
 )

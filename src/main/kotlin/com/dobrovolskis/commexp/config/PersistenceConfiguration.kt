@@ -32,11 +32,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableTransactionManagement
 class PersistenceConfiguration
 
-object ColumnType {
-	const val MOMENT_WITH_TIMEZONE = "TIMESTAMP WITH TIME ZONE"
-	const val MOMENT = "TIMESTAMP WITHOUT TIME ZONE"
-}
-
 object Table {
 	private const val PREFIX = "cx_"
 

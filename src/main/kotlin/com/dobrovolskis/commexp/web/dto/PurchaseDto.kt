@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,6 +21,7 @@
 
 package com.dobrovolskis.commexp.web.dto
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -31,7 +32,7 @@ import java.util.UUID
 data class PurchaseDto(
 	val id: UUID,
 	val shopId: UUID,
-	val time: LocalDateTime,
+	val time: LocalDate,
 	val creation: LocalDateTime,
 	val doneBy: UUID
 )

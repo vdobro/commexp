@@ -15,7 +15,7 @@
 	          value="nvarchar(20)"
 	          dbms="all"/>
 	<property name="type.time"
-	          value="timestamp with time zone"
+	          value="timestamp without time zone"
 	          dbms="all"/>
 	<property name="type.int"
 	          value="int"
@@ -29,7 +29,7 @@
 	<property name="type.id"
 	          value="uuid"
 	          dbms="all"/>
-	<property name="type.time.zoneless"
-	          value="timestamp without time zone"
+	<property name="type.date"
+	          value="date"
 	          dbms="all"/>
 </databaseChangeLog>

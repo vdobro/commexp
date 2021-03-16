@@ -23,6 +23,10 @@ package com.dobrovolskis.commexp.web.dto
 
 import java.util.UUID
 
+/**
+ * @author Vitalijus Dobrovolskis
+ * @since 2020.12.06
+ */
 data class UserGroupDto(
 	val id: UUID,
 	val name: String

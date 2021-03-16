@@ -22,7 +22,7 @@
 package com.dobrovolskis.commexp.web.dto
 
 import java.math.BigDecimal
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.UUID
 
 /**
@@ -34,7 +34,7 @@ data class InvoiceDto(
 	val payerId: UUID,
 	val receiverId: UUID,
 	val groupId: UUID,
-	val from: LocalDateTime,
-	val to: LocalDateTime,
+	val from: LocalDate,
+	val to: LocalDate,
 	val sum: BigDecimal
 )

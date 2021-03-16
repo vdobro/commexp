@@ -21,8 +21,8 @@
 
 package com.dobrovolskis.commexp.model
 
-import com.dobrovolskis.commexp.config.ColumnType
 import com.dobrovolskis.commexp.config.Table.PURCHASES
+import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
 import javax.persistence.Column
@@ -65,18 +65,16 @@ class Purchase(
 	@NotNull
 	@Column(
 		name = "shopping_time",
-		columnDefinition = ColumnType.MOMENT,
 		updatable = false,
 		nullable = false
 	)
-	val shoppingTime: LocalDateTime,
+	val shoppingTime: LocalDate,
 
 	) : IdEntity() {
 
 	@NotNull
 	@Column(
 		name = "created",
-		columnDefinition = ColumnType.MOMENT,
 		updatable = false,
 		nullable = false
 	)

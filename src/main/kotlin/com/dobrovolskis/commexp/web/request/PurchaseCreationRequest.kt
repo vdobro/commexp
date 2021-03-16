@@ -21,7 +21,7 @@
 
 package com.dobrovolskis.commexp.web.request
 
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.UUID
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Past
@@ -39,5 +39,5 @@ data class PurchaseCreationRequest(
 	val doneBy: UUID,
 	@NotNull
 	@Past
-	val shoppingTime: LocalDateTime
+	val shoppingTime: LocalDate
 )

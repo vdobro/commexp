@@ -28,7 +28,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.UUID
 
 /**
@@ -39,24 +39,22 @@ import java.util.UUID
 interface InvoiceRepository : CrudRepository<Invoice, UUID> {
 
 	fun findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroupAndPayer(
-		from: LocalDateTime, to: LocalDateTime, group: UserGroup, payer: User
+		from: LocalDate, to: LocalDate, group: UserGroup, payer: User
 	): Iterable<Invoice>
 
 	fun findByFromAndToAndPayerAndReceiverAndGroup(
-		from: LocalDateTime, to: LocalDateTime, payer: User, receiver: User, group: UserGroup
+		from: LocalDate, to: LocalDate, payer: User, receiver: User, group: UserGroup
 	): Invoice?
 
 	@Query("from Invoice i where i.group = :group and :date between i.from and i.to")
 	fun findAllWithDateIn(
-		@Param("date") date: LocalDateTime,
+		@Param("date") date: LocalDate,
 		@Param("group") group: UserGroup
 	): List<Invoice>
 
-	@Query(
-		"from Invoice i where i.group = :group and i.payer = :payer and i.receiver = :receiver and i.from <= :date and :date <= i.to"
-	)
+	@Query("from Invoice i where i.group = :group and i.payer = :payer and i.receiver = :receiver and :date between i.from and i.to")
 	fun existsAnyForUserPairWithDateIn(
-		@Param("date") date: LocalDateTime,
+		@Param("date") date: LocalDate,
 		@Param("group") group: UserGroup,
 		@Param("payer") payer: User,
 		@Param("receiver") receiver: User,

@@ -32,7 +32,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.UUID
 
 /**
@@ -59,7 +59,7 @@ class PurchaseService(
 		user: User,
 		group: UserGroup,
 		shop: Shop,
-		shoppingTime: LocalDateTime,
+		shoppingTime: LocalDate,
 	): Purchase = repository.save(
 		Purchase(
 			doneBy = user,
