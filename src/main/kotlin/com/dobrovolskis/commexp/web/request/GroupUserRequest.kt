@@ -23,6 +23,7 @@ package com.dobrovolskis.commexp.web.request
 
 import java.util.UUID
 import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotNull
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -31,5 +32,6 @@ import javax.validation.constraints.NotEmpty
 data class GroupUserRequest(
 	@NotEmpty
 	val username: String,
+	@NotNull
 	val groupId: UUID
 )

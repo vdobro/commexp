@@ -21,15 +21,25 @@
 
 package com.dobrovolskis.commexp.web.request
 
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 import java.util.UUID
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Past
+import javax.validation.constraints.PastOrPresent
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.14
  */
 data class InvoiceAssemblyRequest(
+	@NotNull
 	val groupId: UUID,
-	val start: ZonedDateTime,
-	val end: ZonedDateTime
+
+	@Past
+	@NotNull
+	val start: LocalDateTime,
+
+	@PastOrPresent
+	@NotNull
+	val end: LocalDateTime
 )

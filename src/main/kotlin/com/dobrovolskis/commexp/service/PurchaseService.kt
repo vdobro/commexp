@@ -32,7 +32,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 import java.util.UUID
 
 /**
@@ -59,7 +59,7 @@ class PurchaseService(
 		user: User,
 		group: UserGroup,
 		shop: Shop,
-		shoppingTime: ZonedDateTime,
+		shoppingTime: LocalDateTime,
 	): Purchase = repository.save(
 		Purchase(
 			doneBy = user,
@@ -70,12 +70,18 @@ class PurchaseService(
 		)
 	)
 
-	fun addItem(purchase: Purchase, itemName: String, price: BigDecimal): PurchaseItem =
+	fun addItem(
+		purchase: Purchase,
+		itemName: String,
+		price: BigDecimal,
+		description: String? = ""
+	): PurchaseItem =
 		itemRepository.save(
 			PurchaseItem(
 				name = itemName,
 				price = price,
 				purchase = find(purchase.id()!!),
+				description = description ?: ""
 			)
 		)
 

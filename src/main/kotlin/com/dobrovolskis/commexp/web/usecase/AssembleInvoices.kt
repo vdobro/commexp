@@ -23,6 +23,7 @@ package com.dobrovolskis.commexp.web.usecase
 
 import com.dobrovolskis.commexp.model.Invoice
 import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.service.DateRange
 import com.dobrovolskis.commexp.service.InvoiceService
 import com.dobrovolskis.commexp.service.UserGroupService
 import com.dobrovolskis.commexp.web.request.InvoiceAssemblyRequest
@@ -42,14 +43,15 @@ class AssembleInvoices(
 
 	override operator fun invoke(currentUser: User, request: InvoiceAssemblyRequest): Iterable<Invoice> {
 		val group = groupService.find(request.groupId)
+		val range = DateRange(from = request.start, to = request.end)
 		invoiceService.assembleForGroup(
 			group = group,
-			from = request.start,
-			to = request.end
+			range = range,
 		)
 		return invoiceService.getPaidBy(
 			user = currentUser,
-			group = group, from = request.start, to = request.end
+			group = group,
+			range = range
 		)
 	}
 }

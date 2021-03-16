@@ -30,7 +30,7 @@ import com.dobrovolskis.commexp.repository.PurchaseItemRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -44,21 +44,20 @@ class InvoiceService(
 ) {
 	fun assembleForGroup(
 		group: UserGroup,
-		from: ZonedDateTime,
-		to: ZonedDateTime
+		range: DateRange
 	) {
 		for (user in group.users()) {
-			assembleForUser(user, group, from, to)
+			assembleForUser(user, group, range)
 		}
-		simplify(group, from, to)
+		simplify(group, range)
 	}
 
 	fun getPaidBy(
 		user: User, group: UserGroup,
-		from: ZonedDateTime, to: ZonedDateTime
+		range: DateRange,
 	): Iterable<Invoice> {
 		return invoiceRepository.findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroupAndPayer(
-			from = from, to = to, group = group, payer = user
+			from = range.from, to = range.to, group = group, payer = user
 		)
 	}
 
@@ -75,20 +74,21 @@ class InvoiceService(
 		}
 		val from = invoices.first().from
 		val to = invoices.first().to
+		val range = DateRange(from = from, to = to)
 		invoiceRepository.deleteAll(invoices)
-		assembleForGroup(group, from, to)
+		assembleForGroup(group, range)
 	}
 
-	fun simplify(group: UserGroup, from: ZonedDateTime, to: ZonedDateTime) {
+	fun simplify(group: UserGroup, range: DateRange) {
 		for (first in group.users()) {
 			for (second in group.users()) {
 				val outgoing = invoiceRepository.findByFromAndToAndPayerAndReceiverAndGroup(
 					payer = first, receiver = second,
-					from = from, to = to, group = group
+					from = range.from, to = range.to, group = group
 				)
 				val incoming = invoiceRepository.findByFromAndToAndPayerAndReceiverAndGroup(
 					payer = second, receiver = first,
-					from = from, to = to, group = group,
+					from = range.from, to = range.to, group = group,
 				)
 				if (outgoing != null && incoming != null) {
 					eliminatePair(outgoing, incoming)
@@ -111,12 +111,12 @@ class InvoiceService(
 
 	private fun assembleForUser(
 		user: User, group: UserGroup,
-		from: ZonedDateTime, to: ZonedDateTime
+		range: DateRange,
 	) {
-		validateRequest(from = from, to = to)
+		validateRequest(range)
 		val items = itemRepository.getUsedUpItemsByPurchaseDoneWithin(
-			from = from,
-			until = to,
+			from = range.from,
+			until = range.to,
 			usedBy = user,
 			group = group
 		)
@@ -127,7 +127,7 @@ class InvoiceService(
 			.groupBy { item -> item.purchase.doneBy }
 			.mapKeys { (buyer, items) ->
 				Invoice(
-					from = from, to = to,
+					from = range.from, to = range.to,
 					payer = user, receiver = buyer, group = group,
 					sum = items.sumOf(this::calculatePricePart)
 				)
@@ -140,11 +140,13 @@ class InvoiceService(
 	}
 
 	private fun calculatePricePart(item: PurchaseItem): BigDecimal {
-		return item.price / item.usedBy().size.toBigDecimal()
+		val users = item.usedBy().size
+		if (users == 0) return BigDecimal.valueOf(0)
+		return item.price / users.toBigDecimal()
 	}
 
-	private fun validateRequest(from: ZonedDateTime, to: ZonedDateTime) {
-		require(from.isBefore(to) || from.isEqual(to)) {
+	private fun validateRequest(range: DateRange) {
+		require(range.from.isBefore(range.to) || range.from.isEqual(range.to)) {
 			"Invalid date range"
 		}
 	}
@@ -161,7 +163,7 @@ class InvoiceService(
 	}
 
 	private fun checkOverlap(
-		name: String, date: ZonedDateTime,
+		name: String, date: LocalDateTime,
 		group: UserGroup, payer: User, receiver: User
 	) {
 		val result = invoiceRepository.existsAnyForUserPairWithDateIn(
@@ -176,3 +178,8 @@ class InvoiceService(
 		}
 	}
 }
+
+data class DateRange(
+	val from: LocalDateTime,
+	val to: LocalDateTime
+)

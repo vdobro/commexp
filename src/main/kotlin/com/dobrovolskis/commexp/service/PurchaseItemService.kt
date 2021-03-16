@@ -59,10 +59,6 @@ class PurchaseItemService(private val repository: PurchaseItemRepository) {
 		return repository.save(item)
 	}
 
-	fun userHasAccessTo(purchaseItem: PurchaseItem, user: User): Boolean {
-		return purchaseItem.purchase.group.containsUser(user)
-	}
-
 	fun removeItem(itemId: UUID) {
 		val item = find(itemId)
 		repository.delete(item)

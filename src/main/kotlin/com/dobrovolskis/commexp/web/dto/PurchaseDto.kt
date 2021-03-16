@@ -21,7 +21,7 @@
 
 package com.dobrovolskis.commexp.web.dto
 
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 import java.util.UUID
 
 /**
@@ -31,7 +31,7 @@ import java.util.UUID
 data class PurchaseDto(
 	val id: UUID,
 	val shopId: UUID,
-	val time: ZonedDateTime,
-	val creation: ZonedDateTime,
+	val time: LocalDateTime,
+	val creation: LocalDateTime,
 	val doneBy: UUID
 )

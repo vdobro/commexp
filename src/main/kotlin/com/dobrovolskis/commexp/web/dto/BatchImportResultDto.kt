@@ -21,20 +21,18 @@
 
 package com.dobrovolskis.commexp.web.dto
 
-import java.math.BigDecimal
-import java.time.LocalDateTime
+import com.dobrovolskis.commexp.model.ImportedEntityType
+import java.time.ZonedDateTime
 import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.14
+ * @since 2021.03.16
  */
-data class InvoiceDto(
-	val id: UUID,
-	val payerId: UUID,
-	val receiverId: UUID,
-	val groupId: UUID,
-	val from: LocalDateTime,
-	val to: LocalDateTime,
-	val sum: BigDecimal
+data class BatchImportResultDto(
+	val sessionId: UUID,
+	val created: ZonedDateTime,
+	val author: UUID,
+	val itemType: ImportedEntityType,
+	val itemIds: List<UUID>,
 )

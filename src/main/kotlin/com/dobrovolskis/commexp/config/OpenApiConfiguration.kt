@@ -19,22 +19,24 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.dto
+package com.dobrovolskis.commexp.config
 
-import java.math.BigDecimal
-import java.time.LocalDateTime
-import java.util.UUID
+import io.swagger.v3.oas.annotations.OpenAPIDefinition
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
+import io.swagger.v3.oas.annotations.info.Info
+import io.swagger.v3.oas.annotations.security.SecurityScheme
+import org.springframework.context.annotation.Configuration
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.14
+ * @since 2021.02.08
  */
-data class InvoiceDto(
-	val id: UUID,
-	val payerId: UUID,
-	val receiverId: UUID,
-	val groupId: UUID,
-	val from: LocalDateTime,
-	val to: LocalDateTime,
-	val sum: BigDecimal
+@Configuration
+@OpenAPIDefinition(info = Info(title = "commexp API", version = "v1"))
+@SecurityScheme(
+	name = "basicAuth",
+	type = SecuritySchemeType.HTTP,
+	scheme = "basic"
 )
+class OpenApiConfiguration {
+}

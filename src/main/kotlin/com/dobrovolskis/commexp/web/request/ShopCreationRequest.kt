@@ -24,6 +24,7 @@ package com.dobrovolskis.commexp.web.request
 import com.dobrovolskis.commexp.config.Constraints.Strings.LENGTH_SHORT
 import java.util.UUID
 import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 /**
@@ -31,6 +32,7 @@ import javax.validation.constraints.Size
  * @since 2021.01.09
  */
 data class ShopCreationRequest(
+	@NotNull
 	val groupId: UUID,
 	@NotEmpty
 	@Size(max = LENGTH_SHORT)

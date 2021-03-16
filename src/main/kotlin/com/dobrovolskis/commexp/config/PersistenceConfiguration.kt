@@ -32,6 +32,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableTransactionManagement
 class PersistenceConfiguration
 
+object ColumnType {
+	const val MOMENT_WITH_TIMEZONE = "TIMESTAMP WITH TIME ZONE"
+	const val MOMENT = "TIMESTAMP WITHOUT TIME ZONE"
+}
+
 object Table {
 	private const val PREFIX = "cx_"
 
@@ -45,6 +50,8 @@ object Table {
 	const val SHOPS = "${PREFIX}shop"
 	const val INVOICES = "${PREFIX}invoice"
 	const val PAYMENTS = "${PREFIX}payment"
+	const val IMPORTS  = "${PREFIX}import"
+	const val IMPORTED_ENTITIES = "${PREFIX}imported_entity"
 }
 
 const val ID_COLUMN_NAME = "id"
@@ -54,6 +61,8 @@ object Constraints {
 		const val LENGTH_LONG = 1000
 		const val LENGTH_MEDIUM = 5000
 		const val LENGTH_SHORT = 200
+		const val LENGTH_NOT_NULL = 1
+		const val PASSWORD_LENGTH = 8
 		const val LENGTH_MIN = 20
 		const val DIGITS_INTEGER = 10
 		const val DIGITS_FRACTION = 2

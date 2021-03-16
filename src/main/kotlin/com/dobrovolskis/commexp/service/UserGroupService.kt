@@ -46,6 +46,7 @@ class UserGroupService(
 		return repository.findByIdOrNull(id) ?: throw IllegalArgumentException("User group $id not found")
 	}
 
+
 	fun createGroup(name: String): UserGroup {
 		return repository.save(
 			UserGroup(

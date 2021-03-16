@@ -67,12 +67,12 @@ class PurchaseItem(
 	@JoinColumn(name = "purchase_id", nullable = false)
 	var purchase: Purchase,
 
-	) : IdEntity() {
-
 	@NotNull
 	@Column(name = "description", nullable = false)
 	@Size(max = LENGTH_MEDIUM)
-	var description: String = ""
+	var description: String = "",
+
+	) : IdEntity() {
 
 	@NotNull
 	@Column(name = "used_up", nullable = false)

@@ -48,4 +48,9 @@ class ShopService(private val repository: ShopRepository) {
 	fun getAllForGroup(group: UserGroup): List<Shop> {
 		return repository.getAllByGroup(group)
 	}
+
+	fun findOrCreate(name: String, group: UserGroup): Shop {
+		return repository.findByGroupAndName(userGroup = group, name = name)
+			?: createNew(group = group, name = name)
+	}
 }

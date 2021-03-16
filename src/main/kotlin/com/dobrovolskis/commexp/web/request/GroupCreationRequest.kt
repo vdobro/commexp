@@ -21,8 +21,8 @@
 
 package com.dobrovolskis.commexp.web.request
 
+import com.dobrovolskis.commexp.config.Constraints.Strings.LENGTH_NOT_NULL
 import com.dobrovolskis.commexp.config.Constraints.Strings.LENGTH_SHORT
-import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.Size
 
 /**
@@ -30,7 +30,6 @@ import javax.validation.constraints.Size
  * @since 2020.12.06
  */
 data class GroupCreationRequest(
-	@NotEmpty
-	@Size(max = LENGTH_SHORT)
+	@Size(min = LENGTH_NOT_NULL, max = LENGTH_SHORT)
 	val name: String
 )

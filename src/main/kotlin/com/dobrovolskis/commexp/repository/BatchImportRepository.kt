@@ -19,22 +19,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.dto
+package com.dobrovolskis.commexp.repository
 
-import java.math.BigDecimal
-import java.time.LocalDateTime
+import com.dobrovolskis.commexp.model.BatchImport
+import org.springframework.data.repository.CrudRepository
+import org.springframework.stereotype.Repository
 import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.14
+ * @since 2021.03.12
  */
-data class InvoiceDto(
-	val id: UUID,
-	val payerId: UUID,
-	val receiverId: UUID,
-	val groupId: UUID,
-	val from: LocalDateTime,
-	val to: LocalDateTime,
-	val sum: BigDecimal
-)
+@Repository
+interface BatchImportRepository : CrudRepository<BatchImport, UUID>

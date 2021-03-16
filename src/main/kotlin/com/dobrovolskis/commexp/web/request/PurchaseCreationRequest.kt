@@ -21,16 +21,23 @@
 
 package com.dobrovolskis.commexp.web.request
 
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 import java.util.UUID
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Past
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.06
  */
 data class PurchaseCreationRequest(
+	@NotNull
 	val shopId: UUID,
+	@NotNull
 	val groupId: UUID,
+	@NotNull
 	val doneBy: UUID,
-	val shoppingTime: ZonedDateTime
+	@NotNull
+	@Past
+	val shoppingTime: LocalDateTime
 )

@@ -22,6 +22,7 @@
 package com.dobrovolskis.commexp.service
 
 import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.model.UserGroup
 import com.dobrovolskis.commexp.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -57,6 +58,12 @@ class UserService(
 		)
 	}
 
+	fun getAllGroups(id: UUID): List<UserGroup> {
+		val user = getById(id)
+		val result = user.userGroups
+		return result.toList()
+	}
+
 	fun getById(id: UUID): User {
 		return repository.findByIdOrNull(id)
 			?: throw IllegalArgumentException("User not found")
@@ -64,6 +71,6 @@ class UserService(
 
 	fun findByUsername(username: String): User {
 		return repository.findByUsername(username)
-			?: throw IllegalArgumentException("User not found")
+			?: throw IllegalArgumentException("User $username not found")
 	}
 }

@@ -21,13 +21,15 @@
 
 package com.dobrovolskis.commexp.model
 
+import com.dobrovolskis.commexp.config.Constraints.Strings.DIGITS_FRACTION
+import com.dobrovolskis.commexp.config.Constraints.Strings.DIGITS_INTEGER
 import com.dobrovolskis.commexp.config.Table.PAYMENTS
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.time.ZonedDateTime.now
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.FetchType
+import javax.persistence.FetchType.LAZY
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.Table
@@ -42,7 +44,7 @@ import javax.validation.constraints.NotNull
 @Table(name = PAYMENTS)
 class Payment(
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(
 		name = "payer_id",
 		nullable = false,
@@ -51,7 +53,7 @@ class Payment(
 	var payer: User,
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(
 		name = "receiver_id",
 		nullable = false,
@@ -64,7 +66,7 @@ class Payment(
 		name = "sum",
 		nullable = false,
 	)
-	@Digits(integer = 10, fraction = 2)
+	@Digits(integer = DIGITS_INTEGER, fraction = DIGITS_FRACTION)
 	var sum: BigDecimal,
 
 	) : IdEntity() {

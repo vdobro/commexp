@@ -25,19 +25,23 @@ import com.dobrovolskis.commexp.config.PATH_PURCHASES
 import com.dobrovolskis.commexp.model.Purchase
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.web.ControllerUtils
+import com.dobrovolskis.commexp.web.dto.BatchImportResultDto
 import com.dobrovolskis.commexp.web.dto.PurchaseDto
+import com.dobrovolskis.commexp.web.request.ImportRequest
 import com.dobrovolskis.commexp.web.request.PurchaseCreationRequest
+import com.dobrovolskis.commexp.web.usecase.BatchImporter
 import com.dobrovolskis.commexp.web.usecase.purchase.CreatePurchase
 import com.dobrovolskis.commexp.web.usecase.purchase.GetPurchasesInGroup
 import com.dobrovolskis.commexp.web.usecase.purchase.RemovePurchase
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod.DELETE
-import org.springframework.web.bind.annotation.RequestMethod.GET
-import org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
 import java.util.UUID
 import javax.validation.Valid
 
@@ -49,24 +53,32 @@ import javax.validation.Valid
 @RequestMapping(value = [PATH_PURCHASES])
 class PurchaseController(
 	private val createPurchase: CreatePurchase,
+	private val importer: BatchImporter,
 	private val purchaseList: GetPurchasesInGroup,
 	private val controllerUtils: ControllerUtils,
 	private val removePurchase: RemovePurchase,
 ) {
-	@RequestMapping(method = [POST])
+	@PostMapping
 	fun createNew(@RequestBody @Valid creationRequest: PurchaseCreationRequest): PurchaseDto {
 		val result = createPurchase(getUser(), creationRequest)
 		return mapToDto(result)
 	}
 
-	@RequestMapping(method = [GET])
+	@PostMapping(path = ["/import"])
+	fun import(
+		@RequestParam("group") groupId: UUID,
+		@RequestParam("file") file: MultipartFile) : BatchImportResultDto {
+		val request = ImportRequest(groupId = groupId, file = file)
+		return importer.importPurchases(user = getUser(), request = request)
+	}
+
+	@GetMapping
 	fun getAll(@RequestParam(required = true) groupId: UUID): List<PurchaseDto> {
 		val result = purchaseList(getUser(), groupId)
 		return result.map(this::mapToDto)
 	}
 
-	@RequestMapping(method = [DELETE],
-		path = ["/{id}"])
+	@DeleteMapping(path = ["/{id}"])
 	fun removePurchase(@PathVariable id: UUID) {
 		removePurchase(getUser(), id)
 	}

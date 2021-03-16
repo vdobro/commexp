@@ -21,15 +21,14 @@
 
 package com.dobrovolskis.commexp.web.request
 
-import javax.validation.constraints.NotEmpty
+import org.springframework.web.multipart.MultipartFile
+import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.09
+ * @since 2021.02.16
  */
-data class UserLoginRequest(
-	@NotEmpty
-	val username: String,
-	@NotEmpty
-	val password: String,
+data class ImportRequest(
+	val groupId: UUID,
+	val file: MultipartFile,
 )

@@ -22,12 +22,13 @@
 package com.dobrovolskis.commexp.model
 
 import com.dobrovolskis.commexp.config.ColumnType
-import com.dobrovolskis.commexp.config.Table.PURCHASES
-import java.time.LocalDateTime
+import com.dobrovolskis.commexp.config.Table.IMPORTS
+import java.time.ZonedDateTime
+import java.time.ZonedDateTime.now
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.FetchType.LAZY
+import javax.persistence.FetchType
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
@@ -37,64 +38,44 @@ import javax.validation.constraints.NotNull
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.05
+ * @since 2021.02.16
  */
 @Entity
-@Table(name = PURCHASES)
-class Purchase(
-	@NotNull
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "shop_id", nullable = false)
-	var shop: Shop,
-
-	@NotNull
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "user_id", nullable = false)
-	var doneBy: User,
-
-	@NotNull
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "creator_id", nullable = false)
-	var createdBy: User,
-
-	@NotNull
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "group_id", nullable = false, updatable = false)
-	var group: UserGroup,
-
-	@NotNull
-	@Column(
-		name = "shopping_time",
-		columnDefinition = ColumnType.MOMENT,
-		updatable = false,
-		nullable = false
-	)
-	val shoppingTime: LocalDateTime,
-
-	) : IdEntity() {
-
+@Table(name = IMPORTS)
+class BatchImport(
 	@NotNull
 	@Column(
 		name = "created",
-		columnDefinition = ColumnType.MOMENT,
-		updatable = false,
-		nullable = false
+		columnDefinition = ColumnType.MOMENT_WITH_TIMEZONE,
+		nullable = false,
+		updatable = false
 	)
-	var created: LocalDateTime = LocalDateTime.now()
+	var created: ZonedDateTime = now(),
+
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(
+		name = "imported_by",
+		nullable = false,
+		updatable = false,
+	)
+	var importedBy: User,
+
+	) : IdEntity() {
 
 	@OneToMany(
-		targetEntity = PurchaseItem::class,
-		fetch = LAZY,
-		mappedBy = "purchase",
+		targetEntity = ImportedEntity::class,
+		fetch = FetchType.LAZY,
+		mappedBy = "import",
 		orphanRemoval = true,
 		cascade = [CascadeType.ALL]
 	)
-	private val _items: MutableList<PurchaseItem> = mutableListOf()
+	private val _items: MutableList<ImportedEntity> = mutableListOf()
 
 	@Transient
 	fun items() = _items.toList()
 
-	fun addItem(item: PurchaseItem) {
+	fun addItem(item: ImportedEntity) {
 		_items.add(item)
 	}
 }

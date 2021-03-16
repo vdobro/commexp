@@ -60,7 +60,7 @@ class UserGroupController(
 ) {
 
 	@RequestMapping(method = [POST])
-	fun createNew(@RequestBody @Valid creationRequest: GroupCreationRequest): UserGroupDto =
+	fun createNew(@RequestBody creationRequest: GroupCreationRequest): UserGroupDto =
 		mapToDto(createGroup(getUser(), creationRequest))
 
 	@RequestMapping(method = [GET])

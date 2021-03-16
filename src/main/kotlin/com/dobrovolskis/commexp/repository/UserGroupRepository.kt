@@ -31,4 +31,5 @@ import java.util.UUID
  * @since 2020.12.06
  */
 @Repository
-interface UserGroupRepository : CrudRepository<UserGroup, UUID>
+interface UserGroupRepository : CrudRepository<UserGroup, UUID> {
+}

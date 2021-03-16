@@ -53,12 +53,12 @@ class User(
 
 	@NotEmpty
 	@Column(name = "name", nullable = false)
-	@Size(max = LENGTH_SHORT)
+	@Size(min = 0, max = LENGTH_SHORT)
 	var name: String,
 
 	@NotEmpty
 	@Column(name = "username", nullable = false, unique = true)
-	@Size(max = LENGTH_SHORT)
+	@Size(min = 0, max = LENGTH_SHORT)
 	private var username: String,
 
 	@NotEmpty

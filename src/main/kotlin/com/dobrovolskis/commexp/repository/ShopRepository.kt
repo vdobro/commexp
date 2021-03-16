@@ -34,4 +34,6 @@ import java.util.UUID
 @Repository
 interface ShopRepository : CrudRepository<Shop, UUID> {
 	fun getAllByGroup(userGroup: UserGroup): List<Shop>
+
+	fun findByGroupAndName(userGroup: UserGroup, name: String) : Shop?
 }

@@ -29,7 +29,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import org.springframework.security.web.csrf.CsrfTokenRepository
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -39,6 +39,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 class WebSecurityConfiguration(
 	private val userDetailsService: UserDetailsService,
 	private val passwordEncoder: PasswordEncoder,
+	private val csrfTokenRepository: CsrfTokenRepository,
 ) : WebSecurityConfigurerAdapter() {
 
 	override fun configure(auth: AuthenticationManagerBuilder) {
@@ -49,6 +50,7 @@ class WebSecurityConfiguration(
 	override fun configure(http: HttpSecurity) {
 		http.cors()
 			.and()
+			.csrf { it.csrfTokenRepository(csrfTokenRepository) }
 			.antMatcher("$ROOT_PATH/**")
 			.authorizeRequests { authorize ->
 				authorize
@@ -59,15 +61,12 @@ class WebSecurityConfiguration(
 					.antMatchers(HttpMethod.POST, PATH_USERS)
 						.permitAll()
 					.anyRequest()
-						.authenticated()
+						.fullyAuthenticated()
 			}
 			.httpBasic()
 			.and()
 			.formLogin {
 				it.disable()
-			}
-			.csrf {
-				it.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 			}
 			.logout {
 				it

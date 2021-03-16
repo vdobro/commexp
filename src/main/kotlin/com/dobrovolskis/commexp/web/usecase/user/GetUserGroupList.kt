@@ -23,6 +23,7 @@ package com.dobrovolskis.commexp.web.usecase.user
 
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserGroup
+import com.dobrovolskis.commexp.service.UserService
 import com.dobrovolskis.commexp.web.usecase.UserRequestHandler
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -33,8 +34,8 @@ import org.springframework.transaction.annotation.Transactional
  */
 @Service
 @Transactional(readOnly = true)
-class GetUserGroupList : UserRequestHandler<List<UserGroup>> {
+class GetUserGroupList(private val userService: UserService) : UserRequestHandler<List<UserGroup>> {
 	override operator fun invoke(currentUser: User): List<UserGroup> {
-		return currentUser.userGroups
+		return userService.getAllGroups(currentUser.id()!!)
 	}
 }

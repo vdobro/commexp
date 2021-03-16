@@ -30,10 +30,10 @@
 			        type="${type.id}">
 				<constraints nullable="false"
 				             primaryKey="true"
-				             primaryKeyName="px_cx_invoice"/>
+				             primaryKeyName="pk_cx_invoice"/>
 			</column>
 			<column name="period_start"
-			        type="${type.time}">
+			        type="${type.time.zoneless}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="sum"
@@ -41,7 +41,7 @@
 				<constraints nullable="false"/>
 			</column>
 			<column name="period_end"
-			        type="${type.time}">
+			        type="${type.time.zoneless}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="payer_id"
@@ -91,14 +91,14 @@
 			        type="${type.id}">
 				<constraints nullable="false"
 				             primaryKey="true"
-				             primaryKeyName="px_cx_purchase"/>
+				             primaryKeyName="pk_cx_purchase"/>
 			</column>
 			<column name="created"
-			        type="${type.time}">
+			        type="${type.time.zoneless}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="shopping_time"
-			        type="${type.time}">
+			        type="${type.time.zoneless}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="creator_id"
@@ -126,7 +126,7 @@
 			        type="${type.id}">
 				<constraints nullable="false"
 				             primaryKey="true"
-				             primaryKeyName="px_cx_user"/>
+				             primaryKeyName="pk_cx_user"/>
 			</column>
 			<column name="non_expired"
 			        type="${type.boolean}">
@@ -165,7 +165,7 @@
 			        type="${type.id}">
 				<constraints nullable="false"
 				             primaryKey="true"
-				             primaryKeyName="px_cx_purchase_item"/>
+				             primaryKeyName="pk_cx_purchase_item"/>
 			</column>
 			<column name="description"
 			        type="${type.text.medium}">
@@ -196,12 +196,12 @@
 			        type="${type.id}">
 				<constraints nullable="false"
 				             primaryKey="true"
-				             primaryKeyName="px_cx_user_group_invitation"/>
+				             primaryKeyName="pk_cx_user_group_invitation"/>
 			</column>
 			<column name="accepted"
-			        type="${type.time}"/>
+			        type="${type.time.zoneless}"/>
 			<column name="created"
-			        type="${type.time}">
+			        type="${type.time.zoneless}">
 				<constraints nullable="false"/>
 			</column>
 			<column name="creator_id"
@@ -225,7 +225,7 @@
 			        type="${type.id}">
 				<constraints nullable="false"
 				             primaryKey="true"
-				             primaryKeyName="px_cx_user_group"/>
+				             primaryKeyName="pk_cx_user_group"/>
 			</column>
 			<column name="name"
 			        type="${type.text.short}">
@@ -396,7 +396,7 @@
 			        type="${type.id}">
 				<constraints nullable="false"
 				             primaryKey="true"
-				             primaryKeyName="px_cx_payment"/>
+				             primaryKeyName="pk_cx_payment"/>
 			</column>
 			<column name="payer_id"
 			        type="${type.id}">
@@ -411,7 +411,7 @@
 				<constraints nullable="false"/>
 			</column>
 			<column name="created"
-			        type="${type.time}">
+			        type="${type.time.zoneless}">
 				<constraints nullable="false"/>
 			</column>
 		</createTable>
@@ -430,5 +430,67 @@
 				constraintName="cx_payment_receiver_id_cx_user_id"
 				referencedColumnNames="id"
 				referencedTableName="cx_user"/>
+	</changeSet>
+	<changeSet id="CE-1-ac"
+	           author="vd">
+		<createTable tableName="cx_import">
+			<column name="id"
+			        type="${type.id}">
+				<constraints nullable="false"
+				             primaryKey="true"
+				             primaryKeyName="pk_cx_import"/>
+			</column>
+			<column name="created"
+			        type="${type.time.zoneless}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="imported_by"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="CE-1-AD"
+	           author="vd">
+		<addForeignKeyConstraint baseTableName="cx_import"
+		                         baseColumnNames="imported_by"
+		                         constraintName="cx_import_imported_by_cx_user_id"
+		                         referencedTableName="cx_user"
+		                         referencedColumnNames="id"/>
+	</changeSet>
+	<changeSet id="CE-1-AE"
+	           author="vd">
+		<createTable tableName="cx_imported_entity">
+			<column name="id"
+			        type="${type.id}">
+				<constraints nullable="false"
+				             primaryKey="true"
+				             primaryKeyName="pk_cx_imported_entity"/>
+			</column>
+			<column name="import_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="type"
+			        type="${type.text.min}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="entity_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="original_id"
+			        type="${type.text.min}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="CE-1-AF"
+	           author="vd">
+		<addForeignKeyConstraint baseTableName="cx_imported_entity"
+		                         baseColumnNames="import_id"
+		                         constraintName="cx_import_import_id_cx_import_id"
+		                         referencedTableName="cx_import"
+		                         referencedColumnNames="id"/>
 	</changeSet>
 </databaseChangeLog>

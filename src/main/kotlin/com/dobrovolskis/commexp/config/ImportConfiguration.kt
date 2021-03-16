@@ -19,22 +19,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.dto
+package com.dobrovolskis.commexp.config
 
-import java.math.BigDecimal
-import java.time.LocalDateTime
-import java.util.UUID
+import java.time.format.DateTimeFormatter
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.14
+ * @since 2021.02.16
  */
-data class InvoiceDto(
-	val id: UUID,
-	val payerId: UUID,
-	val receiverId: UUID,
-	val groupId: UUID,
-	val from: LocalDateTime,
-	val to: LocalDateTime,
-	val sum: BigDecimal
-)
+val DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ISO_DATE

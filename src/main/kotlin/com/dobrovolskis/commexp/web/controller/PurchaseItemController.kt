@@ -25,15 +25,19 @@ import com.dobrovolskis.commexp.config.PATH_PURCHASE_ITEMS
 import com.dobrovolskis.commexp.model.PurchaseItem
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.web.ControllerUtils
+import com.dobrovolskis.commexp.web.dto.BatchImportResultDto
 import com.dobrovolskis.commexp.web.dto.PurchaseItemDto
+import com.dobrovolskis.commexp.web.request.ImportRequest
 import com.dobrovolskis.commexp.web.request.ItemCreationRequest
 import com.dobrovolskis.commexp.web.request.ItemUsageChangeRequest
+import com.dobrovolskis.commexp.web.usecase.BatchImporter
 import com.dobrovolskis.commexp.web.usecase.item.AddPurchaseItem
 import com.dobrovolskis.commexp.web.usecase.item.GetItemsInPurchase
 import com.dobrovolskis.commexp.web.usecase.item.MarkItemAsUsedUp
 import com.dobrovolskis.commexp.web.usecase.item.RemovePurchaseItem
 import com.dobrovolskis.commexp.web.usecase.item.UpdateItemUsageByUser
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod.DELETE
@@ -41,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestMethod.GET
 import org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
 import java.util.UUID
 import javax.validation.Valid
 
@@ -52,6 +57,7 @@ import javax.validation.Valid
 @RequestMapping(value = [PATH_PURCHASE_ITEMS])
 class PurchaseItemController(
 	private val addItem: AddPurchaseItem,
+	private val importer: BatchImporter,
 	private val getAllItems: GetItemsInPurchase,
 	private val removeItem: RemovePurchaseItem,
 	private val updateItemUsage: UpdateItemUsageByUser,
@@ -63,6 +69,15 @@ class PurchaseItemController(
 	fun addNewItem(@RequestBody @Valid itemCreationRequest: ItemCreationRequest): PurchaseItemDto {
 		val result = addItem(getUser(), itemCreationRequest)
 		return mapToDto(result)
+	}
+
+	@PostMapping(path = ["/import"])
+	fun import(
+		@RequestParam("group") groupId: UUID,
+		@RequestParam("file") file: MultipartFile
+	) : BatchImportResultDto {
+		val request = ImportRequest(groupId = groupId, file = file)
+		return importer.importItems(user = getUser(), request = request)
 	}
 
 	@RequestMapping(method = [GET])

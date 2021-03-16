@@ -23,11 +23,12 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<jvm.version>1.8</jvm.version>
-		<kotlin.version>1.4.21</kotlin.version>
+		<kotlin.version>1.4.31</kotlin.version>
 		<node.version>v15.3.0</node.version>
 		<npm.version>7.0.4</npm.version>
 		<serialization.version>1.0.0-RC</serialization.version>
 		<springdoc.version>1.5.2</springdoc.version>
+		<opencsv.version>5.3</opencsv.version>
 	</properties>
 
 	<dependencies>
@@ -120,24 +121,66 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdoc.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-kotlin</artifactId>
+			<version>${springdoc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>${opencsv.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-stdlib-jdk8</artifactId>
+			<version>${kotlin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-test</artifactId>
+			<version>${kotlin.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-stdlib-jdk8</artifactId>
+			<version>${kotlin.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
-		<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-		<testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+		<sourceDirectory>src/main/kotlin</sourceDirectory>
+		<testSourceDirectory>src/test/kotlin</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<jvmArguments>-Dspring.application.admin.enabled=true</jvmArguments>
 					<layers>
 						<enabled>true</enabled>
 					</layers>
 				</configuration>
+				<executions>
+					<execution>
+						<id>pre-integration-test</id>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>post-integration-test</id>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-maven-plugin</artifactId>
+				<version>${kotlin.version}</version>
 				<executions>
 					<execution>
 						<id>process-sources</id>
@@ -153,11 +196,19 @@
 							<goal>compile</goal>
 						</goals>
 					</execution>
+					<execution>
+						<id>test-compile</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
 				</executions>
 				<configuration>
-					<jvmTarget>${jvm.version}</jvmTarget>
+					<jvmTarget>1.8</jvmTarget>
 					<args>
 						<arg>-Xjsr305=strict</arg>
+						<arg>-Xuse-ir</arg>
 					</args>
 					<compilerPlugins>
 						<plugin>spring</plugin>
@@ -177,7 +228,6 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
@@ -228,6 +278,19 @@
 				<configuration>
 					<propertyFile>${project.basedir}/src/main/resources/liquibase.properties</propertyFile>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springdoc</groupId>
+				<artifactId>springdoc-openapi-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
