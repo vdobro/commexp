@@ -38,7 +38,15 @@ import java.util.UUID
 @Repository
 interface InvoiceRepository : CrudRepository<Invoice, UUID> {
 
+	fun findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroup(
+		from: LocalDate, to: LocalDate, group: UserGroup
+	) : Iterable<Invoice>
+
 	fun findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroupAndPayer(
+		from: LocalDate, to: LocalDate, group: UserGroup, payer: User
+	): Iterable<Invoice>
+
+	fun findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroupAndPayerAndMirrorIsNotNull(
 		from: LocalDate, to: LocalDate, group: UserGroup, payer: User
 	): Iterable<Invoice>
 

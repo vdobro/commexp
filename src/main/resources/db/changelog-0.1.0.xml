@@ -36,10 +36,14 @@
 			        type="${type.date}">
 				<constraints nullable="false"/>
 			</column>
-			<column name="sum"
+			<column name="total"
 			        type="${type.decimal}">
 				<constraints nullable="false"/>
 			</column>
+			<column name="reduction"
+			        type="${type.decimal}"/>
+			<column name="final"
+			        type="${type.decimal}"/>
 			<column name="period_end"
 			        type="${type.date}">
 				<constraints nullable="false"/>
@@ -56,7 +60,18 @@
 			        type="${type.id}">
 				<constraints nullable="false"/>
 			</column>
+			<column name="mirror_invoice_id"
+			        type="${type.id}"/>
 		</createTable>
+	</changeSet>
+	<changeSet id="CE-1-b-1"
+	           author="vd">
+		<addForeignKeyConstraint
+				baseTableName="cx_invoice"
+				baseColumnNames="mirror_invoice_id"
+				constraintName="fk_cx_invoice_mirror_invoice_id_cx_invoice_id"
+				referencedTableName="cx_invoice"
+				referencedColumnNames="id"/>
 	</changeSet>
 	<changeSet id="CE-1-c"
 	           author="vd">
@@ -450,7 +465,7 @@
 			</column>
 		</createTable>
 	</changeSet>
-	<changeSet id="CE-1-AD"
+	<changeSet id="CE-1-ad"
 	           author="vd">
 		<addForeignKeyConstraint baseTableName="cx_import"
 		                         baseColumnNames="imported_by"
@@ -458,7 +473,7 @@
 		                         referencedTableName="cx_user"
 		                         referencedColumnNames="id"/>
 	</changeSet>
-	<changeSet id="CE-1-AE"
+	<changeSet id="CE-1-ae"
 	           author="vd">
 		<createTable tableName="cx_imported_entity">
 			<column name="id"
@@ -485,12 +500,54 @@
 			</column>
 		</createTable>
 	</changeSet>
-	<changeSet id="CE-1-AF"
+	<changeSet id="CE-1-af"
 	           author="vd">
-		<addForeignKeyConstraint baseTableName="cx_imported_entity"
-		                         baseColumnNames="import_id"
-		                         constraintName="cx_import_import_id_cx_import_id"
-		                         referencedTableName="cx_import"
-		                         referencedColumnNames="id"/>
+		<addForeignKeyConstraint
+				baseTableName="cx_imported_entity"
+				baseColumnNames="import_id"
+				constraintName="cx_import_import_id_cx_import_id"
+				referencedTableName="cx_import"
+				referencedColumnNames="id"/>
+	</changeSet>
+	<changeSet id="CE-1-ag"
+	           author="vd">
+		<createTable tableName="cx_invoice_item">
+			<column name="id"
+			        type="${type.id}">
+				<constraints nullable="false"
+				             primaryKey="true"
+				             primaryKeyName="pk_cx_invoice_item"/>
+			</column>
+			<column name="invoice_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="sum"
+			        type="${type.decimal}">
+				<constraints nullable="false"/>
+			</column>
+			<column name="item_id"
+			        type="${type.id}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="CE-1-ah"
+	           author="vd">
+		<addForeignKeyConstraint
+				baseTableName="cx_invoice_item"
+				baseColumnNames="invoice_id"
+				constraintName="fk_cx_invoice_item_invoice_id_cx_invoice_id"
+				referencedTableName="cx_invoice"
+				referencedColumnNames="id"/>
+	</changeSet>
+	<changeSet id="CE-1-ai"
+	           author="vd">
+		<addForeignKeyConstraint
+				baseTableName="cx_invoice_item"
+				baseColumnNames="item_id"
+				constraintName="fk_cx_invoice_item_item_id_cx_purchase_item_id"
+				referencedTableName="cx_purchase_item"
+				referencedColumnNames="id"/>
 	</changeSet>
 </databaseChangeLog>

@@ -21,18 +21,23 @@
 
 package com.dobrovolskis.commexp.service
 
+import com.dobrovolskis.commexp.exception.ResourceAccessError
 import com.dobrovolskis.commexp.model.Invoice
+import com.dobrovolskis.commexp.model.Purchase
 import com.dobrovolskis.commexp.model.PurchaseItem
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserGroup
 import com.dobrovolskis.commexp.repository.InvoiceRepository
 import com.dobrovolskis.commexp.repository.PurchaseItemRepository
 import com.dobrovolskis.commexp.web.usecase.invoice.DateRange
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
+import java.math.BigDecimal.valueOf
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -51,20 +56,34 @@ class InvoiceService(
 		for (user in group.users()) {
 			assembleForUser(user, group, range)
 		}
-		simplify(group, range)
+		cancelOutPairs(group, range)
+	}
+
+	fun find(invoiceId: UUID) : Invoice {
+		return invoiceRepository.findByIdOrNull(invoiceId) ?: throw ResourceAccessError()
+	}
+
+	fun getInGroup(group: UserGroup, range: DateRange) : Iterable<Invoice> {
+		return invoiceRepository.findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroup(
+			group = group, from = range.from, to = range.to
+		)
 	}
 
 	fun getPaidBy(
 		user: User, group: UserGroup,
-		range: DateRange,
+		range: DateRange, filterRedundant: Boolean
 	): Iterable<Invoice> {
-		return invoiceRepository.findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroupAndPayer(
-			from = range.from, to = range.to, group = group, payer = user
+		val query = if (filterRedundant) {
+			invoiceRepository::findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroupAndPayerAndMirrorIsNotNull
+		} else {
+			invoiceRepository::findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroupAndPayer
+		}
+		return query(
+			range.from, range.to, group, user
 		)
 	}
 
-	fun reassembleIfAnyExistForChangedItem(item: PurchaseItem) {
-		val purchase = item.purchase
+	fun reassembleForChangedPurchase(purchase: Purchase) {
 		val group = purchase.group
 		val time = purchase.shoppingTime
 
@@ -77,11 +96,21 @@ class InvoiceService(
 		val from = invoices.first().from
 		val to = invoices.first().to
 		val range = DateRange(from = from, to = to)
+
 		invoiceRepository.deleteAll(invoices)
 		assembleForGroup(group, range)
 	}
 
-	fun simplify(group: UserGroup, range: DateRange) {
+	private fun assembleForUser(
+		user: User,
+		group: UserGroup,
+		range: DateRange,
+	) {
+		val invoices = calculateInvoicesToBePaidBy(user, group, range) ?: return
+		invoiceRepository.saveAll(invoices)
+	}
+
+	private fun cancelOutPairs(group: UserGroup, range: DateRange) {
 		for (first in group.users()) {
 			for (second in group.users()) {
 				val outgoing = invoiceRepository.findByFromAndToAndPayerAndReceiverAndGroup(
@@ -100,21 +129,28 @@ class InvoiceService(
 	}
 
 	private fun eliminatePair(a: Invoice, b: Invoice) {
-		if (a.sum > b.sum) {
-			a.sum -= b.sum
-			invoiceRepository.save(a)
-			invoiceRepository.delete(b)
-		} else if (a.sum < b.sum) {
-			b.sum -= a.sum
-			invoiceRepository.save(b)
-			invoiceRepository.delete(a)
+		if (a.total >= b.total) {
+			reduce(a, b)
+		}
+		if (a.total <= b.total) {
+			reduce(b, a)
 		}
 	}
 
-	private fun assembleForUser(
-		user: User, group: UserGroup,
+	private fun reduce(larger: Invoice, smaller: Invoice) {
+		val reduction = smaller.total
+		larger.reduction = reduction
+		larger.finalAmount = larger.total - reduction
+		larger.mirror = smaller
+
+		invoiceRepository.save(larger)
+	}
+
+	private fun calculateInvoicesToBePaidBy(
+		user: User,
+		group: UserGroup,
 		range: DateRange,
-	) {
+	): Iterable<Invoice>? {
 		validateRequest(range)
 		val items = itemRepository.getUsedUpItemsByPurchaseDoneWithin(
 			from = range.from,
@@ -122,27 +158,38 @@ class InvoiceService(
 			usedBy = user,
 			group = group
 		)
-		if (items.isEmpty()) return
+		if (items.isEmpty()) return null
 
 		val invoices = items
 			.groupBy { item -> item.purchase.doneBy }
 			.mapKeys { (buyer, items) ->
-				Invoice(
+				val invoice = Invoice(
 					from = range.from, to = range.to,
 					payer = user, receiver = buyer, group = group,
-					sum = items.sumOf(this::calculatePricePart)
+					total = valueOf(0),
+					finalAmount = valueOf(0)
 				)
+				val sum = items.sumOf {
+					val sum = calculatePricePart(it)
+					invoice.addItem(it, sum)
+					sum
+				}
+				invoice.total = sum
+				invoice.finalAmount = sum
+
+				invoice
 			}
-			.keys.toList()
+			.keys
+			.toList()
 		for (invoice in invoices) {
 			checkDates(invoice)
 		}
-		invoiceRepository.saveAll(invoices)
+		return invoices
 	}
 
 	private fun calculatePricePart(item: PurchaseItem): BigDecimal {
 		val users = item.usedBy().size
-		if (users == 0) return BigDecimal.valueOf(0)
+		if (users == 0) return valueOf(0)
 		return item.price / users.toBigDecimal()
 	}
 

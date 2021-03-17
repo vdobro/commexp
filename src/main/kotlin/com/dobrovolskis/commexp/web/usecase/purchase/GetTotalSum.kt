@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,40 +19,28 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.usecase.item
+package com.dobrovolskis.commexp.web.usecase.purchase
 
 import com.dobrovolskis.commexp.model.User
-import com.dobrovolskis.commexp.service.InvoiceService
-import com.dobrovolskis.commexp.service.PurchaseItemService
+import com.dobrovolskis.commexp.service.PurchaseService
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
-import com.dobrovolskis.commexp.web.usecase.verifyAccessToItem
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToPurchase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.math.BigDecimal
 import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2021.03.17
  */
 @Service
-@Transactional
-class RemovePurchaseItem(
-	private val itemService: PurchaseItemService,
-	private val invoiceService: InvoiceService,
-) : BaseRequestHandler<UUID, Unit> {
+@Transactional(readOnly = true)
+class GetTotalSum(private val purchaseService: PurchaseService) : BaseRequestHandler<UUID, BigDecimal> {
 
-	override fun invoke(currentUser: User, request: UUID) {
-		validateRequest(currentUser, request)
-
-		val existingItem = itemService.find(request)
-		val purchase = existingItem.purchase
-
-		itemService.removeItem(request)
-		invoiceService.reassembleForChangedPurchase(purchase)
-	}
-
-	private fun validateRequest(user: User, request: UUID) {
-		val item = itemService.find(request)
-		verifyAccessToItem(user = user, purchaseItem = item)
+	override operator fun invoke(currentUser: User, request: UUID): BigDecimal {
+		val purchase = purchaseService.find(request)
+		verifyAccessToPurchase(purchase = purchase, user = currentUser)
+		return purchase.items().sumOf { it.price }
 	}
 }

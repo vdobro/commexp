@@ -46,7 +46,7 @@ class MarkItemAsUsedUp(
 		verifyAccessToItem(currentUser, item)
 		val result = itemService.markAsUsedUp(item = item)
 
-		invoiceService.reassembleIfAnyExistForChangedItem(result)
+		invoiceService.reassembleForChangedPurchase(result.purchase)
 		return result
 	}
 }

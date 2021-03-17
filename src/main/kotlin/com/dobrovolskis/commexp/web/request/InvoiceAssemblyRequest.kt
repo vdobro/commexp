@@ -45,5 +45,7 @@ data class InvoiceAssemblyRequest(
 	@PastOrPresent
 	@NotNull
 	@JsonDeserialize(using = LocalDateDeserializer::class)
-	val end: LocalDate
+	val end: LocalDate,
+
+	val filterRedundant: Boolean? = null,
 )

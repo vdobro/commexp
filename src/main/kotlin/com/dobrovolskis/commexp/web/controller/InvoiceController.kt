@@ -29,9 +29,14 @@ import com.dobrovolskis.commexp.web.ControllerUtils
 import com.dobrovolskis.commexp.web.dto.InvoiceDto
 import com.dobrovolskis.commexp.web.request.InvoiceAssemblyRequest
 import com.dobrovolskis.commexp.web.usecase.invoice.AssembleInvoices
+import com.dobrovolskis.commexp.web.usecase.invoice.GetInvoiceDetails
+import com.dobrovolskis.commexp.web.usecase.invoice.InvoiceDetails
+import com.dobrovolskis.commexp.web.usecase.invoice.PurgeInvoices
 import com.dobrovolskis.commexp.web.usecase.invoice.QueryInvoices
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod.DELETE
 import org.springframework.web.bind.annotation.RequestMethod.GET
 import org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.web.bind.annotation.RequestParam
@@ -49,7 +54,9 @@ import javax.validation.Valid
 class InvoiceController(
 	private val assembleInvoices: AssembleInvoices,
 	private val queryInvoices: QueryInvoices,
+	private val getInvoiceDetails: GetInvoiceDetails,
 	private val controllerUtils: ControllerUtils,
+	private val purgeInvoices: PurgeInvoices,
 ) {
 
 	@RequestMapping(method = [POST])
@@ -62,15 +69,27 @@ class InvoiceController(
 	fun getAllForGroup(
 		@RequestParam(required = true) groupId: UUID,
 		@RequestParam(required = true) from: String,
-		@RequestParam(required = true) to: String
+		@RequestParam(required = true) to: String,
+		@RequestParam(required = false) filterRedundant: Boolean?
 	): List<InvoiceDto> {
 		val user = getUser()
 		val request = InvoiceAssemblyRequest(
 			groupId = groupId,
 			start = LocalDate.from(DATE_FORMAT.parse(from)),
-			end = LocalDate.from(DATE_FORMAT.parse(to))
+			end = LocalDate.from(DATE_FORMAT.parse(to)),
+			filterRedundant = filterRedundant ?: false,
 		)
 		return queryInvoices.invoke(user, request = request).map { mapToDto(it) }
+	}
+
+	@RequestMapping(method = [DELETE])
+	fun purgeAll(@RequestBody request: InvoiceAssemblyRequest) {
+		purgeInvoices(getUser(), request)
+	}
+
+	@RequestMapping(method = [GET], path = ["/{invoiceId}"])
+	fun getDetailsForInvoice(@PathVariable invoiceId: UUID) : InvoiceDetails {
+		return getInvoiceDetails(getUser(), invoiceId)
 	}
 
 	private fun mapToDto(invoice: Invoice) = InvoiceDto(
@@ -80,7 +99,7 @@ class InvoiceController(
 		groupId = invoice.group.id()!!,
 		from = invoice.from,
 		to = invoice.to,
-		sum = invoice.sum
+		sum = invoice.finalAmount
 	)
 
 	private fun getUser(): User = controllerUtils.getCurrentUser()

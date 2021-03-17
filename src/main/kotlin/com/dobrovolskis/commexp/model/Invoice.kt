@@ -21,16 +21,22 @@
 
 package com.dobrovolskis.commexp.model
 
+import com.dobrovolskis.commexp.config.Constraints.Strings.DIGITS_FRACTION
+import com.dobrovolskis.commexp.config.Constraints.Strings.DIGITS_INTEGER
 import com.dobrovolskis.commexp.config.Table.INVOICES
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
+import javax.persistence.CascadeType.ALL
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType.LAZY
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
+import javax.persistence.OneToOne
 import javax.persistence.Table
+import javax.persistence.Transient
 import javax.validation.constraints.Digits
 import javax.validation.constraints.NotNull
 
@@ -87,13 +93,48 @@ class Invoice(
 
 	@NotNull
 	@Column(
-		name = "sum",
+		name = "total",
+		nullable = false,
+	)
+	@Digits(integer = DIGITS_INTEGER, fraction = DIGITS_FRACTION)
+	var total: BigDecimal,
+
+	@NotNull
+	@Column(
+		name = "final",
 		nullable = false
 	)
-	@Digits(integer = 10, fraction = 2)
-	var sum: BigDecimal,
+	@Digits(integer = DIGITS_INTEGER, fraction = DIGITS_FRACTION)
+	var finalAmount: BigDecimal,
 
 	) : IdEntity() {
+
+	@Column(name = "reduction")
+	@Digits(integer = DIGITS_INTEGER, fraction = DIGITS_FRACTION)
+	var reduction: BigDecimal? = null
+
+	@OneToOne(fetch = LAZY, cascade = [ALL])
+	@JoinColumn(name = "mirror_invoice_id")
+	var mirror: Invoice? = null
+
+	@OneToMany(
+		targetEntity = InvoiceItem::class,
+		fetch = LAZY,
+		mappedBy = "invoice",
+		orphanRemoval = true,
+		cascade = [ALL]
+	)
+	private val _items: MutableList<InvoiceItem> = mutableListOf()
+
+	@Transient
+	fun items() = _items.toList()
+
+	fun addItem(item: PurchaseItem, sum : BigDecimal) {
+		_items.add(
+			InvoiceItem(this, item = item, sum = sum)
+		)
+	}
+
 	override fun toString(): String {
 		return "${payer.name}'s invoice for ${from.format(OUTPUT_FORMATTER)} - ${to.format(OUTPUT_FORMATTER)}"
 	}

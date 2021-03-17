@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,40 +19,37 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.usecase.item
+package com.dobrovolskis.commexp.web.usecase.invoice
 
 import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.repository.InvoiceRepository
 import com.dobrovolskis.commexp.service.InvoiceService
-import com.dobrovolskis.commexp.service.PurchaseItemService
+import com.dobrovolskis.commexp.service.UserGroupService
+import com.dobrovolskis.commexp.web.request.InvoiceAssemblyRequest
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
-import com.dobrovolskis.commexp.web.usecase.verifyAccessToItem
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2021.03.17
  */
 @Service
 @Transactional
-class RemovePurchaseItem(
-	private val itemService: PurchaseItemService,
+class PurgeInvoices(
+	private val groupService: UserGroupService,
 	private val invoiceService: InvoiceService,
-) : BaseRequestHandler<UUID, Unit> {
+	private val invoiceRepository: InvoiceRepository,
+) :
+	BaseRequestHandler<InvoiceAssemblyRequest, Unit> {
+	override operator fun invoke(currentUser: User, request: InvoiceAssemblyRequest) {
+		val group = groupService.find(request.groupId)
+		verifyAccessToGroup(currentUser, group)
 
-	override fun invoke(currentUser: User, request: UUID) {
-		validateRequest(currentUser, request)
+		val range = DateRange(from = request.start, to = request.end)
+		val invoices = invoiceService.getInGroup(group, range)
 
-		val existingItem = itemService.find(request)
-		val purchase = existingItem.purchase
-
-		itemService.removeItem(request)
-		invoiceService.reassembleForChangedPurchase(purchase)
-	}
-
-	private fun validateRequest(user: User, request: UUID) {
-		val item = itemService.find(request)
-		verifyAccessToItem(user = user, purchaseItem = item)
+		invoiceRepository.deleteAll(invoices)
 	}
 }

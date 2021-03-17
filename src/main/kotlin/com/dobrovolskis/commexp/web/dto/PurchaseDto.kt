@@ -21,6 +21,7 @@
 
 package com.dobrovolskis.commexp.web.dto
 
+import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
@@ -34,5 +35,6 @@ data class PurchaseDto(
 	val shopId: UUID,
 	val time: LocalDate,
 	val creation: LocalDateTime,
-	val doneBy: UUID
+	val doneBy: UUID,
+	val sum: BigDecimal,
 )

@@ -39,13 +39,19 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class QueryInvoices(
 	private val groupService: UserGroupService,
-	private val invoiceService: InvoiceService) :
+	private val invoiceService: InvoiceService
+) :
 	BaseRequestHandler<InvoiceAssemblyRequest, Iterable<Invoice>> {
 	override operator fun invoke(currentUser: User, request: InvoiceAssemblyRequest): Iterable<Invoice> {
 		val group = groupService.find(request.groupId)
 		verifyAccessToGroup(user = currentUser, group)
 
 		val range = DateRange(from = request.start, to = request.end)
-		return invoiceService.getPaidBy(user = currentUser, group, range)
+		return invoiceService.getPaidBy(
+			user = currentUser,
+			group = group,
+			range = range,
+			filterRedundant = request.filterRedundant ?: false
+		)
 	}
 }

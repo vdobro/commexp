@@ -44,6 +44,7 @@ object Table {
 	const val USERS_USE_PURCHASE_ITEMS = "${PREFIX}purchase_item__user"
 	const val SHOPS = "${PREFIX}shop"
 	const val INVOICES = "${PREFIX}invoice"
+	const val INVOICE_ITEMS = "${PREFIX}invoice_item"
 	const val PAYMENTS = "${PREFIX}payment"
 	const val IMPORTS  = "${PREFIX}import"
 	const val IMPORTED_ENTITIES = "${PREFIX}imported_entity"

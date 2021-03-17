@@ -52,13 +52,14 @@ class UpdateItemUsageByUser(
 
 		val user = userService.getById(request.userId)
 		val item = itemService.find(request.itemId)
+		val purchase = item.purchase
 
 		val result = if (request.use) {
 			itemService.markAsUsedBy(item, user)
 		} else {
 			itemService.markAsUnusedBy(item, user)
 		}
-		invoiceService.reassembleIfAnyExistForChangedItem(item)
+		invoiceService.reassembleForChangedPurchase(purchase)
 		return result
 	}
 

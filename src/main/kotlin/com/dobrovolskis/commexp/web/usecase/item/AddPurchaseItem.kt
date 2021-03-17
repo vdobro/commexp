@@ -51,7 +51,7 @@ class AddPurchaseItem(
 		val purchase = purchaseService.find(request.purchaseId)
 		val item = purchaseService.addItem(purchase, request.name, request.price)
 
-		invoiceService.reassembleIfAnyExistForChangedItem(item)
+		invoiceService.reassembleForChangedPurchase(purchase)
 		return item
 	}
 

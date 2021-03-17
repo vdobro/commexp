@@ -32,6 +32,7 @@ import com.dobrovolskis.commexp.web.request.PurchaseCreationRequest
 import com.dobrovolskis.commexp.web.usecase.BatchImporter
 import com.dobrovolskis.commexp.web.usecase.purchase.CreatePurchase
 import com.dobrovolskis.commexp.web.usecase.purchase.GetPurchasesInGroup
+import com.dobrovolskis.commexp.web.usecase.purchase.GetTotalSum
 import com.dobrovolskis.commexp.web.usecase.purchase.RemovePurchase
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -57,25 +58,29 @@ class PurchaseController(
 	private val purchaseList: GetPurchasesInGroup,
 	private val controllerUtils: ControllerUtils,
 	private val removePurchase: RemovePurchase,
+	private val getSum: GetTotalSum,
 ) {
 	@PostMapping
 	fun createNew(@RequestBody @Valid creationRequest: PurchaseCreationRequest): PurchaseDto {
-		val result = createPurchase(getUser(), creationRequest)
-		return mapToDto(result)
+		val user = getUser()
+		val result = createPurchase(user, creationRequest)
+		return mapToDto(user, result)
 	}
 
 	@PostMapping(path = ["/import"])
 	fun import(
 		@RequestParam("group") groupId: UUID,
-		@RequestParam("file") file: MultipartFile) : BatchImportResultDto {
+		@RequestParam("file") file: MultipartFile
+	): BatchImportResultDto {
 		val request = ImportRequest(groupId = groupId, file = file)
 		return importer.importPurchases(user = getUser(), request = request)
 	}
 
 	@GetMapping
 	fun getAll(@RequestParam(required = true) groupId: UUID): List<PurchaseDto> {
-		val result = purchaseList(getUser(), groupId)
-		return result.map(this::mapToDto)
+		val user = getUser()
+		val result = purchaseList(user, groupId)
+		return result.map { mapToDto(user, it) }
 	}
 
 	@DeleteMapping(path = ["/{id}"])
@@ -83,13 +88,14 @@ class PurchaseController(
 		removePurchase(getUser(), id)
 	}
 
-	private fun mapToDto(purchase: Purchase): PurchaseDto {
+	private fun mapToDto(user: User, purchase: Purchase): PurchaseDto {
 		return PurchaseDto(
 			id = purchase.id()!!,
 			shopId = purchase.shop.id()!!,
 			time = purchase.shoppingTime,
 			creation = purchase.created,
-			doneBy = purchase.doneBy.id()!!
+			doneBy = purchase.doneBy.id()!!,
+			sum = getSum(currentUser = user, request = purchase.id()!!)
 		)
 	}
 

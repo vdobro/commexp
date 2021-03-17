@@ -56,7 +56,8 @@ class AssembleInvoices(
 		return invoiceService.getPaidBy(
 			user = currentUser,
 			group = group,
-			range = range
+			range = range,
+			filterRedundant = request.filterRedundant ?: false
 		)
 	}
 }
