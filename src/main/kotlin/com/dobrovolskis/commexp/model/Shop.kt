@@ -22,6 +22,8 @@
 package com.dobrovolskis.commexp.model
 
 import com.dobrovolskis.commexp.config.Table.SHOPS
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -38,11 +40,13 @@ import javax.validation.constraints.NotNull
  * @since 2020.12.05
  */
 @Entity
+@Indexed(index = "idx_shop")
 @Table(name = SHOPS)
 class Shop(
 
 	@NotEmpty
 	@Column(name = "name", nullable = false)
+	@FullTextField
 	var name: String,
 
 	@NotNull

@@ -22,6 +22,7 @@
 package com.dobrovolskis.commexp.web.usecase.user
 
 import com.dobrovolskis.commexp.exception.ResourceAccessError
+import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserGroup
 import com.dobrovolskis.commexp.model.UserInvitation
@@ -56,7 +57,7 @@ class AcceptInvitationToGroup(
 
 	private fun validate(user: User, request: UUID): UserInvitation {
 		val invitation = invitationRepository.findByIdOrNull(request)
-			?: throw Error("Invitation $request not found")
+			?: throw ResourceNotFoundError("Invitation $request not found")
 		if (invitation.target != user) {
 			throw ResourceAccessError("User denied access to invitation")
 		}

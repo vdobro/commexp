@@ -30,6 +30,7 @@
 		<serialization.version>1.0.0-RC</serialization.version>
 		<springdoc.version>1.5.2</springdoc.version>
 		<opencsv.version>5.3</opencsv.version>
+		<hibernate-search.version>6.0.2.Final</hibernate-search.version>
 	</properties>
 
 	<dependencies>
@@ -56,6 +57,16 @@
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.search</groupId>
+			<artifactId>hibernate-search-mapper-orm</artifactId>
+			<version>${hibernate-search.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.search</groupId>
+			<artifactId>hibernate-search-backend-lucene</artifactId>
+			<version>${hibernate-search.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.lettuce</groupId>

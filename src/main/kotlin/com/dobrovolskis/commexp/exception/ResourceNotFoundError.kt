@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,20 +19,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.dto
-
-import java.math.BigDecimal
-import java.util.UUID
+package com.dobrovolskis.commexp.exception
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2021.04.08
  */
-data class PurchaseItemDto(
-	val id: UUID,
-	val name: String,
-	val purchaseId: UUID,
-	val price: BigDecimal,
-	val usedUp: Boolean,
-	val users: List<UUID>
-)
+class ResourceNotFoundError(message: String = "Resource not be found") : RuntimeException(message)

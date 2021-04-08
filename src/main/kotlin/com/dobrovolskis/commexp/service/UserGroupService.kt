@@ -21,6 +21,7 @@
 
 package com.dobrovolskis.commexp.service
 
+import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserGroup
 import com.dobrovolskis.commexp.model.UserInvitation
@@ -42,18 +43,15 @@ class UserGroupService(
 	private val invitationRepository: UserInvitationRepository,
 ) {
 
-	fun find(id: UUID): UserGroup {
-		return repository.findByIdOrNull(id) ?: throw IllegalArgumentException("User group $id not found")
-	}
+	fun find(id: UUID): UserGroup =
+		repository.findByIdOrNull(id) ?: throw ResourceNotFoundError("User group $id not found")
 
 
-	fun createGroup(name: String): UserGroup {
-		return repository.save(
-			UserGroup(
-				name = name
-			)
+	fun createGroup(name: String): UserGroup = repository.save(
+		UserGroup(
+			name = name
 		)
-	}
+	)
 
 	fun addUser(group: UserGroup, user: User): UserGroup {
 		require(repository.existsById(group.id()!!)) {

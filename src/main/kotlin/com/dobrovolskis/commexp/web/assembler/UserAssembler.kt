@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,20 +19,23 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.dto
+package com.dobrovolskis.commexp.web.assembler
 
-import java.math.BigDecimal
-import java.util.UUID
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.web.dto.UserDto
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2021.03.23
  */
-data class PurchaseItemDto(
-	val id: UUID,
-	val name: String,
-	val purchaseId: UUID,
-	val price: BigDecimal,
-	val usedUp: Boolean,
-	val users: List<UUID>
-)
+@Service
+@Transactional(readOnly = true)
+class UserAssembler {
+	fun toDto(user: User) = UserDto(
+		id = user.id()!!,
+		username = user.username,
+		name = user.name
+	)
+}

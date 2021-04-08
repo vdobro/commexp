@@ -21,6 +21,7 @@
 
 package com.dobrovolskis.commexp.service
 
+import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import com.dobrovolskis.commexp.model.Purchase
 import com.dobrovolskis.commexp.model.PurchaseItem
 import com.dobrovolskis.commexp.model.Shop
@@ -47,7 +48,7 @@ class PurchaseService(
 ) {
 	fun find(id: UUID): Purchase {
 		return repository.findByIdOrNull(id)
-			?: throw IllegalArgumentException("Purchase list $id not found")
+			?: throw ResourceNotFoundError("Purchase list $id not found")
 	}
 
 	fun getAllForGroup(group: UserGroup): List<Purchase> {

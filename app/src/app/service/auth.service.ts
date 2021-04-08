@@ -27,7 +27,7 @@ import {NetworkError} from "@app/util/NetworkError";
 import {environment} from "@environments/environment";
 
 const URL = {
-	USERS: environment.apiUrl + "/users",
+	USERS: environment.apiUrl + "/user",
 	LOGOUT: environment.apiUrl + "/logout",
 	SESSION: environment.apiUrl + "/session",
 };

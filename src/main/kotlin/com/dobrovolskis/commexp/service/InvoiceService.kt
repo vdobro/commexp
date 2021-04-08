@@ -21,7 +21,7 @@
 
 package com.dobrovolskis.commexp.service
 
-import com.dobrovolskis.commexp.exception.ResourceAccessError
+import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import com.dobrovolskis.commexp.model.Invoice
 import com.dobrovolskis.commexp.model.Purchase
 import com.dobrovolskis.commexp.model.PurchaseItem
@@ -59,9 +59,8 @@ class InvoiceService(
 		cancelOutPairs(group, range)
 	}
 
-	fun find(invoiceId: UUID) : Invoice {
-		return invoiceRepository.findByIdOrNull(invoiceId) ?: throw ResourceAccessError()
-	}
+	fun find(invoiceId: UUID) : Invoice = invoiceRepository.findByIdOrNull(invoiceId)
+		?: throw ResourceNotFoundError("Invoice $invoiceId not found")
 
 	fun getInGroup(group: UserGroup, range: DateRange) : Iterable<Invoice> {
 		return invoiceRepository.findAllByFromIsGreaterThanEqualAndToLessThanEqualAndGroup(

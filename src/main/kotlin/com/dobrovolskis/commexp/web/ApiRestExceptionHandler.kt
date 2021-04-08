@@ -22,9 +22,11 @@
 package com.dobrovolskis.commexp.web
 
 import com.dobrovolskis.commexp.exception.ResourceAccessError
+import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.FORBIDDEN
+import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.HttpStatus.UNAUTHORIZED
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -44,6 +46,12 @@ class ApiRestExceptionHandler : ResponseEntityExceptionHandler() {
 	protected fun handleException(e: IllegalArgumentException, request: WebRequest): ResponseEntity<Any> {
 		val msg = ValidationResponse(e.message ?: FALLBACK_ERROR_MESSAGE)
 		return handleExceptionInternal(e as Exception, msg, headers(), BAD_REQUEST, request)
+	}
+
+	@ExceptionHandler(ResourceNotFoundError::class)
+	protected fun handleException(e: ResourceNotFoundError, request: WebRequest) : ResponseEntity<Any> {
+		val msg = ValidationResponse(e.message ?: FALLBACK_ERROR_MESSAGE)
+		return handleExceptionInternal(e as Exception, msg, headers(), NOT_FOUND, request)
 	}
 
 	@ExceptionHandler(ResourceAccessError::class)

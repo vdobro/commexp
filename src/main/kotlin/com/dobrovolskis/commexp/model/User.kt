@@ -136,4 +136,8 @@ class User(
 	override fun toString(): String {
 		return "User[$username]"
 	}
+
+	fun setPassword(encodedPassword: String) {
+		this.password = encodedPassword
+	}
 }

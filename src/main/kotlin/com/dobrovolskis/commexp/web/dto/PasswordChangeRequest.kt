@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,18 +21,11 @@
 
 package com.dobrovolskis.commexp.web.dto
 
-import java.math.BigDecimal
-import java.util.UUID
-
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2021.03.23
  */
-data class PurchaseItemDto(
-	val id: UUID,
-	val name: String,
-	val purchaseId: UUID,
-	val price: BigDecimal,
-	val usedUp: Boolean,
-	val users: List<UUID>
+data class PasswordChangeRequest(
+	val oldPassword: String,
+	val newPassword: String,
 )

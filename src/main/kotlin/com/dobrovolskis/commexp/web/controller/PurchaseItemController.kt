@@ -25,16 +25,20 @@ import com.dobrovolskis.commexp.config.PATH_PURCHASE_ITEMS
 import com.dobrovolskis.commexp.model.PurchaseItem
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.web.ControllerUtils
+import com.dobrovolskis.commexp.web.assembler.PurchaseItemAssembler
 import com.dobrovolskis.commexp.web.dto.BatchImportResultDto
+import com.dobrovolskis.commexp.web.dto.ItemSearchResultDto
 import com.dobrovolskis.commexp.web.dto.PurchaseItemDto
 import com.dobrovolskis.commexp.web.request.ImportRequest
 import com.dobrovolskis.commexp.web.request.ItemCreationRequest
+import com.dobrovolskis.commexp.web.request.ItemSearchQuery
 import com.dobrovolskis.commexp.web.request.ItemUsageChangeRequest
 import com.dobrovolskis.commexp.web.usecase.BatchImporter
 import com.dobrovolskis.commexp.web.usecase.item.AddPurchaseItem
 import com.dobrovolskis.commexp.web.usecase.item.GetItemsInPurchase
 import com.dobrovolskis.commexp.web.usecase.item.MarkItemAsUsedUp
 import com.dobrovolskis.commexp.web.usecase.item.RemovePurchaseItem
+import com.dobrovolskis.commexp.web.usecase.item.SearchItems
 import com.dobrovolskis.commexp.web.usecase.item.UpdateItemUsageByUser
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -62,6 +66,8 @@ class PurchaseItemController(
 	private val removeItem: RemovePurchaseItem,
 	private val updateItemUsage: UpdateItemUsageByUser,
 	private val markItemAsUsedUp: MarkItemAsUsedUp,
+	private val searchItems: SearchItems,
+	private val assembler: PurchaseItemAssembler,
 	private val controllerUtils: ControllerUtils,
 ) {
 
@@ -69,6 +75,14 @@ class PurchaseItemController(
 	fun addNewItem(@RequestBody @Valid itemCreationRequest: ItemCreationRequest): PurchaseItemDto {
 		val result = addItem(getUser(), itemCreationRequest)
 		return mapToDto(result)
+	}
+
+	@RequestMapping(method = [GET], path = ["/search"])
+	fun search(
+		@RequestParam("group") groupId: UUID,
+		@RequestParam("query") query: String) : ItemSearchResultDto {
+		val request = ItemSearchQuery(text = query, groupId = groupId)
+		return searchItems(getUser(), request)
 	}
 
 	@PostMapping(path = ["/import"])
@@ -115,14 +129,7 @@ class PurchaseItemController(
 		return mapToDto(result)
 	}
 
-	private fun mapToDto(purchaseItem: PurchaseItem): PurchaseItemDto {
-		return PurchaseItemDto(
-			id = purchaseItem.id()!!,
-			name = purchaseItem.name,
-			purchaseId = purchaseItem.purchase.id()!!,
-			price = purchaseItem.price
-		)
-	}
+	private fun mapToDto(purchaseItem: PurchaseItem) = assembler.toDto(purchaseItem)
 
 	private fun getUser(): User = controllerUtils.getCurrentUser()
 }

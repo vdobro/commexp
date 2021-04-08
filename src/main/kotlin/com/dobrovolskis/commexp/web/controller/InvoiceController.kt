@@ -26,9 +26,10 @@ import com.dobrovolskis.commexp.config.PATH_INVOICES
 import com.dobrovolskis.commexp.model.Invoice
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.web.ControllerUtils
+import com.dobrovolskis.commexp.web.assembler.InvoiceAssembler
 import com.dobrovolskis.commexp.web.dto.InvoiceDto
 import com.dobrovolskis.commexp.web.request.InvoiceAssemblyRequest
-import com.dobrovolskis.commexp.web.usecase.invoice.AssembleInvoices
+import com.dobrovolskis.commexp.web.usecase.invoice.GenerateInvoices
 import com.dobrovolskis.commexp.web.usecase.invoice.GetInvoiceDetails
 import com.dobrovolskis.commexp.web.usecase.invoice.InvoiceDetails
 import com.dobrovolskis.commexp.web.usecase.invoice.PurgeInvoices
@@ -52,17 +53,18 @@ import javax.validation.Valid
 @RestController
 @RequestMapping(value = [PATH_INVOICES])
 class InvoiceController(
-	private val assembleInvoices: AssembleInvoices,
+	private val generateInvoices: GenerateInvoices,
 	private val queryInvoices: QueryInvoices,
 	private val getInvoiceDetails: GetInvoiceDetails,
 	private val controllerUtils: ControllerUtils,
 	private val purgeInvoices: PurgeInvoices,
+	private val assembler: InvoiceAssembler
 ) {
 
 	@RequestMapping(method = [POST])
-	fun assembleAllForGroup(@RequestBody @Valid request: InvoiceAssemblyRequest): List<InvoiceDto> {
+	fun generateAllForGroup(@RequestBody @Valid request: InvoiceAssemblyRequest): List<InvoiceDto> {
 		val user = getUser()
-		return assembleInvoices(user, request).map { mapToDto(it) }
+		return generateInvoices(user, request).map { mapToDto(it) }
 	}
 
 	@RequestMapping(method = [GET])
@@ -88,19 +90,11 @@ class InvoiceController(
 	}
 
 	@RequestMapping(method = [GET], path = ["/{invoiceId}"])
-	fun getDetailsForInvoice(@PathVariable invoiceId: UUID) : InvoiceDetails {
+	fun getDetailsForInvoice(@PathVariable invoiceId: UUID): InvoiceDetails {
 		return getInvoiceDetails(getUser(), invoiceId)
 	}
 
-	private fun mapToDto(invoice: Invoice) = InvoiceDto(
-		id = invoice.id()!!,
-		payerId = invoice.payer.id()!!,
-		receiverId = invoice.receiver.id()!!,
-		groupId = invoice.group.id()!!,
-		from = invoice.from,
-		to = invoice.to,
-		sum = invoice.finalAmount
-	)
+	private fun mapToDto(invoice: Invoice) = assembler.toDto(invoice)
 
 	private fun getUser(): User = controllerUtils.getCurrentUser()
 }

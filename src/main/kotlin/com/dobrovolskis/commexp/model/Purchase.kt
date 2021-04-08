@@ -22,6 +22,12 @@
 package com.dobrovolskis.commexp.model
 
 import com.dobrovolskis.commexp.config.Table.PURCHASES
+import org.hibernate.search.engine.backend.types.Searchable
+import org.hibernate.search.engine.backend.types.Sortable
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded
+
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
@@ -40,11 +46,14 @@ import javax.validation.constraints.NotNull
  * @since 2020.12.05
  */
 @Entity
+@Indexed(index = "idx_purchase")
 @Table(name = PURCHASES)
 class Purchase(
+
 	@NotNull
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "shop_id", nullable = false)
+	@IndexedEmbedded(includePaths = ["name"])
 	var shop: Shop,
 
 	@NotNull
@@ -60,6 +69,7 @@ class Purchase(
 	@NotNull
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "group_id", nullable = false, updatable = false)
+	@IndexedEmbedded(includeEmbeddedObjectId = true, includePaths = ["_id"])
 	var group: UserGroup,
 
 	@NotNull
@@ -68,6 +78,7 @@ class Purchase(
 		updatable = false,
 		nullable = false
 	)
+	@GenericField(sortable = Sortable.YES, searchable = Searchable.NO)
 	val shoppingTime: LocalDate,
 
 	) : IdEntity() {

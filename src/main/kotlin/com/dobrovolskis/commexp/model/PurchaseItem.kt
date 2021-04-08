@@ -28,6 +28,13 @@ import com.dobrovolskis.commexp.config.Constraints.Strings.LENGTH_SHORT
 import com.dobrovolskis.commexp.config.ID_COLUMN_NAME
 import com.dobrovolskis.commexp.config.Table.PURCHASE_ITEMS
 import com.dobrovolskis.commexp.config.Table.USERS_USE_PURCHASE_ITEMS
+import org.hibernate.search.engine.backend.types.Searchable
+import org.hibernate.search.engine.backend.types.Sortable
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.ScaledNumberField
 import java.math.BigDecimal
 import javax.persistence.CascadeType.ALL
 import javax.persistence.Column
@@ -49,33 +56,39 @@ import javax.validation.constraints.Size
  * @since 2020.12.05
  */
 @Entity
+@Indexed(index = "idx_purchase_item")
 @Table(name = PURCHASE_ITEMS)
 class PurchaseItem(
 
 	@NotEmpty
 	@Column(name = "name", nullable = false)
 	@Size(max = LENGTH_SHORT)
+	@FullTextField
 	var name: String,
 
 	@NotNull
 	@Column(name = "price", nullable = false)
 	@Digits(integer = DIGITS_INTEGER, fraction = DIGITS_FRACTION)
+	@ScaledNumberField
 	var price: BigDecimal,
 
 	@NotNull
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "purchase_id", nullable = false)
+	@IndexedEmbedded
 	var purchase: Purchase,
 
 	@NotNull
 	@Column(name = "description", nullable = false)
 	@Size(max = LENGTH_MEDIUM)
+	@FullTextField
 	var description: String = "",
 
 	) : IdEntity() {
 
 	@NotNull
 	@Column(name = "used_up", nullable = false)
+	@GenericField(sortable = Sortable.YES, searchable = Searchable.NO)
 	var usedUp: Boolean = false
 
 	@ManyToMany(targetEntity = User::class, cascade = [ALL], fetch = LAZY)

@@ -26,6 +26,8 @@ import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserGroup
 import com.dobrovolskis.commexp.model.UserInvitation
 import com.dobrovolskis.commexp.web.ControllerUtils
+import com.dobrovolskis.commexp.web.assembler.InvitationAssembler
+import com.dobrovolskis.commexp.web.assembler.UserGroupAssembler
 import com.dobrovolskis.commexp.web.dto.UserGroupDto
 import com.dobrovolskis.commexp.web.dto.UserInvitationDto
 import com.dobrovolskis.commexp.web.request.GroupCreationRequest
@@ -57,6 +59,8 @@ class UserGroupController(
 	private val getUserGroupList: GetUserGroupList,
 	private val findGroup: FindGroup,
 	private val controllerUtils: ControllerUtils,
+	private val groupAssembler: UserGroupAssembler,
+	private val invitationAssembler: InvitationAssembler,
 ) {
 
 	@RequestMapping(method = [POST])
@@ -86,20 +90,9 @@ class UserGroupController(
 	fun acceptInvitation(@PathVariable invitationId: UUID): UserGroupDto =
 		mapToDto(acceptInvitationToGroup(getUser(), invitationId))
 
-	private fun mapToDto(userGroup: UserGroup): UserGroupDto {
-		return UserGroupDto(
-			id = userGroup.id()!!,
-			name = userGroup.name
-		)
-	}
+	private fun mapToDto(userGroup: UserGroup) = groupAssembler.toDto(userGroup)
 
-	private fun mapToDto(invitation: UserInvitation): UserInvitationDto {
-		return UserInvitationDto(
-			code = invitation.id()!!.toString(),
-			invitedUser = invitation.target.id()!!,
-			groupName = invitation.group.name
-		)
-	}
+	private fun mapToDto(invitation: UserInvitation) = invitationAssembler.toDto(invitation)
 
 	private fun getUser(): User = controllerUtils.getCurrentUser()
 }

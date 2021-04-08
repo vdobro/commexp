@@ -25,12 +25,15 @@ import com.dobrovolskis.commexp.config.PATH_USERS
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.service.UserService
 import com.dobrovolskis.commexp.web.ControllerUtils
+import com.dobrovolskis.commexp.web.assembler.UserAssembler
+import com.dobrovolskis.commexp.web.dto.PasswordChangeRequest
 import com.dobrovolskis.commexp.web.dto.UserDto
 import com.dobrovolskis.commexp.web.request.UserCreationRequest
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestMethod.GET
+import org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
@@ -43,10 +46,11 @@ import javax.validation.Valid
 @RequestMapping(value = [PATH_USERS])
 class UserController(
 	private val controllerUtils: ControllerUtils,
-	private val userService: UserService
+	private val userService: UserService,
+	private val assembler: UserAssembler
 ) {
 
-	@RequestMapping(method = [RequestMethod.POST])
+	@RequestMapping(method = [POST])
 	fun create(@RequestBody @Valid request: UserCreationRequest) {
 		userService.addUser(
 			name = request.name,
@@ -55,16 +59,20 @@ class UserController(
 		)
 	}
 
-	@RequestMapping(method = [RequestMethod.GET])
+	@RequestMapping(method = [GET])
 	fun getUserInfo(): UserDto {
 		return mapUserToDto(controllerUtils.getCurrentUser())
 	}
 
-	private fun mapUserToDto(user: User): UserDto {
-		return UserDto(
-			id = user.id()!!,
+	@RequestMapping(method = [POST], value = ["/password"])
+	fun changePassword(@RequestBody request: PasswordChangeRequest) {
+		val user = getUserInfo()
+		userService.changePassword(
 			username = user.username,
-			name = user.name
+			oldPassword = request.oldPassword,
+			newPassword = request.newPassword
 		)
 	}
+
+	private fun mapUserToDto(user: User) = assembler.toDto(user)
 }

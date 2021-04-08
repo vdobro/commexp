@@ -21,6 +21,7 @@
 
 package com.dobrovolskis.commexp.web.usecase.purchase
 
+import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import com.dobrovolskis.commexp.model.Purchase
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.repository.ShopRepository
@@ -50,7 +51,7 @@ class CreatePurchase(
 	override operator fun invoke(currentUser: User, request: PurchaseCreationRequest): Purchase {
 		val user = userService.getById(request.doneBy)
 		val shop = shopRepository.findByIdOrNull(request.shopId)
-			?: throw Error("Shop ${request.shopId} not found")
+			?: throw ResourceNotFoundError("Shop ${request.shopId} not found")
 		val group = groupService.find(request.groupId)
 		validateRequest(user, request)
 		return purchaseService.createNew(

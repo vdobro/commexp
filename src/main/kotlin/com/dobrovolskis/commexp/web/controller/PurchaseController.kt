@@ -25,6 +25,7 @@ import com.dobrovolskis.commexp.config.PATH_PURCHASES
 import com.dobrovolskis.commexp.model.Purchase
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.web.ControllerUtils
+import com.dobrovolskis.commexp.web.assembler.PurchaseAssembler
 import com.dobrovolskis.commexp.web.dto.BatchImportResultDto
 import com.dobrovolskis.commexp.web.dto.PurchaseDto
 import com.dobrovolskis.commexp.web.request.ImportRequest
@@ -32,7 +33,6 @@ import com.dobrovolskis.commexp.web.request.PurchaseCreationRequest
 import com.dobrovolskis.commexp.web.usecase.BatchImporter
 import com.dobrovolskis.commexp.web.usecase.purchase.CreatePurchase
 import com.dobrovolskis.commexp.web.usecase.purchase.GetPurchasesInGroup
-import com.dobrovolskis.commexp.web.usecase.purchase.GetTotalSum
 import com.dobrovolskis.commexp.web.usecase.purchase.RemovePurchase
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -58,7 +58,7 @@ class PurchaseController(
 	private val purchaseList: GetPurchasesInGroup,
 	private val controllerUtils: ControllerUtils,
 	private val removePurchase: RemovePurchase,
-	private val getSum: GetTotalSum,
+	private val assembler: PurchaseAssembler,
 ) {
 	@PostMapping
 	fun createNew(@RequestBody @Valid creationRequest: PurchaseCreationRequest): PurchaseDto {
@@ -88,16 +88,7 @@ class PurchaseController(
 		removePurchase(getUser(), id)
 	}
 
-	private fun mapToDto(user: User, purchase: Purchase): PurchaseDto {
-		return PurchaseDto(
-			id = purchase.id()!!,
-			shopId = purchase.shop.id()!!,
-			time = purchase.shoppingTime,
-			creation = purchase.created,
-			doneBy = purchase.doneBy.id()!!,
-			sum = getSum(currentUser = user, request = purchase.id()!!)
-		)
-	}
+	private fun mapToDto(user: User, purchase: Purchase) = assembler.toDto(user, purchase)
 
 	private fun getUser(): User = controllerUtils.getCurrentUser()
 }

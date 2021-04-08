@@ -56,9 +56,7 @@ class ShopController(
 	fun create(@RequestBody @Valid request: ShopCreationRequest): ShopDto =
 		mapToDto(registerShop(getUser(), request))
 
-	private fun mapToDto(shop: Shop): ShopDto {
-		return ShopDto(id = shop.id()!!, name = shop.name)
-	}
+	private fun mapToDto(shop: Shop) = ShopDto(id = shop.id()!!, name = shop.name)
 
 	private fun getUser() = controllerUtils.getCurrentUser()
 }

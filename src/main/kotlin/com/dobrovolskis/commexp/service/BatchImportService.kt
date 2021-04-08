@@ -21,6 +21,7 @@
 
 package com.dobrovolskis.commexp.service
 
+import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import com.dobrovolskis.commexp.model.BatchImport
 import com.dobrovolskis.commexp.model.IdEntity
 import com.dobrovolskis.commexp.model.ImportedEntity
@@ -79,7 +80,7 @@ class BatchImportService(
 
 	fun findPurchase(originalId: String) : Purchase {
 		val entity = entityRepository.findFirstByOriginalId(originalId)
-			?: throw IllegalArgumentException("Imported purchase not found")
+			?: throw ResourceNotFoundError("Imported purchase not found")
 		require(entity.type == PURCHASE) {
 			"Imported entity $originalId is not a purchase"
 		}

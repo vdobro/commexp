@@ -39,7 +39,7 @@ import java.time.LocalDate
  */
 @Service
 @Transactional
-class AssembleInvoices(
+class GenerateInvoices(
 	private val groupService: UserGroupService,
 	private val invoiceService: InvoiceService
 ) : BaseRequestHandler<InvoiceAssemblyRequest, Iterable<Invoice>> {

@@ -19,36 +19,27 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.service
+package com.dobrovolskis.commexp.web.assembler
 
-import com.dobrovolskis.commexp.model.Shop
-import com.dobrovolskis.commexp.model.UserGroup
-import com.dobrovolskis.commexp.repository.ShopRepository
+import com.dobrovolskis.commexp.model.PurchaseItem
+import com.dobrovolskis.commexp.service.PurchaseItemService
+import com.dobrovolskis.commexp.web.dto.PurchaseItemDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.09
+ * @since 2021.03.23
  */
 @Service
-@Transactional
-class ShopService(private val repository: ShopRepository) {
-
-	fun createNew(
-		group: UserGroup,
-		name: String
-	): Shop = repository.save(
-		Shop(
-			name = name,
-			group = group
-		)
+@Transactional(readOnly = true)
+class PurchaseItemAssembler(private val purchaseItemService: PurchaseItemService) {
+	fun toDto(purchaseItem: PurchaseItem) = PurchaseItemDto(
+		id = purchaseItem.id()!!,
+		name = purchaseItem.name,
+		purchaseId = purchaseItem.purchase.id()!!,
+		price = purchaseItem.price,
+		usedUp = purchaseItem.usedUp,
+		users = purchaseItemService.getUserIds(purchaseItem.id()!!)
 	)
-
-	fun getAllForGroup(group: UserGroup): List<Shop> =
-		repository.getAllByGroup(group)
-
-	fun findOrCreate(name: String, group: UserGroup): Shop =
-		repository.findByGroupAndName(userGroup = group, name = name)
-			?: createNew(group = group, name = name)
 }

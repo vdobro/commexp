@@ -6,6 +6,7 @@ COPY ${JAR_FILE} commexp.jar
 RUN java -Djarmode=layertools -jar commexp.jar extract
 
 FROM openjdk:8-jre-alpine
+VOLUME /work/index
 RUN apk add --no-cache gettext
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
