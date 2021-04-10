@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Quicksand&display=swap');
+
+/* Custom Variables */
+@import 'variables';
+@import 'mixins';
+@import 'custom';
+
+h1, h2, h3, h4, h5, p, span, div {
+	font-family: $font-family;
+}

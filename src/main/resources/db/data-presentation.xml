@@ -1,0 +1,2295 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet author="vd" context="presentation" id="ce-1-presentation-1">
+		<comment>User passwords are set as Test1234</comment>
+		<insert tableName="cx_user">
+			<column name="id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="non_expired" valueBoolean="true"/>
+			<column name="non_locked" valueBoolean="true"/>
+			<column name="credentials_not_expired" valueBoolean="true"/>
+			<column name="enabled" valueBoolean="true"/>
+			<column name="name" value="Ymir"/>
+			<column name="password" value="$2a$10$HwvVT1LDamkoa5uRU9sfdeJytkLsBrAd1yT9qHg5cleu6svWfedim"/>
+			<column name="username" value="ymir"/>
+		</insert>
+		<insert tableName="cx_user">
+			<column name="id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="non_expired" valueBoolean="true"/>
+			<column name="non_locked" valueBoolean="true"/>
+			<column name="credentials_not_expired" valueBoolean="true"/>
+			<column name="enabled" valueBoolean="true"/>
+			<column name="name" value="Maria"/>
+			<column name="password" value="$2a$10$EnJkMeBLULxIWEWMevX/neI3Ltp/KP6wcQ9d0CVnWYsKz3kbXDxmS"/>
+			<column name="username" value="maria"/>
+		</insert>
+		<insert tableName="cx_user">
+			<column name="id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="non_expired" valueBoolean="true"/>
+			<column name="non_locked" valueBoolean="true"/>
+			<column name="credentials_not_expired" valueBoolean="true"/>
+			<column name="enabled" valueBoolean="true"/>
+			<column name="name" value="Rose"/>
+			<column name="password" value="$2a$10$yXX8oVb3S9UcXDplH1BDOuRAVbTeKeH3IyT/KQZ4sMGjKELzGioR."/>
+			<column name="username" value="rose"/>
+		</insert>
+		<insert tableName="cx_user">
+			<column name="id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+			<column name="non_expired" valueBoolean="true"/>
+			<column name="non_locked" valueBoolean="true"/>
+			<column name="credentials_not_expired" valueBoolean="true"/>
+			<column name="enabled" valueBoolean="true"/>
+			<column name="name" value="Sina"/>
+			<column name="password" value="$2a$10$Qeql8Zn55F0R3JGEyf2Gxu6ZssgDZ9xwWab8gCH8y0xR2r5tjZXB2"/>
+			<column name="username" value="sina"/>
+		</insert>
+	</changeSet>
+	<changeSet author="vd" context="presentation" id="ce-1-presentation-2">
+		<insert tableName="cx_user_group">
+			<column name="id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="name" value="The Group"/>
+		</insert>
+	</changeSet>
+	<changeSet author="vd" context="presentation" id="ce-1-presentation-3">
+		<insert tableName="cx_user_group__user">
+			<column name="user_group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+		</insert>
+		<insert tableName="cx_user_group__user">
+			<column name="user_group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+		</insert>
+		<insert tableName="cx_user_group__user">
+			<column name="user_group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+		</insert>
+		<insert tableName="cx_user_group__user">
+			<column name="user_group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+		</insert>
+	</changeSet>
+	<changeSet author="vd" context="presentation" id="ce-1-presentation-4">
+		<insert tableName="cx_shop">
+			<column name="id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+			<column name="name" value="Aldi"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+		</insert>
+		<insert tableName="cx_shop">
+			<column name="id" value="4529e368-1e33-4669-b30a-eace599c4d5c"/>
+			<column name="name" value="Kaufland"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+		</insert>
+		<insert tableName="cx_shop">
+			<column name="id" value="535f7ae9-1a72-41ff-ac06-451800e4e052"/>
+			<column name="name" value="Netto"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+		</insert>
+		<insert tableName="cx_shop">
+			<column name="id" value="dc06e51f-1594-4f16-a74d-3086e4f135d6"/>
+			<column name="name" value="GEZ"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+		</insert>
+		<insert tableName="cx_shop">
+			<column name="id" value="e622f538-10a1-4ed3-8532-549bad1d843c"/>
+			<column name="name" value="Vodafone"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+		</insert>
+	</changeSet>
+	<changeSet author="vd" context="presentation" id="ce-1-presentation-5">
+		<insert tableName="cx_purchase">
+			<column name="id" value="6987dd35-3cec-4b9b-8e41-3c69232d7952"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.153597"/>
+			<column name="shopping_time" valueDate="2021-02-03T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="44196b56-7ff5-4f81-9f64-d1b4d8819afe"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.171201"/>
+			<column name="shopping_time" valueDate="2021-02-04T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="4529e368-1e33-4669-b30a-eace599c4d5c"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="2aacdda8-49b7-4a69-a534-80f48733234f"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.177609"/>
+			<column name="shopping_time" valueDate="2021-02-05T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="fa699bbf-0b93-4d73-8f53-c3361d04dd14"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.183317"/>
+			<column name="shopping_time" valueDate="2021-02-05T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="4529e368-1e33-4669-b30a-eace599c4d5c"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="0d07e5e2-7828-45d3-b26f-3e7d100507fa"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.188854"/>
+			<column name="shopping_time" valueDate="2021-02-08T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="1052ef47-703c-422b-ba97-e7beabf812d1"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.193543"/>
+			<column name="shopping_time" valueDate="2021-02-11T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="9cf7a9cb-f781-4088-a19c-f382f0820bbc"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.198412"/>
+			<column name="shopping_time" valueDate="2021-02-12T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="684c6273-933a-42d7-a211-7f751a075df7"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.203961"/>
+			<column name="shopping_time" valueDate="2021-02-15T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="535f7ae9-1a72-41ff-ac06-451800e4e052"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="cfaa5556-179b-4f68-9bee-91a6e98cb73f"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.2176"/>
+			<column name="shopping_time" valueDate="2021-02-15T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="b9e32d91-e075-47fa-b20b-b5a68d337942"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.221506"/>
+			<column name="shopping_time" valueDate="2021-02-19T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="d3b6552e-fcaa-40a3-926c-802a75536b76"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.22489"/>
+			<column name="shopping_time" valueDate="2021-02-19T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="4529e368-1e33-4669-b30a-eace599c4d5c"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="c50cdf3b-596a-4556-a465-2e51c4af693a"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.228103"/>
+			<column name="shopping_time" valueDate="2021-02-22T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="9e3ba26e-aac8-4261-a7f3-5d6071f5a07b"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.232432"/>
+			<column name="shopping_time" valueDate="2021-02-23T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="535f7ae9-1a72-41ff-ac06-451800e4e052"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="df927f1c-a8ab-4520-92c6-1cac1f0f96f1"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.236288"/>
+			<column name="shopping_time" valueDate="2021-02-26T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="535f7ae9-1a72-41ff-ac06-451800e4e052"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="3aff278d-dd85-4965-88bf-86c3e728a203"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.2407"/>
+			<column name="shopping_time" valueDate="2021-02-28T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="535f7ae9-1a72-41ff-ac06-451800e4e052"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="767fb55b-1ac2-49c0-ae0b-3355468afe10"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.244068"/>
+			<column name="shopping_time" valueDate="2021-03-02T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="b61876aa-c1dc-4a86-aae4-8f87c089e5eb"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.248799"/>
+			<column name="shopping_time" valueDate="2021-01-30T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="dc06e51f-1594-4f16-a74d-3086e4f135d6"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="cdfd8f31-b324-4488-a11f-a2570b180218"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.262586"/>
+			<column name="shopping_time" valueDate="2021-02-04T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="e622f538-10a1-4ed3-8532-549bad1d843c"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="09edcf39-c1ac-48bb-b4cc-52c820b974d0"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.26903"/>
+			<column name="shopping_time" valueDate="2021-02-01T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="9d6c2594-79a8-4b5a-856a-ced8fee90ce1"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.273217"/>
+			<column name="shopping_time" valueDate="2021-02-09T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="4529e368-1e33-4669-b30a-eace599c4d5c"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="08330e32-e6ab-4f55-9852-ceb262bc04a5"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.276992"/>
+			<column name="shopping_time" valueDate="2021-02-09T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="6c1f8a11-2b4a-4bed-91e1-9ff3fd278dca"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.280319"/>
+			<column name="shopping_time" valueDate="2021-02-17T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="9a293c47-507a-4d07-8b6b-7a3be7b5e817"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.284103"/>
+			<column name="shopping_time" valueDate="2021-02-17T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+		<insert tableName="cx_purchase">
+			<column name="id" value="96c56636-7b74-4d55-82e5-b64c638796a1"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.287254"/>
+			<column name="shopping_time" valueDate="2021-02-24T23:00:00"/>
+			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
+			<column name="shop_id" value="427aa2c7-7b05-4080-bcf9-b131ae01fa7b"/>
+		</insert>
+	</changeSet>
+	<changeSet author="vd" context="presentation" id="ce-1-presentation-6">
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="469764c1-9139-4afd-9c11-b772f3d33050"/>
+			<column name="description" value=""/>
+			<column name="name" value="Vollkorn-Sandwich"/>
+			<column name="price" valueNumeric="0.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="6987dd35-3cec-4b9b-8e41-3c69232d7952"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="1b340169-91a8-4a82-b3c0-0c9a3c63ca0d"/>
+			<column name="description" value=""/>
+			<column name="name" value="Bio-Zw. Gelb 500g"/>
+			<column name="price" valueNumeric="0.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="6987dd35-3cec-4b9b-8e41-3c69232d7952"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="eb813fc3-9914-4d2e-980b-ae9ed5c37823"/>
+			<column name="description" value=""/>
+			<column name="name" value="Freiland-Eier 6er"/>
+			<column name="price" valueNumeric="0.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="6987dd35-3cec-4b9b-8e41-3c69232d7952"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="e4bb08e5-64b0-486c-8419-80e3765f69be"/>
+			<column name="description" value=""/>
+			<column name="name" value="Bio Tomaten 500g"/>
+			<column name="price" valueNumeric="1.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="6987dd35-3cec-4b9b-8e41-3c69232d7952"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="c1546f39-7c83-4702-a40d-4644b72b74aa"/>
+			<column name="description" value=""/>
+			<column name="name" value="KS: Zitronen 500g"/>
+			<column name="price" valueNumeric="0.59"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="6987dd35-3cec-4b9b-8e41-3c69232d7952"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="143b120c-142b-4bdb-a90d-e41af4be2c76"/>
+			<column name="description" value=""/>
+			<column name="name" value="Mehrkornschnitten"/>
+			<column name="price" valueNumeric="0.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="6987dd35-3cec-4b9b-8e41-3c69232d7952"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="ebda5a01-b25d-4ea2-b515-569afbf92f47"/>
+			<column name="description" value=""/>
+			<column name="name" value="KFav.Appenzeller"/>
+			<column name="price" valueNumeric="5.98"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="44196b56-7ff5-4f81-9f64-d1b4d8819afe"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="dcd36a14-0e02-43ed-89a2-c73475f81dd6"/>
+			<column name="description" value=""/>
+			<column name="name" value="KFav.Le Gruyere"/>
+			<column name="price" valueNumeric="3.79"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="44196b56-7ff5-4f81-9f64-d1b4d8819afe"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="1cd20bbc-8717-4a17-b4cc-57879e70eda8"/>
+			<column name="description" value=""/>
+			<column name="name" value="Passata Rustica"/>
+			<column name="price" valueNumeric="0.89"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="2aacdda8-49b7-4a69-a534-80f48733234f"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="46c4fc54-65ab-4c42-b1dc-b21c04e1edf2"/>
+			<column name="description" value=""/>
+			<column name="name" value="Olivenöl 750ml"/>
+			<column name="price" valueNumeric="3.59"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="2aacdda8-49b7-4a69-a534-80f48733234f"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="b8139985-d274-4572-bf2d-7a13273754ca"/>
+			<column name="description" value=""/>
+			<column name="name" value="Weizenmehl"/>
+			<column name="price" valueNumeric="0.39"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="2aacdda8-49b7-4a69-a534-80f48733234f"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="d5157f73-1406-4696-8d03-c614f6b4a4d6"/>
+			<column name="description" value=""/>
+			<column name="name" value="Tuffi Frischmilch"/>
+			<column name="price" valueNumeric="2.18"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="fa699bbf-0b93-4d73-8f53-c3361d04dd14"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="e49e4111-7f9f-4b4a-977c-373fa5eefb82"/>
+			<column name="description" value=""/>
+			<column name="name" value="Streichgen.Paprika"/>
+			<column name="price" valueNumeric="2.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="fa699bbf-0b93-4d73-8f53-c3361d04dd14"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="024ffd86-d3c5-4955-9569-88b704a12411"/>
+			<column name="description" value=""/>
+			<column name="name" value="L0: Paprika rot, l"/>
+			<column name="price" valueNumeric="0.88"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="0d07e5e2-7828-45d3-b26f-3e7d100507fa"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="862d065d-1051-4c64-9fe2-71cdca76ebef"/>
+			<column name="description" value=""/>
+			<column name="name" value="Vollkorn-Sandwich"/>
+			<column name="price" valueNumeric="0.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="0d07e5e2-7828-45d3-b26f-3e7d100507fa"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="fc81a4be-d580-4722-afad-fcc15723bf23"/>
+			<column name="description" value=""/>
+			<column name="name" value="Unser Volles Korn"/>
+			<column name="price" valueNumeric="1.69"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="0d07e5e2-7828-45d3-b26f-3e7d100507fa"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="b9fbe4a7-8b18-4485-a041-cf8d94d7852a"/>
+			<column name="description" value=""/>
+			<column name="name" value="Intern. Salami"/>
+			<column name="price" valueNumeric="1.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="0d07e5e2-7828-45d3-b26f-3e7d100507fa"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="9c0fa7a5-94af-4152-b41a-01e12cbd2f2f"/>
+			<column name="description" value=""/>
+			<column name="name" value="Tzatziki 500g"/>
+			<column name="price" valueNumeric="1.19"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="0d07e5e2-7828-45d3-b26f-3e7d100507fa"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="53d8b489-53f0-4224-a4c9-c80363ad602e"/>
+			<column name="description" value=""/>
+			<column name="name" value="Spaetzle 500g"/>
+			<column name="price" valueNumeric="0.85"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="1052ef47-703c-422b-ba97-e7beabf812d1"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="cb171833-777f-43cb-8ba0-d59921349944"/>
+			<column name="description" value=""/>
+			<column name="name" value="Spaetzle 500g"/>
+			<column name="price" valueNumeric="0.85"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="1052ef47-703c-422b-ba97-e7beabf812d1"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="0b781cd6-53eb-442c-bd00-908f452b7154"/>
+			<column name="description" value=""/>
+			<column name="name" value="Spaetzle 500g"/>
+			<column name="price" valueNumeric="0.85"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="1052ef47-703c-422b-ba97-e7beabf812d1"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="6d419e2e-ad78-4f9d-b9b5-7a1dbb281c14"/>
+			<column name="description" value=""/>
+			<column name="name" value="Zwiebeln gelb 1kg"/>
+			<column name="price" valueNumeric="0.59"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9cf7a9cb-f781-4088-a19c-f382f0820bbc"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="863a8ce0-9498-4211-8bc5-e3362326cdf5"/>
+			<column name="description" value=""/>
+			<column name="name" value="Creme Fraiche 200g"/>
+			<column name="price" valueNumeric="0.69"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9cf7a9cb-f781-4088-a19c-f382f0820bbc"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="b4910d84-5be3-42ec-98ec-cb3601278fe2"/>
+			<column name="description" value=""/>
+			<column name="name" value="Paprika Mix 500g"/>
+			<column name="price" valueNumeric="1.29"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9cf7a9cb-f781-4088-a19c-f382f0820bbc"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="d82b83fd-6d4b-4a69-a421-2852916bdf70"/>
+			<column name="description" value=""/>
+			<column name="name" value="Gewalzte Bandnudel"/>
+			<column name="price" valueNumeric="1.29"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9cf7a9cb-f781-4088-a19c-f382f0820bbc"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="515d8c5b-6e0e-48cd-a1b5-6214b971bc24"/>
+			<column name="description" value=""/>
+			<column name="name" value="Bio BB ESL Milch 3,8% 1L"/>
+			<column name="price" valueNumeric="1.09"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="684c6273-933a-42d7-a211-7f751a075df7"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="7390f220-f59f-49d8-8bd2-82010692de5e"/>
+			<column name="description" value=""/>
+			<column name="name" value="Bio BB ESL Milch 1,5% 1L"/>
+			<column name="price" valueNumeric="0.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="684c6273-933a-42d7-a211-7f751a075df7"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="25cbed9d-d4b8-4e3f-a58a-eb6b974dbfed"/>
+			<column name="description" value=""/>
+			<column name="name" value="AS Sandwich Vollkorn750g"/>
+			<column name="price" valueNumeric="0.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="684c6273-933a-42d7-a211-7f751a075df7"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="67a56117-9d9c-4a17-9ac9-71a73ca61aef"/>
+			<column name="description" value=""/>
+			<column name="name" value="Lieblings Amaretti 150g"/>
+			<column name="price" valueNumeric="1.49"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="684c6273-933a-42d7-a211-7f751a075df7"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="dbcf1ea6-5c6f-488c-886e-8c94a5b0a012"/>
+			<column name="description" value=""/>
+			<column name="name" value="L0: Süßkartoffeln"/>
+			<column name="price" valueNumeric="3.20"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="cfaa5556-179b-4f68-9bee-91a6e98cb73f"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="b8ed7b70-e6da-40c9-ac1d-3b13f93533a0"/>
+			<column name="description" value=""/>
+			<column name="name" value="L0: Paprika rot, l"/>
+			<column name="price" valueNumeric="1.06"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="cfaa5556-179b-4f68-9bee-91a6e98cb73f"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="7c275051-92a0-49d0-8249-c1f43358f4a4"/>
+			<column name="description" value=""/>
+			<column name="name" value="L0: Paprika rot, l"/>
+			<column name="price" valueNumeric="1.11"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="cfaa5556-179b-4f68-9bee-91a6e98cb73f"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="3cfe79c4-f4c4-4821-8edb-7cfb92e6080a"/>
+			<column name="description" value=""/>
+			<column name="name" value="Bio-Champ.br. 250g"/>
+			<column name="price" valueNumeric="1.79"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="cfaa5556-179b-4f68-9bee-91a6e98cb73f"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="10bfb182-f56c-4328-9963-0023fd55c3d6"/>
+			<column name="description" value=""/>
+			<column name="name" value="Lauchzwiebeln, Bun"/>
+			<column name="price" valueNumeric="0.59"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="cfaa5556-179b-4f68-9bee-91a6e98cb73f"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="55ccec73-ce9b-43a6-8426-511a5d53865d"/>
+			<column name="description" value=""/>
+			<column name="name" value="Gurke Stück"/>
+			<column name="price" valueNumeric="0.66"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="b9e32d91-e075-47fa-b20b-b5a68d337942"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="b874d603-6d84-47d6-ad68-ea4d792ad4eb"/>
+			<column name="description" value=""/>
+			<column name="name" value="L0: Karotten, lose"/>
+			<column name="price" valueNumeric="0.82"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="b9e32d91-e075-47fa-b20b-b5a68d337942"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="558c10c9-b2bf-4887-97b6-0b6be1387b6f"/>
+			<column name="description" value=""/>
+			<column name="name" value="Roestzwiebeln"/>
+			<column name="price" valueNumeric="0.79"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="b9e32d91-e075-47fa-b20b-b5a68d337942"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="56c6e9f8-c7e2-4750-a0ab-f1038d6e5a2c"/>
+			<column name="description" value=""/>
+			<column name="name" value="Gouda/Mozarella"/>
+			<column name="price" valueNumeric="1.79"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="b9e32d91-e075-47fa-b20b-b5a68d337942"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="ff026773-3858-445b-8d30-ce66b209fd71"/>
+			<column name="description" value=""/>
+			<column name="name" value="KS:L0: Birnen Abat"/>
+			<column name="price" valueNumeric="0.95"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="b9e32d91-e075-47fa-b20b-b5a68d337942"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="65423d9a-4474-4b00-84a1-55348a7b5638"/>
+			<column name="description" value=""/>
+			<column name="name" value="Pres.La Brique"/>
+			<column name="price" valueNumeric="3.38"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="d3b6552e-fcaa-40a3-926c-802a75536b76"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="cff7c382-4792-45dc-85c3-cd4ee03eeb9c"/>
+			<column name="description" value=""/>
+			<column name="name" value="Fitness Mix"/>
+			<column name="price" valueNumeric="1.59"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="d3b6552e-fcaa-40a3-926c-802a75536b76"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="32c28015-5433-449f-9a1a-375671aac4f6"/>
+			<column name="description" value=""/>
+			<column name="name" value="Feldsalat"/>
+			<column name="price" valueNumeric="1.39"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="d3b6552e-fcaa-40a3-926c-802a75536b76"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="d13c5688-4944-4904-b97d-b695bd2195ed"/>
+			<column name="description" value=""/>
+			<column name="name" value="Quiche-/Tarteteig"/>
+			<column name="price" valueNumeric="2.06"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="d3b6552e-fcaa-40a3-926c-802a75536b76"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="f1009022-565f-4fb4-8b4d-3e2686a8a59f"/>
+			<column name="description" value=""/>
+			<column name="name" value="L0: Rispentomaten"/>
+			<column name="price" valueNumeric="1.04"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="c50cdf3b-596a-4556-a465-2e51c4af693a"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="24837e28-2d1c-4d4e-bfd1-90ec9c1358df"/>
+			<column name="description" value=""/>
+			<column name="name" value="CO2 Verkaufszyl."/>
+			<column name="price" valueNumeric="19.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="c50cdf3b-596a-4556-a465-2e51c4af693a"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="b4ce5783-c035-4081-8f0c-2df9841ce0a1"/>
+			<column name="description" value=""/>
+			<column name="name" value="Bio-Champ.br. 250g"/>
+			<column name="price" valueNumeric="1.79"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="c50cdf3b-596a-4556-a465-2e51c4af693a"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="ebea32db-64b5-47c9-968f-e76dcc3dd463"/>
+			<column name="description" value=""/>
+			<column name="name" value="Albhof Eierspaetzle 500g"/>
+			<column name="price" valueNumeric="1.98"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9e3ba26e-aac8-4261-a7f3-5d6071f5a07b"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="3953ee43-9d22-4800-97fd-a7b26ad1c15b"/>
+			<column name="description" value=""/>
+			<column name="name" value="GT Vollkorntoast 500g"/>
+			<column name="price" valueNumeric="1.39"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9e3ba26e-aac8-4261-a7f3-5d6071f5a07b"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="e6224863-def6-43f3-82db-91955f8b0a18"/>
+			<column name="description" value=""/>
+			<column name="name" value="BioBio Sahne 30% 200g"/>
+			<column name="price" valueNumeric="0.79"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9e3ba26e-aac8-4261-a7f3-5d6071f5a07b"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="32459080-86a6-43e0-8d13-1f9497eace5e"/>
+			<column name="description" value=""/>
+			<column name="name" value="Bio BB ESL Milch 3,8% 1L"/>
+			<column name="price" valueNumeric="1.09"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9e3ba26e-aac8-4261-a7f3-5d6071f5a07b"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="40e7f2e0-f1be-4cca-a4ca-653c45d6b7a6"/>
+			<column name="description" value=""/>
+			<column name="name" value="Favora Topa 4lg.10x160B1"/>
+			<column name="price" valueNumeric="3.35"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="df927f1c-a8ab-4520-92c6-1cac1f0f96f1"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="6cc3b872-cec9-44cb-9258-6eec594b191e"/>
+			<column name="description" value=""/>
+			<column name="name" value="Bio BB ESL Milch 3,8% 1L"/>
+			<column name="price" valueNumeric="1.09"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="3aff278d-dd85-4965-88bf-86c3e728a203"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="9a562a5a-d428-41e1-9ffe-dc1f7264782a"/>
+			<column name="description" value=""/>
+			<column name="name" value="GL Frischmil.3,5%1L VL0G"/>
+			<column name="price" valueNumeric="0.79"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="3aff278d-dd85-4965-88bf-86c3e728a203"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="a42efb76-e328-49c6-85a4-b6a6190f0478"/>
+			<column name="description" value=""/>
+			<column name="name" value="Ferre.Kinder Pingui 240"/>
+			<column name="price" valueNumeric="2.29"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="3aff278d-dd85-4965-88bf-86c3e728a203"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="25d4ce50-bff1-4c9c-8eff-12274062c993"/>
+			<column name="description" value=""/>
+			<column name="name" value="Fettarme Milch 1,5"/>
+			<column name="price" valueNumeric="2.13"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="767fb55b-1ac2-49c0-ae0b-3355468afe10"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="0e5b66c2-a0f0-47fc-8c99-a8bf6b3aa2f2"/>
+			<column name="description" value=""/>
+			<column name="name" value="Zimt Chips"/>
+			<column name="price" valueNumeric="1.99"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="767fb55b-1ac2-49c0-ae0b-3355468afe10"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="7f727836-6de6-4c32-965e-3b29eba76e4f"/>
+			<column name="description" value=""/>
+			<column name="name" value="Wildlachsfilets"/>
+			<column name="price" valueNumeric="2.49"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="767fb55b-1ac2-49c0-ae0b-3355468afe10"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="ddfced66-89f4-4b2e-bfbb-296e1f8d3acc"/>
+			<column name="description" value=""/>
+			<column name="name" value="Pute Minifilet"/>
+			<column name="price" valueNumeric="2.49"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="767fb55b-1ac2-49c0-ae0b-3355468afe10"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="2091aaf0-7453-4fde-958f-2aea87526ae2"/>
+			<column name="description" value=""/>
+			<column name="name" value="Jodsalz 500g"/>
+			<column name="price" valueNumeric="0.19"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="767fb55b-1ac2-49c0-ae0b-3355468afe10"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="817919cf-dea3-4dd7-b26f-b6841f8a453d"/>
+			<column name="description" value=""/>
+			<column name="name" value="Bio-Mandel/Konosnu"/>
+			<column name="price" valueNumeric="1.15"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="767fb55b-1ac2-49c0-ae0b-3355468afe10"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="e06545d0-ff7d-4507-93ae-6a315de1918c"/>
+			<column name="description" value=""/>
+			<column name="name" value="Bio-Zitronen 500g"/>
+			<column name="price" valueNumeric="1.19"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="767fb55b-1ac2-49c0-ae0b-3355468afe10"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="06e62cc4-10ff-42e1-aba4-50038d35af7c"/>
+			<column name="description" value=""/>
+			<column name="name" value="Blutorangen 1,5kg"/>
+			<column name="price" valueNumeric="1.49"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="767fb55b-1ac2-49c0-ae0b-3355468afe10"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="1a9a5087-5831-4a95-8a07-10c66a65c43f"/>
+			<column name="description" value=""/>
+			<column name="name" value="GEZ"/>
+			<column name="price" valueNumeric="17.50"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="b61876aa-c1dc-4a86-aae4-8f87c089e5eb"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="a82e26e8-8fee-46e2-b6a1-3c4d078c0b70"/>
+			<column name="description" value=""/>
+			<column name="name" value="Internet 01.02-28.02."/>
+			<column name="price" valueNumeric="36.13"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="cdfd8f31-b324-4488-a11f-a2570b180218"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="6e2051ed-ffb4-4bb6-85c9-9862cd3a29b0"/>
+			<column name="description" value=""/>
+			<column name="name" value="Internet 21.01-28.01."/>
+			<column name="price" valueNumeric="-12.32"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="cdfd8f31-b324-4488-a11f-a2570b180218"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="8e47aaf7-06b7-4c64-ad0c-6ae0712e983a"/>
+			<column name="description" value=""/>
+			<column name="name" value="Internet 21.01-31.01."/>
+			<column name="price" valueNumeric="13.25"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="cdfd8f31-b324-4488-a11f-a2570b180218"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="065385ce-f41e-4ab2-85e8-757f70d9c599"/>
+			<column name="description" value=""/>
+			<column name="name" value="Umstellungsgebühr"/>
+			<column name="price" valueNumeric="8.39"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="cdfd8f31-b324-4488-a11f-a2570b180218"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="a0be9795-682f-43bd-be2b-e50e517eb0a2"/>
+			<column name="description" value=""/>
+			<column name="name" value="Umsatzsteuer"/>
+			<column name="price" valueNumeric="8.64"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="cdfd8f31-b324-4488-a11f-a2570b180218"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="0ed36e8f-f1e3-45ad-a0c7-83093ab4e962"/>
+			<column name="description" value=""/>
+			<column name="name" value="Fettarme Milch 1,5"/>
+			<column name="price" valueNumeric="0.71"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="09edcf39-c1ac-48bb-b4cc-52c820b974d0"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="ae1d47d1-4931-4677-99fb-4b0a7c042fb9"/>
+			<column name="description" value=""/>
+			<column name="name" value="Fettarme Milch 1,5"/>
+			<column name="price" valueNumeric="0.71"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="09edcf39-c1ac-48bb-b4cc-52c820b974d0"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="8cefa638-aaf1-4bb9-b972-d843093106c9"/>
+			<column name="description" value=""/>
+			<column name="name" value="Küchenrolle, 3lg"/>
+			<column name="price" valueNumeric="1.95"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="09edcf39-c1ac-48bb-b4cc-52c820b974d0"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="c5bac144-5c99-4918-86b0-b744b0ef7a19"/>
+			<column name="description" value=""/>
+			<column name="name" value="bev.Cremeseife"/>
+			<column name="price" valueNumeric="0.65"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9d6c2594-79a8-4b5a-856a-ced8fee90ce1"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="7faaee47-da49-4bca-8884-ceb4a3fe03c6"/>
+			<column name="description" value=""/>
+			<column name="name" value="K.Frischmilch 1,5"/>
+			<column name="price" valueNumeric="1.42"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9d6c2594-79a8-4b5a-856a-ced8fee90ce1"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="ea1feb33-30b3-4e4f-822d-343f08361b40"/>
+			<column name="description" value=""/>
+			<column name="name" value="KFav.Appenzeller"/>
+			<column name="price" valueNumeric="5.98"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9d6c2594-79a8-4b5a-856a-ced8fee90ce1"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="10ed3ee2-d403-47c9-805b-41ebb6ba31db"/>
+			<column name="description" value=""/>
+			<column name="name" value="Bio-Karotten 1kg"/>
+			<column name="price" valueNumeric="1.19"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="08330e32-e6ab-4f55-9852-ceb262bc04a5"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="9af76f34-a45d-401d-9dce-dd03eccab0cd"/>
+			<column name="description" value=""/>
+			<column name="name" value="Saure Sahne 200g"/>
+			<column name="price" valueNumeric="0.40"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="6c1f8a11-2b4a-4bed-91e1-9ff3fd278dca"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="fdfac0c3-835c-48a0-9395-4dbd9dd6ecd1"/>
+			<column name="description" value=""/>
+			<column name="name" value="Fettarme Milch 1,5"/>
+			<column name="price" valueNumeric="0.71"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="6c1f8a11-2b4a-4bed-91e1-9ff3fd278dca"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="0b79b4a1-eaa9-45d8-a29f-518a7a4a9ffd"/>
+			<column name="description" value=""/>
+			<column name="name" value="Ja! Schlagsahne"/>
+			<column name="price" valueNumeric="1.26"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="9a293c47-507a-4d07-8b6b-7a3be7b5e817"/>
+		</insert>
+		<insert tableName="cx_purchase_item">
+			<column name="id" value="72221fba-ebe4-4a82-a9a2-71ce567ad2f0"/>
+			<column name="description" value=""/>
+			<column name="name" value="Wagner Mozza."/>
+			<column name="price" valueNumeric="2.29"/>
+			<column name="used_up" valueBoolean="false"/>
+			<column name="purchase_id" value="96c56636-7b74-4d55-82e5-b64c638796a1"/>
+		</insert>
+	</changeSet>
+	<changeSet author="vd" context="presentation" id="ce-1-presentation-7">
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+			<column name="purchase_item_id" value="469764c1-9139-4afd-9c11-b772f3d33050"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="469764c1-9139-4afd-9c11-b772f3d33050"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="1b340169-91a8-4a82-b3c0-0c9a3c63ca0d"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="1b340169-91a8-4a82-b3c0-0c9a3c63ca0d"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="1b340169-91a8-4a82-b3c0-0c9a3c63ca0d"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+			<column name="purchase_item_id" value="eb813fc3-9914-4d2e-980b-ae9ed5c37823"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="eb813fc3-9914-4d2e-980b-ae9ed5c37823"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+			<column name="purchase_item_id" value="e4bb08e5-64b0-486c-8419-80e3765f69be"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="e4bb08e5-64b0-486c-8419-80e3765f69be"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+			<column name="purchase_item_id" value="c1546f39-7c83-4702-a40d-4644b72b74aa"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="c1546f39-7c83-4702-a40d-4644b72b74aa"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="143b120c-142b-4bdb-a90d-e41af4be2c76"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="ebda5a01-b25d-4ea2-b515-569afbf92f47"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="ebda5a01-b25d-4ea2-b515-569afbf92f47"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+			<column name="purchase_item_id" value="ebda5a01-b25d-4ea2-b515-569afbf92f47"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="ebda5a01-b25d-4ea2-b515-569afbf92f47"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="dcd36a14-0e02-43ed-89a2-c73475f81dd6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="dcd36a14-0e02-43ed-89a2-c73475f81dd6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="dcd36a14-0e02-43ed-89a2-c73475f81dd6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="1cd20bbc-8717-4a17-b4cc-57879e70eda8"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+			<column name="purchase_item_id" value="1cd20bbc-8717-4a17-b4cc-57879e70eda8"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="1cd20bbc-8717-4a17-b4cc-57879e70eda8"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="46c4fc54-65ab-4c42-b1dc-b21c04e1edf2"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="46c4fc54-65ab-4c42-b1dc-b21c04e1edf2"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="b8139985-d274-4572-bf2d-7a13273754ca"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="b8139985-d274-4572-bf2d-7a13273754ca"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="b8139985-d274-4572-bf2d-7a13273754ca"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="d5157f73-1406-4696-8d03-c614f6b4a4d6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="e49e4111-7f9f-4b4a-977c-373fa5eefb82"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="024ffd86-d3c5-4955-9569-88b704a12411"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="862d065d-1051-4c64-9fe2-71cdca76ebef"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="862d065d-1051-4c64-9fe2-71cdca76ebef"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+			<column name="purchase_item_id" value="b9fbe4a7-8b18-4485-a041-cf8d94d7852a"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
+			<column name="purchase_item_id" value="9c0fa7a5-94af-4152-b41a-01e12cbd2f2f"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="9c0fa7a5-94af-4152-b41a-01e12cbd2f2f"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="53d8b489-53f0-4224-a4c9-c80363ad602e"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="53d8b489-53f0-4224-a4c9-c80363ad602e"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="53d8b489-53f0-4224-a4c9-c80363ad602e"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="cb171833-777f-43cb-8ba0-d59921349944"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="cb171833-777f-43cb-8ba0-d59921349944"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="cb171833-777f-43cb-8ba0-d59921349944"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="0b781cd6-53eb-442c-bd00-908f452b7154"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="0b781cd6-53eb-442c-bd00-908f452b7154"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="0b781cd6-53eb-442c-bd00-908f452b7154"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="6d419e2e-ad78-4f9d-b9b5-7a1dbb281c14"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="6d419e2e-ad78-4f9d-b9b5-7a1dbb281c14"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="6d419e2e-ad78-4f9d-b9b5-7a1dbb281c14"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="863a8ce0-9498-4211-8bc5-e3362326cdf5"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="863a8ce0-9498-4211-8bc5-e3362326cdf5"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="b4910d84-5be3-42ec-98ec-cb3601278fe2"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="b4910d84-5be3-42ec-98ec-cb3601278fe2"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="d82b83fd-6d4b-4a69-a421-2852916bdf70"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="d82b83fd-6d4b-4a69-a421-2852916bdf70"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="515d8c5b-6e0e-48cd-a1b5-6214b971bc24"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="7390f220-f59f-49d8-8bd2-82010692de5e"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="67a56117-9d9c-4a17-9ac9-71a73ca61aef"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="dbcf1ea6-5c6f-488c-886e-8c94a5b0a012"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="dbcf1ea6-5c6f-488c-886e-8c94a5b0a012"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="b8ed7b70-e6da-40c9-ac1d-3b13f93533a0"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="b8ed7b70-e6da-40c9-ac1d-3b13f93533a0"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="7c275051-92a0-49d0-8249-c1f43358f4a4"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="b874d603-6d84-47d6-ad68-ea4d792ad4eb"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="b874d603-6d84-47d6-ad68-ea4d792ad4eb"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="b874d603-6d84-47d6-ad68-ea4d792ad4eb"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="558c10c9-b2bf-4887-97b6-0b6be1387b6f"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="558c10c9-b2bf-4887-97b6-0b6be1387b6f"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="558c10c9-b2bf-4887-97b6-0b6be1387b6f"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="ff026773-3858-445b-8d30-ce66b209fd71"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="ff026773-3858-445b-8d30-ce66b209fd71"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="ff026773-3858-445b-8d30-ce66b209fd71"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="65423d9a-4474-4b00-84a1-55348a7b5638"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="65423d9a-4474-4b00-84a1-55348a7b5638"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="cff7c382-4792-45dc-85c3-cd4ee03eeb9c"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="cff7c382-4792-45dc-85c3-cd4ee03eeb9c"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="32c28015-5433-449f-9a1a-375671aac4f6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="32c28015-5433-449f-9a1a-375671aac4f6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="32c28015-5433-449f-9a1a-375671aac4f6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="d13c5688-4944-4904-b97d-b695bd2195ed"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="d13c5688-4944-4904-b97d-b695bd2195ed"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="d13c5688-4944-4904-b97d-b695bd2195ed"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="b4ce5783-c035-4081-8f0c-2df9841ce0a1"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="b4ce5783-c035-4081-8f0c-2df9841ce0a1"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="b4ce5783-c035-4081-8f0c-2df9841ce0a1"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="ebea32db-64b5-47c9-968f-e76dcc3dd463"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="ebea32db-64b5-47c9-968f-e76dcc3dd463"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="ebea32db-64b5-47c9-968f-e76dcc3dd463"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="3953ee43-9d22-4800-97fd-a7b26ad1c15b"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="3953ee43-9d22-4800-97fd-a7b26ad1c15b"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="e6224863-def6-43f3-82db-91955f8b0a18"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="e6224863-def6-43f3-82db-91955f8b0a18"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="e6224863-def6-43f3-82db-91955f8b0a18"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="32459080-86a6-43e0-8d13-1f9497eace5e"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="40e7f2e0-f1be-4cca-a4ca-653c45d6b7a6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="40e7f2e0-f1be-4cca-a4ca-653c45d6b7a6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="40e7f2e0-f1be-4cca-a4ca-653c45d6b7a6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="6cc3b872-cec9-44cb-9258-6eec594b191e"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="9a562a5a-d428-41e1-9ffe-dc1f7264782a"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="a42efb76-e328-49c6-85a4-b6a6190f0478"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="25d4ce50-bff1-4c9c-8eff-12274062c993"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="0e5b66c2-a0f0-47fc-8c99-a8bf6b3aa2f2"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="7f727836-6de6-4c32-965e-3b29eba76e4f"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="ddfced66-89f4-4b2e-bfbb-296e1f8d3acc"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="2091aaf0-7453-4fde-958f-2aea87526ae2"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="2091aaf0-7453-4fde-958f-2aea87526ae2"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="2091aaf0-7453-4fde-958f-2aea87526ae2"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="817919cf-dea3-4dd7-b26f-b6841f8a453d"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="e06545d0-ff7d-4507-93ae-6a315de1918c"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="06e62cc4-10ff-42e1-aba4-50038d35af7c"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="1a9a5087-5831-4a95-8a07-10c66a65c43f"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="1a9a5087-5831-4a95-8a07-10c66a65c43f"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="1a9a5087-5831-4a95-8a07-10c66a65c43f"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="a82e26e8-8fee-46e2-b6a1-3c4d078c0b70"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="a82e26e8-8fee-46e2-b6a1-3c4d078c0b70"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="a82e26e8-8fee-46e2-b6a1-3c4d078c0b70"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="6e2051ed-ffb4-4bb6-85c9-9862cd3a29b0"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="6e2051ed-ffb4-4bb6-85c9-9862cd3a29b0"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="6e2051ed-ffb4-4bb6-85c9-9862cd3a29b0"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="8e47aaf7-06b7-4c64-ad0c-6ae0712e983a"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="8e47aaf7-06b7-4c64-ad0c-6ae0712e983a"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="8e47aaf7-06b7-4c64-ad0c-6ae0712e983a"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="065385ce-f41e-4ab2-85e8-757f70d9c599"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="a0be9795-682f-43bd-be2b-e50e517eb0a2"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="a0be9795-682f-43bd-be2b-e50e517eb0a2"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="a0be9795-682f-43bd-be2b-e50e517eb0a2"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="0ed36e8f-f1e3-45ad-a0c7-83093ab4e962"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="0ed36e8f-f1e3-45ad-a0c7-83093ab4e962"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="ae1d47d1-4931-4677-99fb-4b0a7c042fb9"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="ae1d47d1-4931-4677-99fb-4b0a7c042fb9"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="8cefa638-aaf1-4bb9-b972-d843093106c9"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="8cefa638-aaf1-4bb9-b972-d843093106c9"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="8cefa638-aaf1-4bb9-b972-d843093106c9"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="c5bac144-5c99-4918-86b0-b744b0ef7a19"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="c5bac144-5c99-4918-86b0-b744b0ef7a19"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="c5bac144-5c99-4918-86b0-b744b0ef7a19"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="7faaee47-da49-4bca-8884-ceb4a3fe03c6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="7faaee47-da49-4bca-8884-ceb4a3fe03c6"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="ea1feb33-30b3-4e4f-822d-343f08361b40"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="ea1feb33-30b3-4e4f-822d-343f08361b40"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="ea1feb33-30b3-4e4f-822d-343f08361b40"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="10ed3ee2-d403-47c9-805b-41ebb6ba31db"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="10ed3ee2-d403-47c9-805b-41ebb6ba31db"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="10ed3ee2-d403-47c9-805b-41ebb6ba31db"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="9af76f34-a45d-401d-9dce-dd03eccab0cd"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="9af76f34-a45d-401d-9dce-dd03eccab0cd"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="9af76f34-a45d-401d-9dce-dd03eccab0cd"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="fdfac0c3-835c-48a0-9395-4dbd9dd6ecd1"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="fdfac0c3-835c-48a0-9395-4dbd9dd6ecd1"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="0b79b4a1-eaa9-45d8-a29f-518a7a4a9ffd"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
+			<column name="purchase_item_id" value="0b79b4a1-eaa9-45d8-a29f-518a7a4a9ffd"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
+			<column name="purchase_item_id" value="0b79b4a1-eaa9-45d8-a29f-518a7a4a9ffd"/>
+		</insert>
+		<insert tableName="cx_purchase_item__user">
+			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+			<column name="purchase_item_id" value="72221fba-ebe4-4a82-a9a2-71ce567ad2f0"/>
+		</insert>
+	</changeSet>
+	<changeSet author="vd" context="presentation" id="ce-1-presentation-8">
+		<insert tableName="cx_import">
+			<column name="id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="created" valueDate="2021-03-16T05:24:39.131822"/>
+			<column name="imported_by" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+		</insert>
+		<insert tableName="cx_import">
+			<column name="id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="created" valueDate="2021-03-16T05:24:41.599478"/>
+			<column name="imported_by" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
+		</insert>
+	</changeSet>
+	<changeSet author="vd" context="presentation" id="ce-1-presentation-9">
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="b5e2d123-134e-4018-bbeb-a7d80b6514a6"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="6987dd35-3cec-4b9b-8e41-3c69232d7952"/>
+			<column name="original_id" value="1"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="85735bf6-e070-42a7-84df-e68625fddd13"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="44196b56-7ff5-4f81-9f64-d1b4d8819afe"/>
+			<column name="original_id" value="2"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="a74148a8-2c72-466a-95da-38c37fdfb846"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="2aacdda8-49b7-4a69-a534-80f48733234f"/>
+			<column name="original_id" value="3"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="c102f22c-06aa-4230-bcf1-0ca13832ce51"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="fa699bbf-0b93-4d73-8f53-c3361d04dd14"/>
+			<column name="original_id" value="4"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="450c30fe-26d4-406a-9591-8481d61ea068"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="0d07e5e2-7828-45d3-b26f-3e7d100507fa"/>
+			<column name="original_id" value="5"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="c006ad39-d871-40be-bc99-7b8f4691131a"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="1052ef47-703c-422b-ba97-e7beabf812d1"/>
+			<column name="original_id" value="6"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="fedd75ab-0a76-4899-90c4-775cee4acee6"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="9cf7a9cb-f781-4088-a19c-f382f0820bbc"/>
+			<column name="original_id" value="7"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="6ec8237f-0045-4ea9-94b2-e6a38adad6b0"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="684c6273-933a-42d7-a211-7f751a075df7"/>
+			<column name="original_id" value="8"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="bebcc724-36e9-4495-b446-afc7319d1a8a"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="cfaa5556-179b-4f68-9bee-91a6e98cb73f"/>
+			<column name="original_id" value="9"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="9e237e95-88f8-49ff-ae02-cd325152d9b4"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="b9e32d91-e075-47fa-b20b-b5a68d337942"/>
+			<column name="original_id" value="10"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="347584b4-368d-4f74-9b6d-77f4e632b504"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="d3b6552e-fcaa-40a3-926c-802a75536b76"/>
+			<column name="original_id" value="11"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="394c1d1e-9cde-4843-adc2-acc3f4b1643c"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="c50cdf3b-596a-4556-a465-2e51c4af693a"/>
+			<column name="original_id" value="12"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="86fd6531-2a4d-40ea-b4be-209215fff7c0"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="9e3ba26e-aac8-4261-a7f3-5d6071f5a07b"/>
+			<column name="original_id" value="13"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="749cd8de-0562-4fe8-825d-5f7c5b33f6db"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="df927f1c-a8ab-4520-92c6-1cac1f0f96f1"/>
+			<column name="original_id" value="14"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="bd642c80-2afc-48d4-be70-6c316f7f0d8c"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="3aff278d-dd85-4965-88bf-86c3e728a203"/>
+			<column name="original_id" value="15"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="b000156f-4d00-458d-9d5d-dd0ce5dc6cd6"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="767fb55b-1ac2-49c0-ae0b-3355468afe10"/>
+			<column name="original_id" value="16"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="3585892d-3758-4500-9316-8e067f4be57d"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="b61876aa-c1dc-4a86-aae4-8f87c089e5eb"/>
+			<column name="original_id" value="17"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="7e6dd47a-13ef-4213-9068-2ee68a05870c"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="cdfd8f31-b324-4488-a11f-a2570b180218"/>
+			<column name="original_id" value="18"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="3e20c6ba-d273-45d8-bb3c-4e3ce6c76768"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="09edcf39-c1ac-48bb-b4cc-52c820b974d0"/>
+			<column name="original_id" value="19"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="5598e071-ea89-4497-8249-9372a289571c"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="9d6c2594-79a8-4b5a-856a-ced8fee90ce1"/>
+			<column name="original_id" value="20"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="ffbd0792-d305-4315-a6cc-594568ec3267"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="08330e32-e6ab-4f55-9852-ceb262bc04a5"/>
+			<column name="original_id" value="21"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="11abd00e-55b6-47fc-8259-63b0d40bfcbc"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="6c1f8a11-2b4a-4bed-91e1-9ff3fd278dca"/>
+			<column name="original_id" value="22"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="e2c0247c-a93d-4265-84ed-a38d8aab1562"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="9a293c47-507a-4d07-8b6b-7a3be7b5e817"/>
+			<column name="original_id" value="23"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="d94fb6c2-cf82-4af2-8c6f-2e1a423a8a2c"/>
+			<column name="import_id" value="484c03f3-9698-42b8-986e-7c81d170c522"/>
+			<column name="type" value="PURCHASE"/>
+			<column name="entity_id" value="96c56636-7b74-4d55-82e5-b64c638796a1"/>
+			<column name="original_id" value="24"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="94ae5f56-a5b7-4c70-b137-3e38e778e9bd"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="469764c1-9139-4afd-9c11-b772f3d33050"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="9f60002f-a09a-4e98-958f-f7e7fe5dbd99"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="1b340169-91a8-4a82-b3c0-0c9a3c63ca0d"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="7e6d2dc0-fb33-401b-bcb2-7af2dfe3282f"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="eb813fc3-9914-4d2e-980b-ae9ed5c37823"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="3db6e6e0-8fdf-40db-8eb6-1f0c564f1f64"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="e4bb08e5-64b0-486c-8419-80e3765f69be"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="3b2c7e95-4926-41fa-a4db-ab060111f3b2"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="c1546f39-7c83-4702-a40d-4644b72b74aa"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="2fcc37c6-cbd7-4206-8120-fc46b6e43958"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="143b120c-142b-4bdb-a90d-e41af4be2c76"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="7f94bd94-2dc6-4840-94f8-0f0afa4809ad"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="ebda5a01-b25d-4ea2-b515-569afbf92f47"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="ea22963a-f2c7-40ec-81e1-96211072961b"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="dcd36a14-0e02-43ed-89a2-c73475f81dd6"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="f386f175-b2cc-406a-8763-ca115f2c8dd3"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="1cd20bbc-8717-4a17-b4cc-57879e70eda8"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="7e523a5d-8eb0-46dd-a532-6ffe8890e952"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="46c4fc54-65ab-4c42-b1dc-b21c04e1edf2"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="7f1451ec-3d12-4a87-af9f-51e763ae9c5e"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="b8139985-d274-4572-bf2d-7a13273754ca"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="50075004-726c-46c6-932c-f9272c4d7372"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="d5157f73-1406-4696-8d03-c614f6b4a4d6"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="8a420b3d-1178-40ca-a2c5-6633d9c3cb35"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="e49e4111-7f9f-4b4a-977c-373fa5eefb82"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="b189488e-848c-473e-9af8-9638174066aa"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="024ffd86-d3c5-4955-9569-88b704a12411"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="5cfa3323-a007-42bc-a68c-c4ab5eaebf24"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="862d065d-1051-4c64-9fe2-71cdca76ebef"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="bf45e986-4986-4c26-9478-a799c1a7f494"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="fc81a4be-d580-4722-afad-fcc15723bf23"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="454cfc4a-7658-49ca-b647-50690becbb69"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="b9fbe4a7-8b18-4485-a041-cf8d94d7852a"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="d43d3d14-3a35-46b4-bf43-449bfec0d58b"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="9c0fa7a5-94af-4152-b41a-01e12cbd2f2f"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="ac8f3593-17d4-4ee8-80c2-b0fd9faeb360"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="53d8b489-53f0-4224-a4c9-c80363ad602e"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="3735c802-356b-466e-a337-48fc8545cdca"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="cb171833-777f-43cb-8ba0-d59921349944"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="14dd8ff6-08c3-470c-9e19-b9cada451511"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="0b781cd6-53eb-442c-bd00-908f452b7154"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="dacf39d1-b3eb-4844-8ed9-3d62b5dfdbee"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="6d419e2e-ad78-4f9d-b9b5-7a1dbb281c14"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="24dc50ba-2e83-4f98-8af4-ba458c65afc5"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="863a8ce0-9498-4211-8bc5-e3362326cdf5"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="81c89917-5763-4741-8745-da99d10a0136"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="b4910d84-5be3-42ec-98ec-cb3601278fe2"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="ff60628d-4237-418f-a81e-3e674a51891c"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="d82b83fd-6d4b-4a69-a421-2852916bdf70"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="0b812350-bf8a-4248-a0c3-bfdc734eb38d"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="515d8c5b-6e0e-48cd-a1b5-6214b971bc24"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="bb3c18b6-5866-445b-9fce-ad3ce53a852b"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="7390f220-f59f-49d8-8bd2-82010692de5e"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="c0df6a67-aca0-4f0e-bdf5-fa81a879c718"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="25cbed9d-d4b8-4e3f-a58a-eb6b974dbfed"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="634f1bd8-6b9d-43eb-b3d0-2e253d5d2e67"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="67a56117-9d9c-4a17-9ac9-71a73ca61aef"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="5703b43b-bc10-4f26-bf07-bd936e34879b"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="dbcf1ea6-5c6f-488c-886e-8c94a5b0a012"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="2cef55ac-8c83-4126-83ee-c890cd6fcb2b"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="b8ed7b70-e6da-40c9-ac1d-3b13f93533a0"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="10352743-313c-4a17-aafa-188a1669d193"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="7c275051-92a0-49d0-8249-c1f43358f4a4"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="06a51c7f-16a0-45b6-b23a-d29640215321"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="3cfe79c4-f4c4-4821-8edb-7cfb92e6080a"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="d69077f4-3dca-48ad-88eb-e18addfc608b"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="10bfb182-f56c-4328-9963-0023fd55c3d6"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="fe2d18a9-7c37-45ef-9f38-804c6b55e299"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="55ccec73-ce9b-43a6-8426-511a5d53865d"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="78d498cd-727f-4ac4-8c0b-4a8f76d991ad"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="b874d603-6d84-47d6-ad68-ea4d792ad4eb"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="afc793b7-e956-4116-bd96-c882eba94fc2"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="558c10c9-b2bf-4887-97b6-0b6be1387b6f"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="1b187da5-d569-4036-bcad-d0d8dce3b343"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="56c6e9f8-c7e2-4750-a0ab-f1038d6e5a2c"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="b2a91cf8-5781-429d-9a6f-b17181ab8bdf"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="ff026773-3858-445b-8d30-ce66b209fd71"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="f6b44971-bea3-471d-9648-c0e1824ec056"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="65423d9a-4474-4b00-84a1-55348a7b5638"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="70dc4bd8-24f4-43ab-9ac8-eb634e93b53c"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="cff7c382-4792-45dc-85c3-cd4ee03eeb9c"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="bef80e4a-a2e9-437b-93d0-fd618f401d49"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="32c28015-5433-449f-9a1a-375671aac4f6"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="0bdfea0c-5a44-423d-bfb5-1c291e51b6e7"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="d13c5688-4944-4904-b97d-b695bd2195ed"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="cf4324e5-190f-4918-afe3-05c0f258e40e"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="f1009022-565f-4fb4-8b4d-3e2686a8a59f"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="2cc45236-9abb-41f3-9c03-336fc648877c"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="24837e28-2d1c-4d4e-bfd1-90ec9c1358df"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="43dfd10c-a775-4f33-89be-b91e1fa3d164"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="b4ce5783-c035-4081-8f0c-2df9841ce0a1"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="454a769c-ddb1-4211-a2c9-2387be3db25a"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="ebea32db-64b5-47c9-968f-e76dcc3dd463"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="05680a88-d55e-4618-a0ab-8465a496eff6"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="3953ee43-9d22-4800-97fd-a7b26ad1c15b"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="338891c1-8fee-440c-9615-c9caf25bd9fd"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="e6224863-def6-43f3-82db-91955f8b0a18"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="a49e6f34-2a1e-4730-a6d6-9567a6df33f8"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="32459080-86a6-43e0-8d13-1f9497eace5e"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="97a1ebe1-f156-43ed-9dab-3f93e16095d7"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="40e7f2e0-f1be-4cca-a4ca-653c45d6b7a6"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="b7918678-5fdb-466a-94d0-459c8c8dcd75"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="6cc3b872-cec9-44cb-9258-6eec594b191e"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="db49f04a-b525-4721-b207-8701fcd8f80e"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="9a562a5a-d428-41e1-9ffe-dc1f7264782a"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="178a78e0-a1c5-49a9-8a4a-ec6cc1700d72"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="a42efb76-e328-49c6-85a4-b6a6190f0478"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="2fdfd6c6-228c-4304-a1d2-75f7f2e6d60e"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="25d4ce50-bff1-4c9c-8eff-12274062c993"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="e63db59a-4f02-4a62-8804-bcb516f2a682"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="0e5b66c2-a0f0-47fc-8c99-a8bf6b3aa2f2"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="296d16f4-0dfc-4e48-ad7c-72b6dfbbfb4d"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="7f727836-6de6-4c32-965e-3b29eba76e4f"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="32c974fc-c4f0-42c8-8caa-b66664a9f0c0"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="ddfced66-89f4-4b2e-bfbb-296e1f8d3acc"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="4aee02d9-5d14-44a4-9189-dae370417ca5"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="2091aaf0-7453-4fde-958f-2aea87526ae2"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="84a9c537-3f31-4f48-a9a4-7c28a9806a3d"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="817919cf-dea3-4dd7-b26f-b6841f8a453d"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="f8c994a2-3b20-4f18-8c21-3ff10b068811"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="e06545d0-ff7d-4507-93ae-6a315de1918c"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="a67a9509-584e-4892-a576-a1d04e575abf"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="06e62cc4-10ff-42e1-aba4-50038d35af7c"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="fa8f634e-b354-457d-bf84-bb64ed874341"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="1a9a5087-5831-4a95-8a07-10c66a65c43f"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="cb9fc199-9164-4cd4-ba56-95d5c96b2ef1"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="a82e26e8-8fee-46e2-b6a1-3c4d078c0b70"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="0e97cdfe-94ac-4056-9234-8fb47f950bcf"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="6e2051ed-ffb4-4bb6-85c9-9862cd3a29b0"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="1e44517f-8d10-467f-87dd-1307d8df9043"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="8e47aaf7-06b7-4c64-ad0c-6ae0712e983a"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="eee71b1e-b505-42b0-8e37-2902af450186"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="065385ce-f41e-4ab2-85e8-757f70d9c599"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="04d12fc8-7f7f-4e6d-a1d3-4fbee77ca9e6"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="a0be9795-682f-43bd-be2b-e50e517eb0a2"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="f9d526ed-b872-4e00-8a03-0cf5ae5d017c"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="0ed36e8f-f1e3-45ad-a0c7-83093ab4e962"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="a0b0a9f0-b606-451b-9da3-ec9733b55b3f"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="ae1d47d1-4931-4677-99fb-4b0a7c042fb9"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="6e59ee5e-632c-4d2b-8226-b0845b745e33"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="8cefa638-aaf1-4bb9-b972-d843093106c9"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="f95dcb78-db16-4d66-b077-f9a74587a1a8"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="c5bac144-5c99-4918-86b0-b744b0ef7a19"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="8f6ffc0c-3586-4bb6-a2e9-66f73e48f5a2"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="7faaee47-da49-4bca-8884-ceb4a3fe03c6"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="6e3812c8-db2c-4b72-8c5e-b2bbc70feb43"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="ea1feb33-30b3-4e4f-822d-343f08361b40"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="993acb7d-ac14-475f-ad3b-446de9545b96"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="10ed3ee2-d403-47c9-805b-41ebb6ba31db"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="0a38b6f1-1bc6-4e8c-b7c8-36c5a68f5d63"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="9af76f34-a45d-401d-9dce-dd03eccab0cd"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="9fd51605-936e-4758-85c7-feecb7e45ca3"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="fdfac0c3-835c-48a0-9395-4dbd9dd6ecd1"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="62ae99b5-4692-42d8-af2a-95d9ae01f875"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="0b79b4a1-eaa9-45d8-a29f-518a7a4a9ffd"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+		<insert tableName="cx_imported_entity">
+			<column name="id" value="c0f4dbdc-0926-454f-8e43-75acd8036bc7"/>
+			<column name="import_id" value="051674d8-a793-430c-b593-b95de833c26a"/>
+			<column name="type" value="ITEM"/>
+			<column name="entity_id" value="72221fba-ebe4-4a82-a9a2-71ce567ad2f0"/>
+			<column name="original_id" value="N/A"/>
+		</insert>
+	</changeSet>
+
+</databaseChangeLog>

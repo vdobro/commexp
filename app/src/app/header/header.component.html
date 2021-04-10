@@ -1,0 +1,9 @@
+<p-menubar [model]="(headerService.$items | async) || []">
+	<ng-template pTemplate="end">
+		<p-dropdown *ngIf="groups.length > 0"
+		            [options]="groups"
+		            [(ngModel)]="activeGroup"
+		            (onChange)="onChangeSelection()"
+		            optionLabel="name"></p-dropdown>
+	</ng-template>
+</p-menubar>

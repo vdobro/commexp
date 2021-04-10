@@ -1,0 +1,36 @@
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<property name="type.text.long"
+	          value="nvarchar(1000)"
+	          dbms="all"/>
+	<property name="type.text.medium"
+	          value="nvarchar(500)"
+	          dbms="all"/>
+	<property name="type.text.short"
+	          value="nvarchar(200)"
+	          dbms="all"/>
+	<property name="type.text.min"
+	          value="nvarchar(20)"
+	          dbms="all"/>
+	<property name="type.time"
+	          value="timestamp without time zone"
+	          dbms="all"/>
+	<property name="type.int"
+	          value="int"
+	          dbms="all"/>
+	<property name="type.decimal"
+	          value="decimal(10,2)"
+	          dbms="all"/>
+	<property name="type.boolean"
+	          value="boolean"
+	          dbms="all"/>
+	<property name="type.id"
+	          value="uuid"
+	          dbms="all"/>
+	<property name="type.date"
+	          value="date"
+	          dbms="all"/>
+</databaseChangeLog>
