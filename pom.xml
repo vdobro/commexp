@@ -163,7 +163,6 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>integration-test</goal>
 							<goal>verify</goal>
 						</goals>
 					</execution>
@@ -182,20 +181,6 @@
 						<enabled>true</enabled>
 					</layers>
 				</configuration>
-				<executions>
-					<execution>
-						<id>pre-integration-test</id>
-						<goals>
-							<goal>start</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>post-integration-test</id>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
@@ -297,19 +282,6 @@
 				<configuration>
 					<propertyFile>${project.basedir}/src/main/resources/liquibase.properties</propertyFile>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springdoc</groupId>
-				<artifactId>springdoc-openapi-maven-plugin</artifactId>
-				<version>${springdoc-openapi-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>integration-test</id>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
