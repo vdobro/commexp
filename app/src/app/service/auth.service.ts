@@ -20,11 +20,12 @@
  */
 
 import {Injectable} from '@angular/core';
-import {SessionService, UserSession} from "@app/service/state/session.service";
+import {SessionService} from "@app/service/state/session.service";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {UsernameError} from "@app/util/SessionUtils";
 import {NetworkError} from "@app/util/NetworkError";
 import {environment} from "@environments/environment";
+import {UserSession} from "@app/model/user-session";
 
 const URL = {
 	USERS: environment.apiUrl + "/user",
@@ -113,7 +114,7 @@ export class AuthService {
 		).toPromise();
 
 		const user = response.body!!;
-		this.sessionService.setUser(user);
+		await this.sessionService.setUser(user);
 		return user;
 	}
 }

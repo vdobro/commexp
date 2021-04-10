@@ -19,17 +19,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {AnonymousSession, UserSession} from "@app/service/state/session.service";
+import {Session, UserSession} from "@app/model/user-session";
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2021.01.25
  */
 
-export const HEADER_AUTH_TOKEN = "X-Auth-Token";
-export const SESSION_STORAGE_AUTH_TOKEN = "authToken";
-
-export function isUser(user: UserSession | AnonymousSession): user is UserSession {
+export function isUser(user: Session): user is UserSession {
 	return (user as UserSession).id !== undefined;
 }
 

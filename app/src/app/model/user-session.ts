@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,7 +19,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export const environment = {
-	production: true,
-	apiUrl: 'api'
-};
+/**
+ * @author Vitalijus Dobrovolskis
+ * @since 2021.01.10
+ */
+export interface UserSession {
+	id: string,
+	username: string,
+	name: string,
+}
+
+export interface AnonymousSession {
+}
+
+export type Session = UserSession | AnonymousSession

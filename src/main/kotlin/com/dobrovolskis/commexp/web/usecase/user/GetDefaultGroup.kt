@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,7 +19,24 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export const environment = {
-	production: true,
-	apiUrl: 'api'
-};
+package com.dobrovolskis.commexp.web.usecase.user
+
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.model.UserGroup
+import com.dobrovolskis.commexp.service.UserService
+import com.dobrovolskis.commexp.web.usecase.UserRequestHandler
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+
+/**
+ * @author Vitalijus Dobrovolskis
+ * @since 2021.04.10
+ */
+
+@Service
+@Transactional
+class GetDefaultGroup(private val userService: UserService) : UserRequestHandler<UserGroup?> {
+	override fun invoke(currentUser: User): UserGroup? {
+		return userService.getById(currentUser.id()!!).defaultGroup
+	}
+}

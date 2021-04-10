@@ -35,6 +35,7 @@ import javax.persistence.FetchType.LAZY
 import javax.persistence.JoinColumn
 import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
+import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
 import javax.persistence.Table
 import javax.persistence.Transient
@@ -117,6 +118,10 @@ class User(
 		inverseJoinColumns = [JoinColumn(name = "user_group_id")],
 	)
 	val userGroups: List<UserGroup> = mutableListOf()
+
+	@ManyToOne(targetEntity = UserGroup::class, fetch = LAZY)
+	@JoinColumn(name = "default_group_id")
+	var defaultGroup: UserGroup? = null
 
 	override fun getUsername(): String = username
 	override fun getPassword(): String = password

@@ -23,6 +23,9 @@ import {Component, OnInit} from '@angular/core';
 import {HeaderService} from "@app/service/state/header.service";
 import {SessionService} from "@app/service/state/session.service";
 import {isUser} from "@app/util/SessionUtils";
+import {UserGroup} from "@app/model/user-group";
+import {Session} from "@app/model/user-session";
+import {GroupSessionService} from "@app/service/state/group.service";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -38,9 +41,14 @@ export class HeaderComponent implements OnInit {
 	userLoggedIn = false;
 	name = '';
 
+	groups: UserGroup[] = [];
+	activeGroup: UserGroup | null = null;
+
 	constructor(public readonly headerService: HeaderService,
-	            public readonly sessionService: SessionService) {
-		this.sessionService.session$.subscribe((session) => {
+	            public readonly sessionService: SessionService,
+	            private readonly groupSessionService: GroupSessionService,
+	) {
+		this.sessionService.session$.subscribe((session: Session) => {
 			if (isUser(session)) {
 				this.name = session.name;
 				this.userLoggedIn = true;
@@ -49,9 +57,20 @@ export class HeaderComponent implements OnInit {
 				this.name = '';
 			}
 		});
+		this.groupSessionService.myGroups$.subscribe(groups => {
+			this.groups = groups;
+		})
+		this.groupSessionService.activeGroup$.subscribe((group) => {
+			this.activeGroup = group;
+		})
 	}
 
 	ngOnInit(): void {
 	}
 
+	async onChangeSelection() {
+		if (this.activeGroup) {
+			await this.groupSessionService.selectGroup(this.activeGroup);
+		}
+	}
 }

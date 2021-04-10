@@ -31,5 +31,5 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  */
 @Configuration
 @EnableRedisHttpSession
-@Profile("cache")
+@Profile(Profiles.CACHE)
 class HttpSessionConfiguration

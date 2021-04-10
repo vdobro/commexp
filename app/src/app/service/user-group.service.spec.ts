@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,7 +19,23 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export const environment = {
-	production: true,
-	apiUrl: 'api'
-};
+import {TestBed} from '@angular/core/testing';
+
+import {UserGroupService} from './user-group.service';
+
+/**
+ * @author Vitalijus Dobrovolskis
+ * @since 2021.04.10
+ */
+describe('UserGroupService', () => {
+	let service: UserGroupService;
+
+	beforeEach(() => {
+		TestBed.configureTestingModule({});
+		service = TestBed.inject(UserGroupService);
+	});
+
+	it('should be created', () => {
+		expect(service).toBeTruthy();
+	});
+});

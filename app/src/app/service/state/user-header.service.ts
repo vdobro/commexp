@@ -21,11 +21,12 @@
 
 import {Injectable} from '@angular/core';
 import {HeaderService} from "@app/service/state/header.service";
-import {AnonymousSession, SessionService, UserSession} from "@app/service/state/session.service";
+import {SessionService} from "@app/service/state/session.service";
 import {MenuItem} from "primeng/api";
 import {PATH_LOGIN, PATH_REGISTER, ROOT_USER} from "@app/util/UrlConfig";
 import {isUser} from "@app/util/SessionUtils";
 import {AuthService} from "@app/service/auth.service";
+import {Session} from "@app/model/user-session";
 
 @Injectable({
 	providedIn: 'root'
@@ -42,7 +43,7 @@ export class UserHeaderService {
 	};
 	private readonly logoutButton: MenuItem = {
 		label: 'Ausloggen',
-		command: async event => {
+		command: async _ => {
 			await this.authService.logout();
 		}
 	};
@@ -59,7 +60,7 @@ export class UserHeaderService {
 		this.updateButtons(this.sessionService.currentSession);
 	}
 
-	private updateButtons(userState: UserSession | AnonymousSession) {
+	private updateButtons(userState: Session) {
 		if (isUser(userState)) {
 			this.header.removeItem(this.loginButton);
 			this.header.removeItem(this.registerButton);

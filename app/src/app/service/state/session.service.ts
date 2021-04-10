@@ -21,6 +21,7 @@
 
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
+import {Session, UserSession} from "@app/model/user-session";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -46,7 +47,7 @@ export class SessionService {
 		this.setSession({});
 	}
 
-	setUser(user: UserSession) {
+	async setUser(user: UserSession) {
 		this.setSession(user);
 	}
 
@@ -54,15 +55,3 @@ export class SessionService {
 		this._session.next(val);
 	}
 }
-
-
-export interface UserSession {
-	id: string,
-	username: string,
-	name: string,
-}
-
-export interface AnonymousSession {
-}
-
-type Session = UserSession | AnonymousSession

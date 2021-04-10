@@ -35,13 +35,16 @@ import com.dobrovolskis.commexp.web.request.GroupUserRequest
 import com.dobrovolskis.commexp.web.usecase.user.AcceptInvitationToGroup
 import com.dobrovolskis.commexp.web.usecase.user.CreateGroup
 import com.dobrovolskis.commexp.web.usecase.user.FindGroup
+import com.dobrovolskis.commexp.web.usecase.user.GetDefaultGroup
 import com.dobrovolskis.commexp.web.usecase.user.GetUserGroupList
 import com.dobrovolskis.commexp.web.usecase.user.InviteUserToGroup
+import com.dobrovolskis.commexp.web.usecase.user.SetDefaultGroup
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod.GET
 import org.springframework.web.bind.annotation.RequestMethod.POST
+import org.springframework.web.bind.annotation.RequestMethod.PUT
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 import javax.validation.Valid
@@ -58,6 +61,8 @@ class UserGroupController(
 	private val acceptInvitationToGroup: AcceptInvitationToGroup,
 	private val getUserGroupList: GetUserGroupList,
 	private val findGroup: FindGroup,
+	private val getDefaultGroup: GetDefaultGroup,
+	private val setDefaultGroup: SetDefaultGroup,
 	private val controllerUtils: ControllerUtils,
 	private val groupAssembler: UserGroupAssembler,
 	private val invitationAssembler: InvitationAssembler,
@@ -75,6 +80,15 @@ class UserGroupController(
 	fun get(@PathVariable id: UUID) : UserGroupDto {
 		return mapToDto(findGroup(getUser(), id))
 	}
+
+	@RequestMapping(method = [GET], path = ["/default"])
+	fun getDefault() : UserGroupDto? {
+		val group = getDefaultGroup(getUser())
+		return group?.let { mapToDto(it) }
+	}
+
+	@RequestMapping(method = [PUT], path = ["/default/{id}"])
+	fun setDefault(@PathVariable id: UUID) = setDefaultGroup(getUser(), id)
 
 	@RequestMapping(
 		method = [POST],

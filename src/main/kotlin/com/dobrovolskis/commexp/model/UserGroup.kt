@@ -27,6 +27,7 @@ import com.dobrovolskis.commexp.config.Table.USER_GROUPS_USERS
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded
+import java.io.Serializable
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -58,7 +59,7 @@ class UserGroup(
 	@FullTextField
 	var name: String = ""
 
-) : IdEntity() {
+) : IdEntity(), Serializable {
 
 	@ManyToMany(targetEntity = User::class, fetch = FetchType.LAZY)
 	@JoinTable(

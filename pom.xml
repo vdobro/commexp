@@ -24,13 +24,15 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<jvm.version>1.8</jvm.version>
-		<kotlin.version>1.4.31</kotlin.version>
-		<node.version>v15.3.0</node.version>
-		<npm.version>7.0.4</npm.version>
-		<serialization.version>1.0.0-RC</serialization.version>
-		<springdoc.version>1.5.2</springdoc.version>
-		<opencsv.version>5.3</opencsv.version>
+		<kotlin.version>1.4.32</kotlin.version>
+		<node.version>v14.16.0</node.version>
+		<npm.version>6.14.11</npm.version>
+		<serialization.version>1.1.0</serialization.version>
+		<springdoc.version>1.5.7</springdoc.version>
+		<opencsv.version>5.4</opencsv.version>
 		<hibernate-search.version>6.0.2.Final</hibernate-search.version>
+		<frontend-plugin.version>1.11.3</frontend-plugin.version>
+		<springdoc-openapi-plugin.version>1.1</springdoc-openapi-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -180,7 +182,7 @@
 						<enabled>true</enabled>
 					</layers>
 				</configuration>
-				<!--executions>
+				<executions>
 					<execution>
 						<id>pre-integration-test</id>
 						<goals>
@@ -193,7 +195,7 @@
 							<goal>stop</goal>
 						</goals>
 					</execution>
-				</executions-->
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
@@ -249,7 +251,7 @@
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.9.1</version>
+				<version>${frontend-plugin.version}</version>
 				<configuration>
 					<workingDirectory>${project.basedir}/app</workingDirectory>
 					<nodeVersion>${node.version}</nodeVersion>
@@ -292,7 +294,6 @@
 			<plugin>
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>3.10.3</version>
 				<configuration>
 					<propertyFile>${project.basedir}/src/main/resources/liquibase.properties</propertyFile>
 				</configuration>
@@ -300,7 +301,7 @@
 			<plugin>
 				<groupId>org.springdoc</groupId>
 				<artifactId>springdoc-openapi-maven-plugin</artifactId>
-				<version>1.1</version>
+				<version>${springdoc-openapi-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>integration-test</id>

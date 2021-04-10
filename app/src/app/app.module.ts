@@ -25,6 +25,8 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {DropdownModule} from "primeng/dropdown";
 import {HeaderComponent} from './header/header.component';
 import {MenubarModule} from "primeng/menubar";
 import {HomeComponent} from './home/home.component';
@@ -33,6 +35,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {SharedModule} from "primeng/api";
 import {HttpErrorInterceptor} from "@app/util/HttpErrorInterceptor";
 import {XsrfInterceptor} from "@app/util/XsrfInterceptor";
+import {FormsModule} from "@angular/forms";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -46,12 +49,15 @@ import {XsrfInterceptor} from "@app/util/XsrfInterceptor";
 	],
 	imports: [
 		BrowserModule,
+		BrowserAnimationsModule,
+		DropdownModule,
 		HttpClientModule,
 		HttpClientXsrfModule,
 		AppRoutingModule,
 		MenubarModule,
 		InputTextModule,
-		SharedModule
+		SharedModule,
+		FormsModule
 	],
 	providers: [
 		{provide: LocationStrategy, useClass: HashLocationStrategy},

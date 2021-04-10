@@ -75,6 +75,12 @@ class UserService(
 			?: throw ResourceNotFoundError("User $username not found")
 	}
 
+	fun setDefaultGroup(userId: UUID, group: UserGroup) {
+		val user = getById(userId)
+		user.defaultGroup = group
+		repository.save(user)
+	}
+
 	fun changePassword(username: String,
 	                   oldPassword: String,
 	                   newPassword: String) {
