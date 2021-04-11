@@ -1,10 +1,10 @@
-FROM openjdk:8-jre-alpine as builder
+FROM openjdk:11-jre-buster as builder
 WORKDIR application
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} application.jar
 RUN java -Djarmode=layertools -jar application.jar extract
 
-FROM openjdk:8-jre-alpine
+FROM openjdk:11-jre-buster
 LABEL maintainer="Vitalijus Dobrovolskis vitalijusdobro@gmail.com"
 VOLUME /tmp
 VOLUME /work/index
