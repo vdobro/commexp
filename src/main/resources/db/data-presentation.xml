@@ -102,7 +102,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="6987dd35-3cec-4b9b-8e41-3c69232d7952"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.153597"/>
-			<column name="shopping_time" valueDate="2021-02-03T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-03"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -111,7 +111,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="44196b56-7ff5-4f81-9f64-d1b4d8819afe"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.171201"/>
-			<column name="shopping_time" valueDate="2021-02-04T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-04"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -120,7 +120,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="2aacdda8-49b7-4a69-a534-80f48733234f"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.177609"/>
-			<column name="shopping_time" valueDate="2021-02-05T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-05"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -129,7 +129,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="fa699bbf-0b93-4d73-8f53-c3361d04dd14"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.183317"/>
-			<column name="shopping_time" valueDate="2021-02-05T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-05"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -138,7 +138,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="0d07e5e2-7828-45d3-b26f-3e7d100507fa"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.188854"/>
-			<column name="shopping_time" valueDate="2021-02-08T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-08"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="08c2e6d8-dae3-42cf-b87f-8d2275e3ba89"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -147,7 +147,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="1052ef47-703c-422b-ba97-e7beabf812d1"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.193543"/>
-			<column name="shopping_time" valueDate="2021-02-11T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-11"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -156,7 +156,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="9cf7a9cb-f781-4088-a19c-f382f0820bbc"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.198412"/>
-			<column name="shopping_time" valueDate="2021-02-12T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-12"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -165,7 +165,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="684c6273-933a-42d7-a211-7f751a075df7"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.203961"/>
-			<column name="shopping_time" valueDate="2021-02-15T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-15"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -174,7 +174,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="cfaa5556-179b-4f68-9bee-91a6e98cb73f"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.2176"/>
-			<column name="shopping_time" valueDate="2021-02-15T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-15"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -183,7 +183,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="b9e32d91-e075-47fa-b20b-b5a68d337942"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.221506"/>
-			<column name="shopping_time" valueDate="2021-02-19T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-19"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -192,7 +192,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="d3b6552e-fcaa-40a3-926c-802a75536b76"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.22489"/>
-			<column name="shopping_time" valueDate="2021-02-19T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-19"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -201,7 +201,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="c50cdf3b-596a-4556-a465-2e51c4af693a"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.228103"/>
-			<column name="shopping_time" valueDate="2021-02-22T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-22"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -210,7 +210,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="9e3ba26e-aac8-4261-a7f3-5d6071f5a07b"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.232432"/>
-			<column name="shopping_time" valueDate="2021-02-23T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-23"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -219,7 +219,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="df927f1c-a8ab-4520-92c6-1cac1f0f96f1"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.236288"/>
-			<column name="shopping_time" valueDate="2021-02-26T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-26"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -228,7 +228,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="3aff278d-dd85-4965-88bf-86c3e728a203"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.2407"/>
-			<column name="shopping_time" valueDate="2021-02-28T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-28"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -237,7 +237,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="767fb55b-1ac2-49c0-ae0b-3355468afe10"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.244068"/>
-			<column name="shopping_time" valueDate="2021-03-02T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-03-02"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -246,7 +246,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="b61876aa-c1dc-4a86-aae4-8f87c089e5eb"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.248799"/>
-			<column name="shopping_time" valueDate="2021-01-30T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-01-30"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="18a5370a-1aaf-4581-a89a-3709afa78434"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -255,7 +255,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="cdfd8f31-b324-4488-a11f-a2570b180218"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.262586"/>
-			<column name="shopping_time" valueDate="2021-02-04T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-04"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -264,7 +264,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="09edcf39-c1ac-48bb-b4cc-52c820b974d0"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.26903"/>
-			<column name="shopping_time" valueDate="2021-02-01T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-01"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -273,7 +273,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="9d6c2594-79a8-4b5a-856a-ced8fee90ce1"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.273217"/>
-			<column name="shopping_time" valueDate="2021-02-09T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-09"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -282,7 +282,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="08330e32-e6ab-4f55-9852-ceb262bc04a5"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.276992"/>
-			<column name="shopping_time" valueDate="2021-02-09T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-09"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -291,7 +291,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="6c1f8a11-2b4a-4bed-91e1-9ff3fd278dca"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.280319"/>
-			<column name="shopping_time" valueDate="2021-02-17T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-17"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -300,7 +300,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="9a293c47-507a-4d07-8b6b-7a3be7b5e817"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.284103"/>
-			<column name="shopping_time" valueDate="2021-02-17T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-17"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>
@@ -309,7 +309,7 @@
 		<insert tableName="cx_purchase">
 			<column name="id" value="96c56636-7b74-4d55-82e5-b64c638796a1"/>
 			<column name="created" valueDate="2021-03-16T05:24:39.287254"/>
-			<column name="shopping_time" valueDate="2021-02-24T23:00:00"/>
+			<column name="shopping_time" valueDate="2021-02-24"/>
 			<column name="creator_id" value="e1593cca-4a19-4101-88a6-bd22d381feba"/>
 			<column name="user_id" value="5c533ada-21b2-4a0f-b459-af4025d05a5e"/>
 			<column name="group_id" value="5d7f65af-41fa-4d8a-a503-6096e6ef776c"/>

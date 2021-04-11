@@ -1,0 +1,48 @@
+version: "3.9"
+services:
+  web:
+    image: dobrovolskis/commexp:0.1-SNAPSHOT
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    depends_on:
+      - "database"
+      - "cache"
+    environment:
+      - APP_HOST=${APP_HOST}
+      - DB_HOST=database
+      - DB_USERNAME=commexp
+      - DB_PASSWORD=${DB_SECRET}
+      - DB_NAME=commexp
+      - REDIS_HOST=cache
+      - DATA_PROFILES=presentation
+    volumes:
+      - web-tmp:/tmp
+      - index-data:/work/index
+    networks:
+      service:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=commexp
+      - POSTGRES_PASSWORD=${DB_SECRET}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      service:
+  cache:
+    image: redis
+    restart: always
+    volumes:
+      - redis-data:/data
+    networks:
+      service:
+volumes:
+  web-tmp:
+  index-data:
+  db-data:
+  redis-data:
+networks:
+  service:
+    driver: bridge

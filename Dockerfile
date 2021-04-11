@@ -1,26 +1,16 @@
-FROM openjdk:8-jre-alpine as builder
+FROM openjdk:11-jre-buster as builder
+WORKDIR application
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} application.jar
+RUN java -Djarmode=layertools -jar application.jar extract
+
+FROM openjdk:11-jre-buster
 LABEL maintainer="Vitalijus Dobrovolskis vitalijusdobro@gmail.com"
 VOLUME /tmp
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} commexp.jar
-RUN java -Djarmode=layertools -jar commexp.jar extract
-
-FROM openjdk:8-jre-alpine
 VOLUME /work/index
-RUN apk add --no-cache gettext
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
-COPY --from=builder dependencies/ ./
-RUN true
-COPY --from=builder snapshot-dependencies/ ./
-RUN true
-COPY --from=builder spring-boot-loader/ ./
-RUN true
-COPY --from=builder application/ ./
-
-USER root
-RUN chown spring:spring /BOOT-INF/classes/static/assets/env.js
-USER spring:spring
-
-EXPOSE 8080
+WORKDIR application
+COPY --from=builder application/dependencies/ ./
+COPY --from=builder application/spring-boot-loader/ ./
+COPY --from=builder application/snapshot-dependencies/ ./
+COPY --from=builder application/application/ ./
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]

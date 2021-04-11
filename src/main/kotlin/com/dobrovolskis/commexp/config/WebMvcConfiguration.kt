@@ -32,11 +32,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
  * @since 2021.01.14
  */
 @Configuration
-class WebMvcConfiguration(@Autowired val environment: Environment) : WebMvcConfigurer {
+class WebMvcConfiguration(
+	@Autowired val environment: Environment,
+	val appConfig: ApplicationConfiguration
+) : WebMvcConfigurer {
+
 	override fun addCorsMappings(registry: CorsRegistry) {
-		val config = registry.addMapping("/**")
+		registry.addMapping("/**")
 			.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 			.allowCredentials(true)
+			.allowedOrigins(appConfig.host)
 			.allowedHeaders(
 				"CONTENT-TYPE",
 				"Authorization",
@@ -45,10 +50,5 @@ class WebMvcConfiguration(@Autowired val environment: Environment) : WebMvcConfi
 				"X-REQUESTED-WITH",
 				"X-XSRF-TOKEN"
 			)
-		if (PROFILE_DEVELOPMENT in environment.activeProfiles) {
-			config.allowedOrigins("http://localhost:4200")
-		}
 	}
 }
-
-const val PROFILE_DEVELOPMENT = "development"

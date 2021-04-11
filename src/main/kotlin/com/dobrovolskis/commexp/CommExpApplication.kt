@@ -23,6 +23,7 @@ package com.dobrovolskis.commexp
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
@@ -36,6 +37,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 )
 @EnableJpaRepositories
 @EnableConfigurationProperties
+@ConfigurationPropertiesScan
 class CommExpApplication
 
 @Suppress("SpreadOperator") // used only on startup
