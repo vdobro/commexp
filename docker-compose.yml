@@ -18,7 +18,7 @@ services:
       - DATA_PROFILES=presentation
     volumes:
       - web-tmp:/tmp
-      - index-data:/work/index
+      - web-work:/application/work
     networks:
       service:
   database:
@@ -40,7 +40,7 @@ services:
       service:
 volumes:
   web-tmp:
-  index-data:
+  web-work:
   db-data:
   redis-data:
 networks:

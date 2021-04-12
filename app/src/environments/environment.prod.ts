@@ -21,5 +21,6 @@
 
 export const environment = {
 	production: true,
-	apiUrl: 'api'
+	// @ts-ignore
+	apiUrl: (window["env"]["apiUrl"] || 'http://localhost:8080') + '/api',
 };
