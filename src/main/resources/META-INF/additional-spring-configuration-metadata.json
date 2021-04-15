@@ -3,7 +3,7 @@
 		{
 			"name": "commexp.host",
 			"type": "java.lang.String",
-			"description": "Full URL to the application host, beginning with either `http:// or http://."
+			"description": "Full URL to the application host, beginning with either `https:// or http://."
 		}
 	]
 }
