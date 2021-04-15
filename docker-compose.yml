@@ -9,6 +9,7 @@ services:
       - "database"
       - "cache"
     environment:
+      - APP_HOST=${APP_HOST}
       - DB_HOST=database
       - DB_USERNAME=commexp
       - DB_PASSWORD=${DB_SECRET}
