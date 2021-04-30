@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -27,7 +27,9 @@ import com.dobrovolskis.commexp.model.UserGroup
 import com.dobrovolskis.commexp.model.UserInvitation
 import com.dobrovolskis.commexp.web.ControllerUtils
 import com.dobrovolskis.commexp.web.assembler.InvitationAssembler
+import com.dobrovolskis.commexp.web.assembler.UserAssembler
 import com.dobrovolskis.commexp.web.assembler.UserGroupAssembler
+import com.dobrovolskis.commexp.web.dto.UserDto
 import com.dobrovolskis.commexp.web.dto.UserGroupDto
 import com.dobrovolskis.commexp.web.dto.UserInvitationDto
 import com.dobrovolskis.commexp.web.request.GroupCreationRequest
@@ -37,6 +39,7 @@ import com.dobrovolskis.commexp.web.usecase.user.CreateGroup
 import com.dobrovolskis.commexp.web.usecase.user.FindGroup
 import com.dobrovolskis.commexp.web.usecase.user.GetDefaultGroup
 import com.dobrovolskis.commexp.web.usecase.user.GetUserGroupList
+import com.dobrovolskis.commexp.web.usecase.user.GetUsersInGroup
 import com.dobrovolskis.commexp.web.usecase.user.InviteUserToGroup
 import com.dobrovolskis.commexp.web.usecase.user.SetDefaultGroup
 import org.springframework.web.bind.annotation.PathVariable
@@ -63,9 +66,11 @@ class UserGroupController(
 	private val findGroup: FindGroup,
 	private val getDefaultGroup: GetDefaultGroup,
 	private val setDefaultGroup: SetDefaultGroup,
+	private val getUsersInGroup: GetUsersInGroup,
 	private val controllerUtils: ControllerUtils,
 	private val groupAssembler: UserGroupAssembler,
 	private val invitationAssembler: InvitationAssembler,
+	private val userAssembler: UserAssembler,
 ) {
 
 	@RequestMapping(method = [POST])
@@ -77,12 +82,17 @@ class UserGroupController(
 		getUserGroupList(getUser()).map(this::mapToDto)
 
 	@RequestMapping(method = [GET], path = ["/{id}"])
-	fun get(@PathVariable id: UUID) : UserGroupDto {
+	fun get(@PathVariable id: UUID): UserGroupDto {
 		return mapToDto(findGroup(getUser(), id))
 	}
 
+	@RequestMapping(method = [GET], path = ["/{id}/users"])
+	fun getUsers(@PathVariable id: UUID): List<UserDto> {
+		return getUsersInGroup(getUser(), id).map { mapToDto(it) }
+	}
+
 	@RequestMapping(method = [GET], path = ["/default"])
-	fun getDefault() : UserGroupDto? {
+	fun getDefault(): UserGroupDto? {
 		val group = getDefaultGroup(getUser())
 		return group?.let { mapToDto(it) }
 	}
@@ -107,6 +117,8 @@ class UserGroupController(
 	private fun mapToDto(userGroup: UserGroup) = groupAssembler.toDto(userGroup)
 
 	private fun mapToDto(invitation: UserInvitation) = invitationAssembler.toDto(invitation)
+
+	private fun mapToDto(user: User) = userAssembler.toDto(user)
 
 	private fun getUser(): User = controllerUtils.getCurrentUser()
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -36,6 +36,7 @@ import {SharedModule} from "primeng/api";
 import {HttpErrorInterceptor} from "@app/util/HttpErrorInterceptor";
 import {XsrfInterceptor} from "@app/util/XsrfInterceptor";
 import {FormsModule} from "@angular/forms";
+import {GroupSwitcherComponent} from './group-switcher/group-switcher.component';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -45,7 +46,8 @@ import {FormsModule} from "@angular/forms";
 	declarations: [
 		AppComponent,
 		HeaderComponent,
-		HomeComponent
+		HomeComponent,
+		GroupSwitcherComponent
 	],
 	imports: [
 		BrowserModule,

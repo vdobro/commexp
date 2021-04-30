@@ -20,37 +20,27 @@
  */
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-
-import {GroupListComponent} from './group-list/group-list.component';
-import {CreateGroupComponent} from "./create-group/create-group.component";
-import {AcceptGroupInvitationComponent} from "./accept-group-invitation/accept-group-invitation.component";
-import {CreateGroupInvitationComponent} from "./create-group-invitation/create-group-invitation.component";
-
-const GROUP_ID_PARAM = "groupId";
-
-const routes: Routes = [
-	{
-		path: '', component: GroupListComponent
-	},
-	{
-		path: 'new', component: CreateGroupComponent,
-	},
-	{
-		path: `:${GROUP_ID_PARAM}/invite`, component: CreateGroupInvitationComponent,
-	},
-	{
-		path: 'join', component: AcceptGroupInvitationComponent,
-	}
-];
+import {CommonModule} from '@angular/common';
+import {AvatarModule} from "primeng/avatar";
+import {AvatarGroupModule} from "primeng/avatargroup";
+import {UserAvatarGroupComponent} from "@app/shared/user-avatar-group/user-avatar-group.component";
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.04.28
  */
 @NgModule({
-	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule]
+	declarations: [
+		UserAvatarGroupComponent,
+	],
+	exports: [
+		UserAvatarGroupComponent
+	],
+	imports: [
+		CommonModule,
+		AvatarModule,
+		AvatarGroupModule,
+	]
 })
-export class GroupsRoutingModule {
+export class SharedModule {
 }

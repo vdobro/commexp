@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,7 +21,6 @@
 
 import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
-import {UserHeaderService} from "@app/service/state/user-header.service";
 import {SessionService} from "@app/service/state/session.service";
 import {isUser} from "@app/util/SessionUtils";
 
@@ -35,11 +34,12 @@ import {isUser} from "@app/util/SessionUtils";
 export class NavigationService {
 
 	constructor(private readonly router: Router,
-	            private readonly sessionService: SessionService,
-	            private readonly userHeaderService: UserHeaderService) {
+	            private readonly sessionService: SessionService) {
 		sessionService.session$.subscribe(async (session) => {
 			if (isUser(session)) {
 				await this.navigateToLast();
+			} else {
+				await this.home();
 			}
 		})
 	}

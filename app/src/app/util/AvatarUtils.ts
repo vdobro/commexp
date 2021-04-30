@@ -19,27 +19,20 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {User} from "@app/model/user";
 
-import {HeaderComponent} from './header.component';
-
-describe('HeaderComponent', () => {
-	let component: HeaderComponent;
-	let fixture: ComponentFixture<HeaderComponent>;
-
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
-			declarations: [HeaderComponent]
-		}).compileComponents();
-	});
-
-	beforeEach(() => {
-		fixture = TestBed.createComponent(HeaderComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
-});
+/**
+ * @author Vitalijus Dobrovolskis
+ * @since 2021.04.28
+ */
+export function generateColor(user: User, saturation: number, lightness: number): string {
+	let hash = 0;
+	let base = user.id.replace('-', '') + user.username;
+	for (let i = 0; i < base.length; i++) {
+		hash = base.charCodeAt(i) + ((hash << 5) - hash);
+	}
+	let h = hash % 360;
+	let s = Math.min(saturation, 100);
+	let l = Math.min(lightness, 100);
+	return `hsl(${h}, ${s}%, ${l}%)`;
+}

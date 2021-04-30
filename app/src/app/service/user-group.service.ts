@@ -65,6 +65,10 @@ export class UserGroupService {
 		}).toPromise();
 	}
 
+	async getUsers(group: UserGroup): Promise<User[]> {
+		return await this.httpClient.get<User[]>(`${GROUP_ROOT}/${group.id}/users`).toPromise();
+	}
+
 	async acceptInvitation(invitation: string): Promise<UserGroup> {
 		return await this.httpClient.post<UserGroup>(`${GROUP_JOIN}/${invitation}`, {}).toPromise();
 	}

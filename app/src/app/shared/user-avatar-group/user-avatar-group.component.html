@@ -1,0 +1,6 @@
+<p-avatarGroup>
+	<p-avatar *ngFor="let user of users"
+	          shape="circle"
+	          [style]="{'background-color': getColor(user), 'color': '#ffffff'}"
+	          label="{{user.name.substr(0, 1).toUpperCase()}}"></p-avatar>
+</p-avatarGroup>

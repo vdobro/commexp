@@ -19,27 +19,31 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {Component, Input, OnInit} from '@angular/core';
+import {User} from "@app/model/user";
+import {generateColor} from "@app/util/AvatarUtils";
 
-import {HeaderComponent} from './header.component';
+/**
+ * @author Vitalijus Dobrovolskis
+ * @since 2021.04.28
+ */
+@Component({
+	selector: 'app-user-avatar-group',
+	templateUrl: './user-avatar-group.component.html',
+	styleUrls: ['./user-avatar-group.component.scss']
+})
+export class UserAvatarGroupComponent implements OnInit {
 
-describe('HeaderComponent', () => {
-	let component: HeaderComponent;
-	let fixture: ComponentFixture<HeaderComponent>;
+	@Input()
+	users: User[] = [];
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
-			declarations: [HeaderComponent]
-		}).compileComponents();
-	});
+	constructor() {
+	}
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(HeaderComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+	ngOnInit(): void {
+	}
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
-});
+	getColor(user: User): string {
+		return generateColor(user, 30, 50);
+	}
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,13 +19,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Component, OnInit} from '@angular/core';
-import {HeaderService} from "@app/service/state/header.service";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {SessionService} from "@app/service/state/session.service";
 import {isUser} from "@app/util/SessionUtils";
 import {UserGroup} from "@app/model/user-group";
 import {Session} from "@app/model/user-session";
-import {GroupSessionService} from "@app/service/state/group.service";
+import {MenuItem} from "primeng/api";
+import {HeaderService} from "@app/service/state/header.service";
+import {UserGroupService} from "@app/service/user-group.service";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -34,43 +35,38 @@ import {GroupSessionService} from "@app/service/state/group.service";
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
-	styleUrls: ['./header.component.scss']
+	styleUrls: ['./header.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
+
+	menuItems: MenuItem[] = [];
 
 	userLoggedIn = false;
 	name = '';
 
-	groups: UserGroup[] = [];
-	activeGroup: UserGroup | null = null;
-
-	constructor(public readonly headerService: HeaderService,
-	            public readonly sessionService: SessionService,
-	            private readonly groupSessionService: GroupSessionService,
+	constructor(private readonly sessionService: SessionService,
+	            private readonly headerService: HeaderService,
+	            private readonly groupService: UserGroupService,
+	            private readonly cdr: ChangeDetectorRef,
 	) {
+		this.menuItems = this.headerService.items;
 		this.sessionService.session$.subscribe((session: Session) => {
 			if (isUser(session)) {
 				this.name = session.name;
 				this.userLoggedIn = true;
 			} else {
-				this.userLoggedIn = false;
 				this.name = '';
+				this.userLoggedIn = false;
 			}
+			this.cdr.markForCheck();
 		});
-		this.groupSessionService.myGroups$.subscribe(groups => {
-			this.groups = groups;
-		})
-		this.groupSessionService.activeGroup$.subscribe((group) => {
-			this.activeGroup = group;
-		})
 	}
 
 	ngOnInit(): void {
 	}
 
-	async onChangeSelection() {
-		if (this.activeGroup) {
-			await this.groupSessionService.selectGroup(this.activeGroup);
-		}
+	async changeActiveGroup(group: UserGroup) {
+		await this.groupService.setDefault(group);
 	}
 }

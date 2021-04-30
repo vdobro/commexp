@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,6 +21,12 @@
 
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {PanelModule} from 'primeng/panel';
+import {ButtonModule} from 'primeng/button';
+import {CardModule} from "primeng/card";
+import {RippleModule} from "primeng/ripple";
+
+import {SharedModule} from "@app/shared/shared.module";
 
 import {GroupsRoutingModule} from './groups-routing.module';
 import {GroupListComponent} from './group-list/group-list.component';
@@ -33,10 +39,20 @@ import {CreateGroupInvitationComponent} from './create-group-invitation/create-g
  * @since 2021.01.10
  */
 @NgModule({
-	declarations: [GroupListComponent, CreateGroupComponent, AcceptGroupInvitationComponent, CreateGroupInvitationComponent],
+	declarations: [
+		GroupListComponent,
+		CreateGroupComponent,
+		AcceptGroupInvitationComponent,
+		CreateGroupInvitationComponent
+	],
 	imports: [
+		ButtonModule,
 		CommonModule,
-		GroupsRoutingModule
+		GroupsRoutingModule,
+		PanelModule,
+		CardModule,
+		SharedModule,
+		RippleModule,
 	]
 })
 export class GroupsModule {

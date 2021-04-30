@@ -1,9 +1,7 @@
-<p-menubar [model]="(headerService.$items | async) || []">
+<p-menubar [model]="menuItems || []">
 	<ng-template pTemplate="end">
-		<p-dropdown *ngIf="groups.length > 0"
-		            [options]="groups"
-		            [(ngModel)]="activeGroup"
-		            (onChange)="onChangeSelection()"
-		            optionLabel="name"></p-dropdown>
+		<app-group-switcher *ngIf="userLoggedIn"
+		                    (groupSelect)="changeActiveGroup($event)">
+		</app-group-switcher>
 	</ng-template>
 </p-menubar>

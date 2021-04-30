@@ -1,7 +1,6 @@
-<div [hidden]="!authenticated">
+<div [hidden]="!(authenticated | async)">
 	<p>Greeting</p>
 </div>
-<div [hidden]="authenticated">
-	<p></p>
+<div [hidden]="(authenticated | async)">
 	<p>Login to see your greeting</p>
 </div>

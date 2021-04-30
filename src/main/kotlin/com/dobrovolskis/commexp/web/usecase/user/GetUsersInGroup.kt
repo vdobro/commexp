@@ -19,31 +19,26 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+package com.dobrovolskis.commexp.web.usecase.user
 
-import {LoginComponent} from './login.component';
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.service.UserGroupService
+import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.04.28
  */
-describe('LoginComponent', () => {
-	let component: LoginComponent;
-	let fixture: ComponentFixture<LoginComponent>;
-
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
-			declarations: [LoginComponent]
-		}).compileComponents();
-	});
-
-	beforeEach(() => {
-		fixture = TestBed.createComponent(LoginComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
-});
+@Service
+@Transactional(readOnly = true)
+class GetUsersInGroup(private val groupService: UserGroupService) : BaseRequestHandler<UUID, List<User>> {
+	override operator fun invoke(currentUser: User, request: UUID): List<User> {
+		val group = groupService.find(request)
+		verifyAccessToGroup(currentUser, group)
+		return group.users().toList()
+	}
+}

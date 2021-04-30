@@ -1,1 +1,14 @@
-<h5>Gruppen</h5>
+<div class="p-grid">
+	<div class="p-col">
+		<button pButton icon="pi pi-plus" label="Create new"></button>
+		<button pButton
+		        class="p-ml-2"
+		        icon="pi pi-key"
+		        label="Join existing"></button>
+	</div>
+	<div *ngFor="let group of groups" class="p-col-12">
+		<p-card pRipple header="{{group.name}}">
+			<app-user-avatar-group [users]="group.users"></app-user-avatar-group>
+		</p-card>
+	</div>
+</div>

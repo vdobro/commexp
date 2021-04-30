@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -23,6 +23,7 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {SessionService} from "@app/service/state/session.service";
 import {map} from "rxjs/operators";
+import {isUser} from "@app/util/SessionUtils";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -39,8 +40,7 @@ export class HomeComponent implements OnInit {
 
 	constructor(private readonly session: SessionService) {
 		this.authenticated = this.session.session$.pipe(
-			map(user => user != null)
-		);
+			map(user => isUser(user)));
 	}
 
 	ngOnInit(): void {

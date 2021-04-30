@@ -21,20 +21,25 @@
 
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {HeaderComponent} from './header.component';
+import {GroupSwitcherComponent} from './group-switcher.component';
 
-describe('HeaderComponent', () => {
-	let component: HeaderComponent;
-	let fixture: ComponentFixture<HeaderComponent>;
+/**
+ * @author Vitalijus Dobrovolskis
+ * @since 2021.04.29
+ */
+describe('GroupSwitcherComponent', () => {
+	let component: GroupSwitcherComponent;
+	let fixture: ComponentFixture<GroupSwitcherComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [HeaderComponent]
-		}).compileComponents();
+			declarations: [GroupSwitcherComponent]
+		})
+			.compileComponents();
 	});
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(HeaderComponent);
+		fixture = TestBed.createComponent(GroupSwitcherComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
