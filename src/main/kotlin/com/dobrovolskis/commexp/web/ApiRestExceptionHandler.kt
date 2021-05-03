@@ -24,7 +24,7 @@ package com.dobrovolskis.commexp.web
 import com.dobrovolskis.commexp.exception.ResourceAccessError
 import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpStatus.BAD_REQUEST
+import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.FORBIDDEN
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.HttpStatus.UNAUTHORIZED
@@ -43,28 +43,31 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 class ApiRestExceptionHandler : ResponseEntityExceptionHandler() {
 
 	@ExceptionHandler(IllegalArgumentException::class)
-	protected fun handleException(e: IllegalArgumentException, request: WebRequest): ResponseEntity<Any> {
-		val msg = ValidationResponse(e.message ?: FALLBACK_ERROR_MESSAGE)
-		return handleExceptionInternal(e as Exception, msg, headers(), BAD_REQUEST, request)
-	}
+	protected fun handleException(e: IllegalArgumentException, request: WebRequest): ResponseEntity<Any> =
+		handle(e, FORBIDDEN, request)
 
 	@ExceptionHandler(ResourceNotFoundError::class)
-	protected fun handleException(e: ResourceNotFoundError, request: WebRequest) : ResponseEntity<Any> {
-		val msg = ValidationResponse(e.message ?: FALLBACK_ERROR_MESSAGE)
-		return handleExceptionInternal(e as Exception, msg, headers(), NOT_FOUND, request)
-	}
+	protected fun handleException(e: ResourceNotFoundError, request: WebRequest): ResponseEntity<Any> =
+		handle(e, NOT_FOUND, request)
 
 	@ExceptionHandler(ResourceAccessError::class)
-	protected fun handleException(e: ResourceAccessError, request: WebRequest): ResponseEntity<Any> {
-		val msg = ValidationResponse(e.message ?: FALLBACK_ERROR_MESSAGE)
-		return handleExceptionInternal(e as Exception, msg, headers(), FORBIDDEN, request)
-	}
+	protected fun handleException(e: ResourceAccessError, request: WebRequest): ResponseEntity<Any> =
+		handle(e, FORBIDDEN, request)
 
 	@ExceptionHandler(IllegalStateException::class)
-	protected fun handleException(e: IllegalStateException, request: WebRequest): ResponseEntity<Any> {
-		val msg = ValidationResponse(e.message ?: FALLBACK_ERROR_MESSAGE)
-		return handleExceptionInternal(e as Exception, msg, headers(), UNAUTHORIZED, request)
-	}
+	protected fun handleException(e: IllegalStateException, request: WebRequest): ResponseEntity<Any> =
+		handle(e, UNAUTHORIZED, request)
+
+	private fun handle(
+		cause: Throwable,
+		status: HttpStatus,
+		request: WebRequest
+	) = handleExceptionInternal(
+		cause as Exception,
+		ValidationResponse(cause.message ?: FALLBACK_ERROR_MESSAGE),
+		headers(),
+		status, request
+	)
 }
 
 private fun headers(): HttpHeaders {
