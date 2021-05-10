@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {SessionService} from "@app/service/state/session.service";
 import {isUser} from "@app/util/SessionUtils";
 import {UserGroup} from "@app/model/user-group";
@@ -37,12 +37,15 @@ import {UserGroupService} from "@app/service/user-group.service";
 	templateUrl: './header.component.html',
 	styleUrls: ['./header.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent implements OnInit {
 
 	menuItems: MenuItem[] = [];
 
 	userLoggedIn = false;
+	hideGroupSwitcher = false;
+
 	name = '';
 
 	constructor(private readonly sessionService: SessionService,

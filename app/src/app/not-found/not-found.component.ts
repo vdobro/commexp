@@ -19,26 +19,27 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Injectable} from '@angular/core';
-import {Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {NavigationService} from "@app/service/navigation.service";
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.05.10
  */
-@Injectable({
-	providedIn: 'root'
+@Component({
+	selector: 'app-not-found',
+	templateUrl: './not-found.component.html',
+	styleUrls: ['./not-found.component.scss']
 })
-export class NavigationService {
+export class NotFoundComponent implements OnInit {
 
-	constructor(private readonly router: Router) {
+	constructor(private readonly navigation: NavigationService) {
 	}
 
-	async home() {
-		await this.router.navigate(['']);
+	ngOnInit(): void {
 	}
 
-	async editGroup(id: string) {
-		await this.router.navigate(['groups', id, 'edit']);
+	async goHome() {
+		await this.navigation.home();
 	}
 }

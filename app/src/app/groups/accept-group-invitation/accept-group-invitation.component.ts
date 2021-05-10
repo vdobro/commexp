@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -32,10 +32,19 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AcceptGroupInvitationComponent implements OnInit {
 
+	model = {
+		invitationId: ''
+	};
+
+	tokenError: boolean = false;
+
 	constructor() {
 	}
 
 	ngOnInit(): void {
 	}
 
+	async submit() {
+
+	}
 }

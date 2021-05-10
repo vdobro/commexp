@@ -21,31 +21,28 @@
 
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+
+import {UserGroup} from "@app/model/user-group";
 import {UserGroupService} from "@app/service/user-group.service";
 import {GROUP_ID_PARAM} from "@app/groups/links";
-import {UserGroup} from "@app/model/user-group";
-import {Clipboard} from "@angular/cdk/clipboard";
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.05.10
  */
 @Component({
-	selector: 'app-create-group-invitation',
-	templateUrl: './create-group-invitation.component.html',
-	styleUrls: ['./create-group-invitation.component.scss']
+	selector: 'app-edit-group',
+	templateUrl: './edit-group.component.html',
+	styleUrls: ['./edit-group.component.scss']
 })
-export class CreateGroupInvitationComponent implements OnInit {
+export class EditGroupComponent implements OnInit {
 
-	initializing = false;
 	group: UserGroup | null = null;
 
-	invitationId: string | null = null;
-	loadingCode = false;
+	initializing = false;
 
 	constructor(private readonly route: ActivatedRoute,
-	            private readonly groupService: UserGroupService,
-	            private readonly clipboard: Clipboard) {
+	            private readonly groupService: UserGroupService) {
 	}
 
 	ngOnInit(): void {
@@ -58,21 +55,5 @@ export class CreateGroupInvitationComponent implements OnInit {
 		this.initializing = true;
 		this.group = await this.groupService.get(groupId);
 		this.initializing = false;
-	}
-
-	async requestInvitation() {
-		if (!this.group) {
-			return;
-		}
-		this.loadingCode = true;
-		const result = await this.groupService.inviteUser(this.group);
-		this.invitationId = result.code;
-		this.loadingCode = false;
-	}
-
-	copyCode() {
-		if (this.invitationId != null) {
-			this.clipboard.copy(this.invitationId);
-		}
 	}
 }

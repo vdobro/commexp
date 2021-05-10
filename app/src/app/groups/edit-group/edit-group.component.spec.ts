@@ -19,26 +19,31 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Injectable} from '@angular/core';
-import {Router} from "@angular/router";
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+
+import {EditGroupComponent} from './edit-group.component';
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.05.10
  */
-@Injectable({
-	providedIn: 'root'
-})
-export class NavigationService {
+describe('EditGroupComponent', () => {
+	let component: EditGroupComponent;
+	let fixture: ComponentFixture<EditGroupComponent>;
 
-	constructor(private readonly router: Router) {
-	}
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			declarations: [EditGroupComponent]
+		}).compileComponents();
+	});
 
-	async home() {
-		await this.router.navigate(['']);
-	}
+	beforeEach(() => {
+		fixture = TestBed.createComponent(EditGroupComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-	async editGroup(id: string) {
-		await this.router.navigate(['groups', id, 'edit']);
-	}
-}
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
+});

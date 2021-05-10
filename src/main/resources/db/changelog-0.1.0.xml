@@ -251,10 +251,6 @@
 			        type="${type.id}">
 				<constraints nullable="false"/>
 			</column>
-			<column name="target_user_id"
-			        type="${type.id}">
-				<constraints nullable="false"/>
-			</column>
 		</createTable>
 	</changeSet>
 	<changeSet author="vd"
@@ -291,31 +287,28 @@
 				baseTableName="cx_user_group_invitation"
 				constraintName="fk_cx_user_group__invitation_creator_id_cx_user_id"
 				referencedColumnNames="id"
-				referencedTableName="cx_user"/>
+				referencedTableName="cx_user" />
 	</changeSet>
 	<changeSet author="vd"
 	           id="CE-1-o">
-		<addForeignKeyConstraint
-				baseColumnNames="target_user_id"
-				baseTableName="cx_user_group_invitation"
-				constraintName="fk_cx_user_group_invitation_target_user_id_cx_user_id"
-				referencedColumnNames="id"
-				referencedTableName="cx_user"/>
-	</changeSet>
-	<changeSet author="vd"
-	           id="CE-1-p">
 		<addForeignKeyConstraint
 				baseColumnNames="payer_id"
 				baseTableName="cx_invoice"
 				constraintName="fk_cx_invoice_payer_id_cx_user_id"
 				referencedColumnNames="id"
 				referencedTableName="cx_user"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-p">
 		<addForeignKeyConstraint
 				baseColumnNames="receiver_id"
 				baseTableName="cx_invoice"
 				constraintName="fk_cx_invoice_receiver_id_cx_user_id"
 				referencedColumnNames="id"
 				referencedTableName="cx_user"/>
+	</changeSet>
+	<changeSet author="vd"
+	           id="CE-1-q">
 		<addForeignKeyConstraint
 				baseColumnNames="group_id"
 				baseTableName="cx_invoice"
@@ -324,7 +317,7 @@
 				referencedTableName="cx_user_group"/>
 	</changeSet>
 	<changeSet author="vd"
-	           id="CE-1-q">
+	           id="CE-1-r">
 		<addForeignKeyConstraint
 				baseColumnNames="user_id"
 				baseTableName="cx_purchase"
@@ -333,7 +326,7 @@
 				referencedTableName="cx_user"/>
 	</changeSet>
 	<changeSet author="vd"
-	           id="CE-1-r">
+	           id="CE-1-s">
 		<addForeignKeyConstraint
 				baseColumnNames="user_id"
 				baseTableName="cx_purchase_item__user"
@@ -342,7 +335,7 @@
 				referencedTableName="cx_user"/>
 	</changeSet>
 	<changeSet author="vd"
-	           id="CE-1-s">
+	           id="CE-1-t">
 		<addForeignKeyConstraint
 				baseColumnNames="creator_id"
 				baseTableName="cx_purchase"
@@ -351,14 +344,14 @@
 				referencedTableName="cx_user"/>
 	</changeSet>
 	<changeSet author="vd"
-	           id="CE-1-t">
+	           id="CE-1-u">
 		<addUniqueConstraint
 				columnNames="username"
 				constraintName="uq_cx_user_username"
 				tableName="cx_user"/>
 	</changeSet>
 	<changeSet author="vd"
-	           id="CE-1-u">
+	           id="CE-1-v">
 		<addForeignKeyConstraint
 				baseColumnNames="purchase_item_id"
 				baseTableName="cx_purchase_item__user"
@@ -367,7 +360,7 @@
 				referencedTableName="cx_purchase_item"/>
 	</changeSet>
 	<changeSet author="vd"
-	           id="CE-1-v">
+	           id="CE-1-w">
 		<addForeignKeyConstraint
 				baseColumnNames="user_group_id"
 				baseTableName="cx_user_group__user"
@@ -376,7 +369,7 @@
 				referencedTableName="cx_user_group"/>
 	</changeSet>
 	<changeSet author="vd"
-	           id="CE-1-w">
+	           id="CE-1-x">
 		<addForeignKeyConstraint
 				baseColumnNames="group_id"
 				baseTableName="cx_user_group_invitation"
@@ -385,7 +378,7 @@
 				referencedTableName="cx_user_group"/>
 	</changeSet>
 	<changeSet author="vd"
-	           id="CE-1-x">
+	           id="CE-1-y">
 		<addForeignKeyConstraint
 				baseColumnNames="group_id"
 				baseTableName="cx_purchase"
@@ -393,19 +386,19 @@
 				referencedColumnNames="id"
 				referencedTableName="cx_user_group"/>
 	</changeSet>
-	<changeSet id="CE-1-y"
+	<changeSet id="CE-1-z"
 	           author="vd">
 		<addPrimaryKey tableName="cx_user_group__user"
 		               columnNames="user_group_id, user_id"
 		               constraintName="pk_cx_user_group__user"/>
 	</changeSet>
-	<changeSet id="CE-1-z"
+	<changeSet id="CE-1-aa"
 	           author="vd">
 		<addPrimaryKey tableName="cx_purchase_item__user"
 		               columnNames="user_id, purchase_item_id"
 		               constraintName="pk_cx_purchase_item__user"/>
 	</changeSet>
-	<changeSet id="CE-1-aa"
+	<changeSet id="CE-1-ab"
 	           author="vd">
 		<addForeignKeyConstraint baseTableName="cx_shop"
 		                         baseColumnNames="group_id"
@@ -413,7 +406,7 @@
 		                         referencedTableName="cx_user_group"
 		                         referencedColumnNames="id"/>
 	</changeSet>
-	<changeSet id="CE-1-ab"
+	<changeSet id="CE-1-ac"
 	           author="vd">
 		<createTable tableName="cx_payment">
 			<column name="id"
@@ -440,7 +433,7 @@
 			</column>
 		</createTable>
 	</changeSet>
-	<changeSet id="CE-1-ac"
+	<changeSet id="CE-1-ad"
 	           author="vd">
 		<addForeignKeyConstraint
 				baseColumnNames="payer_id"
@@ -448,6 +441,9 @@
 				constraintName="cx_payment_payer_id_cx_user_id"
 				referencedColumnNames="id"
 				referencedTableName="cx_user"/>
+	</changeSet>
+	<changeSet id="CE-1-ae"
+	           author="vd">
 		<addForeignKeyConstraint
 				baseColumnNames="receiver_id"
 				baseTableName="cx_payment"
@@ -455,7 +451,7 @@
 				referencedColumnNames="id"
 				referencedTableName="cx_user"/>
 	</changeSet>
-	<changeSet id="CE-1-ad"
+	<changeSet id="CE-1-af"
 	           author="vd">
 		<createTable tableName="cx_import">
 			<column name="id"
@@ -474,7 +470,7 @@
 			</column>
 		</createTable>
 	</changeSet>
-	<changeSet id="CE-1-ae"
+	<changeSet id="CE-1-ag"
 	           author="vd">
 		<addForeignKeyConstraint baseTableName="cx_import"
 		                         baseColumnNames="imported_by"
@@ -482,7 +478,7 @@
 		                         referencedTableName="cx_user"
 		                         referencedColumnNames="id"/>
 	</changeSet>
-	<changeSet id="CE-1-af"
+	<changeSet id="CE-1-ah"
 	           author="vd">
 		<createTable tableName="cx_imported_entity">
 			<column name="id"
@@ -509,7 +505,7 @@
 			</column>
 		</createTable>
 	</changeSet>
-	<changeSet id="CE-1-ag"
+	<changeSet id="CE-1-ai"
 	           author="vd">
 		<addForeignKeyConstraint
 				baseTableName="cx_imported_entity"
@@ -518,7 +514,7 @@
 				referencedTableName="cx_import"
 				referencedColumnNames="id"/>
 	</changeSet>
-	<changeSet id="CE-1-ah"
+	<changeSet id="CE-1-aj"
 	           author="vd">
 		<createTable tableName="cx_invoice_item">
 			<column name="id"
@@ -541,7 +537,7 @@
 			</column>
 		</createTable>
 	</changeSet>
-	<changeSet id="CE-1-ai"
+	<changeSet id="CE-1-ak"
 	           author="vd">
 		<addForeignKeyConstraint
 				baseTableName="cx_invoice_item"
@@ -550,7 +546,7 @@
 				referencedTableName="cx_invoice"
 				referencedColumnNames="id"/>
 	</changeSet>
-	<changeSet id="CE-1-aj"
+	<changeSet id="CE-1-al"
 	           author="vd">
 		<addForeignKeyConstraint
 				baseTableName="cx_invoice_item"

@@ -19,22 +19,33 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.assembler
+package com.dobrovolskis.commexp.web.usecase.user
 
+import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserInvitation
-import com.dobrovolskis.commexp.web.dto.UserInvitationDto
+import com.dobrovolskis.commexp.service.UserGroupService
+import com.dobrovolskis.commexp.web.request.GroupInvitationRequest
+import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.03.23
+ * @since 2020.12.06
  */
 @Service
-@Transactional(readOnly = true)
-class InvitationAssembler {
-	fun toDto(invitation: UserInvitation) = UserInvitationDto(
-		code = invitation.id()!!.toString(),
-		groupName = invitation.group.name
-	)
+@Transactional
+class CreateInvitationToGroup(private val groupService: UserGroupService) :
+	BaseRequestHandler<GroupInvitationRequest, UserInvitation> {
+
+	override fun invoke(currentUser: User, request: GroupInvitationRequest): UserInvitation {
+		val group = groupService.find(request.groupId)
+		verifyAccessToGroup(currentUser, group)
+
+		return groupService.createInvitation(
+			group = group,
+			invitedBy = currentUser,
+		)
+	}
 }

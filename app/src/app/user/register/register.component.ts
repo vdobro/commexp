@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,6 +21,9 @@
 
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "@app/service/auth.service";
+import {SessionService} from "@app/service/state/session.service";
+import {map} from "rxjs/operators";
+import {RequestStatus} from "@app/model/request-status";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -44,8 +47,13 @@ export class RegisterComponent implements OnInit {
 	passwordMismatch = false;
 
 	error: string = '';
+	loading = false;
 
-	constructor(private readonly authService: AuthService) {
+	constructor(private readonly authService: AuthService,
+	            private readonly sessionService: SessionService) {
+		this.sessionService.state$
+			.pipe(map(x => x.status === RequestStatus.LOADING))
+			.subscribe(x => this.loading = x);
 	}
 
 	ngOnInit(): void {
@@ -53,7 +61,7 @@ export class RegisterComponent implements OnInit {
 
 	async submit() {
 		if (this.model.password == this.model.passwordConfirmation) {
-			const result = await this.authService.createNew(
+			await this.authService.createNew(
 				this.model.name,
 				this.model.username,
 				this.model.password);

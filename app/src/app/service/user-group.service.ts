@@ -24,6 +24,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "@environments/environment";
 import {UserGroup} from "@app/model/user-group";
 import {User} from "@app/model/user";
+import {Observable, Subject} from "rxjs";
 
 const GROUP_ROOT = environment.apiUrl + "/group";
 const GROUP_LIST = GROUP_ROOT;
@@ -41,6 +42,9 @@ const GROUP_DEFAULT = GROUP_ROOT + "/default";
 })
 export class UserGroupService {
 
+	private readonly _groupsChanged = new Subject<any>();
+	readonly $groupsChanged: Observable<any> = this._groupsChanged.asObservable();
+
 	constructor(private readonly httpClient: HttpClient,) {
 	}
 
@@ -49,18 +53,19 @@ export class UserGroupService {
 	}
 
 	async create(name: string): Promise<UserGroup> {
-		return await this.httpClient.post<UserGroup>(GROUP_CREATE, {
+		const result = await this.httpClient.post<UserGroup>(GROUP_CREATE, {
 			name: name
 		}).toPromise();
+		this._groupsChanged.next();
+		return result;
 	}
 
 	async get(id: string): Promise<UserGroup> {
 		return await this.httpClient.get<UserGroup>(`${GROUP_ROOT}/${id}`).toPromise();
 	}
 
-	async inviteUser(group: UserGroup, user: User): Promise<InvitationDetails> {
+	async inviteUser(group: UserGroup): Promise<InvitationDetails> {
 		return await this.httpClient.post<InvitationDetails>(GROUP_INVITE_USER, {
-			username: user.username,
 			groupId: group.id,
 		}).toPromise();
 	}
@@ -70,7 +75,9 @@ export class UserGroupService {
 	}
 
 	async acceptInvitation(invitation: string): Promise<UserGroup> {
-		return await this.httpClient.post<UserGroup>(`${GROUP_JOIN}/${invitation}`, {}).toPromise();
+		const result = await this.httpClient.post<UserGroup>(`${GROUP_JOIN}/${invitation}`, {}).toPromise();
+		this._groupsChanged.next();
+		return result;
 	}
 
 	async getDefault(): Promise<UserGroup | null> {
@@ -85,6 +92,5 @@ export class UserGroupService {
 
 export interface InvitationDetails {
 	code: string,
-	invitedUser: string,
 	groupName: string,
 }

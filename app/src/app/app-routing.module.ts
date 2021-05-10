@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -23,11 +23,13 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "@app/home/home.component";
 import {ROOT_GROUPS, ROOT_USER} from "@app/util/UrlConfig";
+import {NotFoundComponent} from "@app/not-found/not-found.component";
 
 const routes: Routes = [
 	{path: ROOT_GROUPS, loadChildren: () => import('./groups/groups.module').then(m => m.GroupsModule)},
 	{path: ROOT_USER, loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
 	{path: '', component: HomeComponent, pathMatch: 'full'},
+	{path: '**', component: NotFoundComponent}
 ];
 
 /**

@@ -1,1 +1,12 @@
-<p>create-group-invitation works!</p>
+<div *ngIf="group">
+	<h2>Invite to group {{group.name}}</h2>
+	<p-button *ngIf="!invitationId"
+	          label="Create code"
+	          (click)="requestInvitation()"
+	          [loading]="loadingCode"></p-button>
+	<p *ngIf="invitationId">Code: {{invitationId}}</p>
+	<p-button *ngIf="invitationId"
+	          label="Copy code"
+	          (click)="copyCode()"></p-button>
+</div>
+<p-skeleton *ngIf="initializing"></p-skeleton>

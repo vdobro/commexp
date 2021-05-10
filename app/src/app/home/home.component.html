@@ -1,6 +1,7 @@
+<h2>Welcome to <i>commexp</i>, version {{appVersion}}</h2>
 <div [hidden]="!(authenticated | async)">
-	<p>Greeting</p>
+	<p>Hello, {{displayName | async}}.</p>
 </div>
 <div [hidden]="(authenticated | async)">
-	<p>Login to see your greeting</p>
+	<p>Log in to use the application or create a new user to get started.</p>
 </div>

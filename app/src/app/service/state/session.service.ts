@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -20,8 +20,10 @@
  */
 
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Session, UserSession} from "@app/model/user-session";
+import {RequestStatus} from "@app/model/request-status";
+import {map} from "rxjs/operators";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -32,26 +34,28 @@ import {Session, UserSession} from "@app/model/user-session";
 })
 export class SessionService {
 
-	private readonly _session = new BehaviorSubject<Session>({});
+	private readonly _session = new BehaviorSubject<SessionState>({
+		session: {},
+		status: RequestStatus.IDLE
+	});
 
-	readonly session$ = this._session.asObservable();
-
-	get currentSession(): Session {
-		return this._session.getValue();
-	}
-
-	constructor() {
-	}
+	readonly state$: Observable<SessionState> = this._session.asObservable();
+	readonly session$: Observable<Session> = this.state$.pipe(map(x => x.session));
 
 	reset() {
-		this.setSession({});
+		this._session.next({session: {}, status: RequestStatus.IDLE});
 	}
 
-	async setUser(user: UserSession) {
-		this.setSession(user);
+	load() {
+		this._session.next({session: {}, status: RequestStatus.LOADING})
 	}
 
-	private setSession(val: Session) {
-		this._session.next(val);
+	setUser(user: UserSession) {
+		this._session.next({session: user, status: RequestStatus.IDLE});
 	}
+}
+
+export interface SessionState {
+	status: RequestStatus,
+	session: Session
 }

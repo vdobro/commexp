@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -30,6 +30,7 @@ import com.dobrovolskis.commexp.repository.UserInvitationRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.ZonedDateTime
 import java.util.UUID
 
 /**
@@ -57,41 +58,34 @@ class UserGroupService(
 		require(repository.existsById(group.id()!!)) {
 			"Group does not exist"
 		}
-		if (group.users().contains(user)) {
-			return group
+		require (!group.users().contains(user)) {
+			"User already in group"
 		}
 		group.addUser(user)
 		return repository.save(group)
 	}
 
-	fun inviteUser(
+	fun createInvitation(
 		group: UserGroup,
 		invitedBy: User,
-		userToInvite: User
 	): UserInvitation {
-		require(!userToInvite.isInGroup(group)) {
-			"User is already in the group"
-		}
-		require(
-			!invitationRepository.existsByTargetAndGroupAndAcceptedIsNull(
-				target = userToInvite,
-				group = group
-			)
-		) {
-			"User already invited to the group"
-		}
 		require(invitedBy.isInGroup(group)) {
-			"User cannot invite to a group they are not a part of"
-		}
-		require(invitedBy != userToInvite) {
-			"User cannot invite themselves"
+			"User cannot invite to a group they are not themselves a part of"
 		}
 		return invitationRepository.save(
 			UserInvitation(
 				creator = invitedBy,
-				target = userToInvite,
 				group = group
 			)
 		)
+	}
+
+	fun acceptInvitation(user: User,
+	                     invitation: UserInvitation): UserGroup {
+		val group = invitation.group
+		invitation.accepted = ZonedDateTime.now()
+		val resultingGroup = addUser(group, user)
+		invitationRepository.save(invitation)
+		return resultingGroup
 	}
 }

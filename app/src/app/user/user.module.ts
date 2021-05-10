@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,16 +21,17 @@
 
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-
-import {UserRoutingModule} from './user-routing.module';
-import {UserComponent} from './user.component';
-import {LoginComponent} from './login/login.component';
-import {RegisterComponent} from './register/register.component';
 import {FormsModule} from "@angular/forms";
 
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {MessageModule} from 'primeng/message';
+import {PasswordModule} from 'primeng/password';
+
+import {UserRoutingModule} from './user-routing.module';
+import {UserComponent} from './user.component';
+import {LoginComponent} from './login/login.component';
+import {RegisterComponent} from './register/register.component';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -43,6 +44,7 @@ import {MessageModule} from 'primeng/message';
 		UserRoutingModule,
 		FormsModule,
 		ButtonModule,
+		PasswordModule,
 		InputTextModule,
 		MessageModule
 	],

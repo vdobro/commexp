@@ -1,14 +1,23 @@
 <div class="p-grid">
 	<div class="p-col">
-		<button pButton icon="pi pi-plus" label="Create new"></button>
-		<button pButton
-		        class="p-ml-2"
-		        icon="pi pi-key"
+		<button pButton icon="pi pi-plus"
+		        routerLink="new"
+		        label="Create new"></button>
+		<button pButton class="p-ml-2" icon="pi pi-sign-in"
+		        routerLink="join"
 		        label="Join existing"></button>
 	</div>
 	<div *ngFor="let group of groups" class="p-col-12">
-		<p-card pRipple header="{{group.name}}">
+		<p-card [header]="group.name">
 			<app-user-avatar-group [users]="group.users"></app-user-avatar-group>
+			<ng-template pTemplate="footer">
+				<button pButton icon="pi pi-user-plus"
+				        routerLink="{{group.id}}/invite"
+				        label="Invite user"></button>
+				<button pButton icon="pi pi-user-edit" class="p-ml-2 p-button-outlined"
+				        routerLink="{{group.id}}/edit"
+				        label="Edit"></button>
+			</ng-template>
 		</p-card>
 	</div>
 </div>

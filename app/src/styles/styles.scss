@@ -6,6 +6,10 @@
 @import 'mixins';
 @import 'custom';
 
-h1, h2, h3, h4, h5, p, span, div {
+* {
 	font-family: $font-family;
+}
+
+body {
+	margin: 0;
 }

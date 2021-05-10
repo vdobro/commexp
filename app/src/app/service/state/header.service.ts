@@ -26,6 +26,7 @@ import {AuthService} from "@app/service/auth.service";
 import {Session} from "@app/model/user-session";
 import {isUser} from "@app/util/SessionUtils";
 import {PATH_LOGIN, PATH_REGISTER, ROOT_GROUPS, ROOT_USER} from "@app/util/UrlConfig";
+import {NavigationService} from "@app/service/navigation.service";
 
 const LOGIN = `/${ROOT_USER}/${PATH_LOGIN}`;
 const REGISTER = `/${ROOT_USER}/${PATH_REGISTER}`;
@@ -55,6 +56,7 @@ export class HeaderService {
 		icon: 'pi pi-power-off',
 		command: async _ => {
 			await this.authService.logout();
+			await this.navigationService.home();
 		}
 	};
 	private readonly groupsButton: MenuItem = {
@@ -73,6 +75,7 @@ export class HeaderService {
 	}
 
 	constructor(
+		private readonly navigationService: NavigationService,
 		private readonly sessionService: SessionService,
 		private readonly authService: AuthService) {
 		this.updateButtons({});

@@ -19,26 +19,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Injectable} from '@angular/core';
-import {Router} from "@angular/router";
-
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.05.10
  */
-@Injectable({
-	providedIn: 'root'
-})
-export class NavigationService {
 
-	constructor(private readonly router: Router) {
-	}
+export const GROUP_ID_PARAM = "groupId";
 
-	async home() {
-		await this.router.navigate(['']);
-	}
+export const links = {
+	createGroup: `:${GROUP_ID_PARAM}/invite`,
+	editGroup: `:${GROUP_ID_PARAM}/edit`,
 
-	async editGroup(id: string) {
-		await this.router.navigate(['groups', id, 'edit']);
-	}
 }

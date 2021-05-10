@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,14 +21,11 @@
 
 package com.dobrovolskis.commexp.web.dto
 
-import java.util.UUID
-
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2020.12.06
  */
 data class UserInvitationDto(
 	val code: String,
-	val invitedUser: UUID,
 	val groupName: String
 )

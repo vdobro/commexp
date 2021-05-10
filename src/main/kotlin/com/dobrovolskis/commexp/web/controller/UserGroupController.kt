@@ -33,14 +33,14 @@ import com.dobrovolskis.commexp.web.dto.UserDto
 import com.dobrovolskis.commexp.web.dto.UserGroupDto
 import com.dobrovolskis.commexp.web.dto.UserInvitationDto
 import com.dobrovolskis.commexp.web.request.GroupCreationRequest
-import com.dobrovolskis.commexp.web.request.GroupUserRequest
-import com.dobrovolskis.commexp.web.usecase.user.AcceptInvitationToGroup
+import com.dobrovolskis.commexp.web.request.GroupInvitationRequest
 import com.dobrovolskis.commexp.web.usecase.user.CreateGroup
+import com.dobrovolskis.commexp.web.usecase.user.CreateInvitationToGroup
 import com.dobrovolskis.commexp.web.usecase.user.FindGroup
 import com.dobrovolskis.commexp.web.usecase.user.GetDefaultGroup
 import com.dobrovolskis.commexp.web.usecase.user.GetUserGroupList
 import com.dobrovolskis.commexp.web.usecase.user.GetUsersInGroup
-import com.dobrovolskis.commexp.web.usecase.user.InviteUserToGroup
+import com.dobrovolskis.commexp.web.usecase.user.JoinGroupWithInvitation
 import com.dobrovolskis.commexp.web.usecase.user.SetDefaultGroup
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
@@ -60,8 +60,8 @@ import javax.validation.Valid
 @RequestMapping(value = [PATH_USER_GROUPS])
 class UserGroupController(
 	private val createGroup: CreateGroup,
-	private val inviteUser: InviteUserToGroup,
-	private val acceptInvitationToGroup: AcceptInvitationToGroup,
+	private val createInvitationToGroup: CreateInvitationToGroup,
+	private val joinGroupWithInvitation: JoinGroupWithInvitation,
 	private val getUserGroupList: GetUserGroupList,
 	private val findGroup: FindGroup,
 	private val getDefaultGroup: GetDefaultGroup,
@@ -104,15 +104,15 @@ class UserGroupController(
 		method = [POST],
 		path = ["/invite"]
 	)
-	fun inviteUserToGroup(@RequestBody @Valid request: GroupUserRequest): UserInvitationDto =
-		mapToDto(inviteUser(getUser(), request))
+	fun createInvitation(@RequestBody @Valid request: GroupInvitationRequest): UserInvitationDto =
+		mapToDto(createInvitationToGroup(getUser(), request))
 
 	@RequestMapping(
 		method = [POST],
 		path = ["/join/{invitationId}"]
 	)
 	fun acceptInvitation(@PathVariable invitationId: UUID): UserGroupDto =
-		mapToDto(acceptInvitationToGroup(getUser(), invitationId))
+		mapToDto(joinGroupWithInvitation(getUser(), invitationId))
 
 	private fun mapToDto(userGroup: UserGroup) = groupAssembler.toDto(userGroup)
 

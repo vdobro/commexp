@@ -1,6 +1,6 @@
-<p-menubar [model]="menuItems || []">
+<p-menubar [baseZIndex]=2000 [model]="menuItems || []" styleClass="p-shadow-3">
 	<ng-template pTemplate="end">
-		<app-group-switcher *ngIf="userLoggedIn"
+		<app-group-switcher *ngIf="userLoggedIn && !hideGroupSwitcher"
 		                    (groupSelect)="changeActiveGroup($event)">
 		</app-group-switcher>
 	</ng-template>

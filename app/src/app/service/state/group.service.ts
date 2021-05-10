@@ -53,6 +53,9 @@ export class GroupSessionService {
 				this.setActive(null);
 			}
 		});
+		this.groupService.$groupsChanged.subscribe(async _ => {
+			await this.update();
+		});
 	}
 
 	async selectGroup(group: UserGroup) {

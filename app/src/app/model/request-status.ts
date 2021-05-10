@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,19 +19,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web.request
-
-import java.util.UUID
-import javax.validation.constraints.NotEmpty
-import javax.validation.constraints.NotNull
-
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2021.05.10
  */
-data class GroupUserRequest(
-	@NotEmpty
-	val username: String,
-	@NotNull
-	val groupId: UUID
-)
+export enum RequestStatus {
+	IDLE,
+	LOADING,
+}

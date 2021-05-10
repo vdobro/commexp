@@ -19,26 +19,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Injectable} from '@angular/core';
-import {Router} from "@angular/router";
+package com.dobrovolskis.commexp.web.request
+
+import java.util.UUID
+import javax.validation.constraints.NotNull
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2020.12.06
  */
-@Injectable({
-	providedIn: 'root'
-})
-export class NavigationService {
-
-	constructor(private readonly router: Router) {
-	}
-
-	async home() {
-		await this.router.navigate(['']);
-	}
-
-	async editGroup(id: string) {
-		await this.router.navigate(['groups', id, 'edit']);
-	}
-}
+data class GroupInvitationRequest(
+	@NotNull
+	val groupId: UUID
+)

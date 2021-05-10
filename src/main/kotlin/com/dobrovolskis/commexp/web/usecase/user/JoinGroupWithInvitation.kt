@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,15 +21,17 @@
 
 package com.dobrovolskis.commexp.web.usecase.user
 
+import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.model.UserGroup
 import com.dobrovolskis.commexp.model.UserInvitation
+import com.dobrovolskis.commexp.repository.UserInvitationRepository
 import com.dobrovolskis.commexp.service.UserGroupService
-import com.dobrovolskis.commexp.service.UserService
-import com.dobrovolskis.commexp.web.request.GroupUserRequest
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
-import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -37,22 +39,23 @@ import org.springframework.transaction.annotation.Transactional
  */
 @Service
 @Transactional
-class InviteUserToGroup(
-	private val groupService: UserGroupService,
-	private val userService: UserService,
-) : BaseRequestHandler<GroupUserRequest, UserInvitation> {
-	override fun invoke(currentUser: User, request: GroupUserRequest): UserInvitation {
-		val group = groupService.find(request.groupId)
-		verifyAccessToGroup(currentUser, group)
+class JoinGroupWithInvitation(
+	private val invitationRepository: UserInvitationRepository,
+	private val userGroupService: UserGroupService
+) : BaseRequestHandler<UUID, UserGroup> {
 
-		require(currentUser.username != request.username) {
-			"User cannot add themselves to another group"
+	override fun invoke(currentUser: User, request: UUID): UserGroup {
+		val invitation = validateAndFind(request)
+		return userGroupService.acceptInvitation(currentUser, invitation)
+	}
+
+	private fun validateAndFind(request: UUID): UserInvitation {
+		val invitation = invitationRepository.findByIdOrNull(request)
+			?: throw ResourceNotFoundError("Invitation $request not found")
+
+		require(invitation.accepted == null) {
+			"Invitation already accepted"
 		}
-		val userToInvite = userService.findByUsername(request.username)
-		return groupService.inviteUser(
-			group = group,
-			invitedBy = currentUser,
-			userToInvite = userToInvite
-		)
+		return invitation
 	}
 }

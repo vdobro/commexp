@@ -20,7 +20,9 @@
  */
 
 import {Component, OnInit} from '@angular/core';
+
 import {UserGroupService} from "@app/service/user-group.service";
+
 import {UserGroup} from "@app/model/user-group";
 import {User} from "@app/model/user";
 
