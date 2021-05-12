@@ -54,14 +54,23 @@ class UserGroupService(
 		)
 	)
 
+	fun renameGroup(group: UserGroup, name: String) = repository.save(
+		group.also { it.name = name }
+	)
+
 	fun addUser(group: UserGroup, user: User): UserGroup {
-		require(repository.existsById(group.id()!!)) {
-			"Group does not exist"
-		}
 		require (!group.users().contains(user)) {
 			"User already in group"
 		}
 		group.addUser(user)
+		return repository.save(group)
+	}
+
+	fun removeUser(group: UserGroup, user: User) : UserGroup {
+		require (group.users().contains(user)) {
+			"User not in group"
+		}
+		group.removeUser(user)
 		return repository.save(group)
 	}
 

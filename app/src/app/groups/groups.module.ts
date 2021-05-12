@@ -21,18 +21,20 @@
 
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from "@angular/forms";
+import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 
 import {PanelModule} from 'primeng/panel';
 import {ButtonModule} from 'primeng/button';
-import {CardModule} from "primeng/card";
-import {RippleModule} from "primeng/ripple";
-import {InputTextModule} from "primeng/inputtext";
-import {MessageModule} from "primeng/message";
+import {CardModule} from 'primeng/card';
+import {RippleModule} from 'primeng/ripple';
+import {InputTextModule} from 'primeng/inputtext';
+import {MessageModule} from 'primeng/message';
 import {SkeletonModule} from 'primeng/skeleton';
+import {TableModule} from 'primeng/table';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
-import {SharedModule} from "@app/shared/shared.module";
+import {SharedModule} from '@app/shared/shared.module';
 
 import {GroupsRoutingModule} from './groups-routing.module';
 import {GroupListComponent} from './group-list/group-list.component';
@@ -66,6 +68,8 @@ import {EditGroupComponent} from './edit-group/edit-group.component';
 		InputTextModule,
 		MessageModule,
 		SkeletonModule,
+		TableModule,
+		ConfirmDialogModule,
 	]
 })
 export class GroupsModule {

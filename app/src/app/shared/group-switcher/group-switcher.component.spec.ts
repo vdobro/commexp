@@ -22,6 +22,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {GroupSwitcherComponent} from './group-switcher.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -33,9 +34,9 @@ describe('GroupSwitcherComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
+			imports: [HttpClientTestingModule],
 			declarations: [GroupSwitcherComponent]
-		})
-			.compileComponents();
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

@@ -21,12 +21,14 @@
 
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+
+import {EditGroupComponent} from '@app/groups/edit-group/edit-group.component';
+import {links} from '@app/groups/links';
+
 import {GroupListComponent} from './group-list/group-list.component';
-import {CreateGroupComponent} from "./create-group/create-group.component";
-import {AcceptGroupInvitationComponent} from "./accept-group-invitation/accept-group-invitation.component";
-import {CreateGroupInvitationComponent} from "./create-group-invitation/create-group-invitation.component";
-import {EditGroupComponent} from "@app/groups/edit-group/edit-group.component";
-import {links} from "@app/groups/links";
+import {CreateGroupComponent} from './create-group/create-group.component';
+import {AcceptGroupInvitationComponent} from './accept-group-invitation/accept-group-invitation.component';
+import {CreateGroupInvitationComponent} from './create-group-invitation/create-group-invitation.component';
 
 const routes: Routes = [
 	{

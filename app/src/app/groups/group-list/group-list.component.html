@@ -3,9 +3,6 @@
 		<button pButton icon="pi pi-plus"
 		        routerLink="new"
 		        label="Create new"></button>
-		<button pButton class="p-ml-2" icon="pi pi-sign-in"
-		        routerLink="join"
-		        label="Join existing"></button>
 	</div>
 	<div *ngFor="let group of groups" class="p-col-12">
 		<p-card [header]="group.name">

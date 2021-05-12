@@ -19,30 +19,31 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+
+import {UserAvatarComponent} from './user-avatar.component';
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.05.12
  */
-@Injectable({
-	providedIn: 'root'
-})
-export class NavigationService {
+describe('UserAvatarComponent', () => {
+	let component: UserAvatarComponent;
+	let fixture: ComponentFixture<UserAvatarComponent>;
 
-	constructor(private readonly router: Router) {
-	}
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			declarations: [UserAvatarComponent]
+		}).compileComponents();
+	});
 
-	async home(): Promise<void> {
-		await this.router.navigate(['']);
-	}
+	beforeEach(() => {
+		fixture = TestBed.createComponent(UserAvatarComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-	async editGroup(id: string): Promise<void> {
-		await this.router.navigate(['groups', id, 'edit']);
-	}
-
-	async goToGroups(): Promise<void> {
-		await this.router.navigate(['groups']);
-	}
-}
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
+});

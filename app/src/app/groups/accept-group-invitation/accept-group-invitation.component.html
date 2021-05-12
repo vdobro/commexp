@@ -1,27 +1,34 @@
-<h2>Join an existing group</h2>
-<div class="p-grid">
-	<div class="p-col-12 p-lg-3 p-md-4 p-sm-6">
-		<form #joinForm="ngForm" (ngSubmit)="submit()" class="p-fluid">
+<div *ngIf="!joinSuccess">
+	<h2>Join an existing group</h2>
+	<div class="p-grid">
+		<div class="p-col-12 p-lg-3 p-md-4 p-sm-6">
+			<form #joinForm="ngForm" (ngSubmit)="submit()" class="p-fluid">
 			<span class="p-float-label p-mt-3">
-				<input id="username"
-				       required
-				       type="text"
-				       [(ngModel)]="model.invitationId"
-				       name="username"
-				       pInputText>
-				<label for="username">Invitation code</label>
+				<input id="token"
+					   required
+					   type="text"
+					   [(ngModel)]="model.invitationId"
+					   (ngModelChange)="resetError()"
+					   name="token"
+					   pInputText>
+				<label for="token">Invitation code</label>
 				<small *ngIf="tokenError"
-				       id="username-help"
-				       class="p-error">Check your invitation code for mistakes.</small>
+					   id="token-help"
+					   class="p-error">Check your invitation code for mistakes.</small>
 			</span>
-			<p-message *ngIf="tokenError"
-			           styleClass="p-mb-2"
-			           severity="error"
-			           text="Error joining a group"></p-message>
-			<p-button styleClass="p-mt-3"
-			          type="submit"
-			          label="Submit code"
-			          [disabled]="!joinForm.form.valid"></p-button>
-		</form>
+				<p-message *ngIf="tokenError"
+						   styleClass="p-mb-2"
+						   severity="error"
+						   text="Error joining a group"></p-message>
+				<p-button styleClass="p-mt-3"
+						  type="submit"
+						  label="Submit code"
+						  [disabled]="!joinForm.form.valid"></p-button>
+			</form>
+		</div>
 	</div>
+</div>
+<div *ngIf="joinSuccess">
+	<h2>Welcome to group <i>{{groupName}}</i>!</h2>
+	<p-button label="Return to group list" (onClick)="quit()"></p-button>
 </div>

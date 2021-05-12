@@ -22,9 +22,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CredentialsError} from "@app/util/SessionUtils";
 import {AuthService} from "@app/service/auth.service";
-import {SessionService} from "@app/service/state/session.service";
-import {map} from "rxjs/operators";
-import {RequestStatus} from "@app/model/request-status";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -46,11 +43,7 @@ export class LoginComponent implements OnInit {
 	credentialsError = false;
 	serverError = false;
 
-	constructor(private readonly authService: AuthService,
-	            private readonly sessionService: SessionService) {
-		this.sessionService.state$
-			.pipe(map(x => x.status == RequestStatus.LOADING))
-			.subscribe(x => this.isLoading = x);
+	constructor(private readonly authService: AuthService) {
 	}
 
 	ngOnInit(): void {
@@ -58,6 +51,7 @@ export class LoginComponent implements OnInit {
 
 	async submit() {
 		try {
+			this.isLoading = true;
 			await this.authService.tryLogin(this.model.username, this.model.password);
 		} catch (e) {
 			if (e instanceof CredentialsError) {
@@ -66,5 +60,6 @@ export class LoginComponent implements OnInit {
 				this.serverError = true;
 			}
 		}
+		this.isLoading = false;
 	}
 }

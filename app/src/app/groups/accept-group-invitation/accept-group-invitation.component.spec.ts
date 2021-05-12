@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -22,6 +22,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AcceptGroupInvitationComponent} from './accept-group-invitation.component';
+import {FormsModule} from '@angular/forms';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -33,9 +34,9 @@ describe('AcceptGroupInvitationComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
+			imports: [FormsModule],
 			declarations: [AcceptGroupInvitationComponent]
-		})
-			.compileComponents();
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

@@ -19,30 +19,37 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {User} from '@app/model/user';
+import {AVATAR_FORM, getAvatarLabel, getAvatarStyle} from '@app/shared/avatar-utils';
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.05.12
  */
-@Injectable({
-	providedIn: 'root'
+@Component({
+	selector: 'app-user-avatar',
+	templateUrl: './user-avatar.component.html',
+	styleUrls: ['./user-avatar.component.scss']
 })
-export class NavigationService {
+export class UserAvatarComponent implements OnInit {
 
-	constructor(private readonly router: Router) {
+	SHAPE = AVATAR_FORM;
+
+	@Input()
+	user: User | null = null;
+
+	constructor() {
 	}
 
-	async home(): Promise<void> {
-		await this.router.navigate(['']);
+	ngOnInit(): void {
 	}
 
-	async editGroup(id: string): Promise<void> {
-		await this.router.navigate(['groups', id, 'edit']);
+	getStyle(user: User): string {
+		return getAvatarStyle(user);
 	}
 
-	async goToGroups(): Promise<void> {
-		await this.router.navigate(['groups']);
+	getLabel(user: User): string {
+		return getAvatarLabel(user);
 	}
 }

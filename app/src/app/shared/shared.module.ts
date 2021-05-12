@@ -20,18 +20,20 @@
  */
 
 import {NgModule} from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 
-import {AvatarModule} from "primeng/avatar";
-import {MenubarModule} from "primeng/menubar";
-import {DropdownModule} from "primeng/dropdown";
-import {SharedModule as PrimeNgSharedModule} from "primeng/api";
-import {AvatarGroupModule} from "primeng/avatargroup";
+import {AvatarModule} from 'primeng/avatar';
+import {MenubarModule} from 'primeng/menubar';
+import {DropdownModule} from 'primeng/dropdown';
+import {SharedModule as PrimeNgSharedModule} from 'primeng/api';
+import {AvatarGroupModule} from 'primeng/avatargroup';
 
-import {UserAvatarGroupComponent} from "@app/shared/user-avatar-group/user-avatar-group.component";
-import {GroupSwitcherComponent} from "@app/shared/group-switcher/group-switcher.component";
-import {HeaderComponent} from "@app/shared/header/header.component";
+import {UserAvatarGroupComponent} from '@app/shared/user-avatar-group/user-avatar-group.component';
+import {GroupSwitcherComponent} from '@app/shared/group-switcher/group-switcher.component';
+import {HeaderComponent} from '@app/shared/header/header.component';
+
+import {UserAvatarComponent} from './user-avatar/user-avatar.component';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -42,10 +44,12 @@ import {HeaderComponent} from "@app/shared/header/header.component";
 		UserAvatarGroupComponent,
 		GroupSwitcherComponent,
 		HeaderComponent,
+  UserAvatarComponent,
 	],
 	exports: [
 		UserAvatarGroupComponent,
 		HeaderComponent,
+		UserAvatarComponent,
 	],
 	imports: [
 		PrimeNgSharedModule,

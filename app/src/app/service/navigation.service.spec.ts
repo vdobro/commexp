@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -22,6 +22,7 @@
 import {TestBed} from '@angular/core/testing';
 
 import {NavigationService} from './navigation.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -31,7 +32,9 @@ describe('NavigationService', () => {
 	let service: NavigationService;
 
 	beforeEach(() => {
-		TestBed.configureTestingModule({});
+		TestBed.configureTestingModule({
+			imports: [RouterTestingModule]
+		});
 		service = TestBed.inject(NavigationService);
 	});
 

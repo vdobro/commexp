@@ -70,7 +70,6 @@ export class AuthService {
 	async createNew(name: string,
 	                username: string,
 	                password: string) {
-		this.sessionService.load();
 		let response: HttpResponse<any>;
 		try {
 			await this.refreshCsrf();
@@ -97,7 +96,6 @@ export class AuthService {
 	}
 
 	async logout() {
-		await this.sessionService.load();
 		await this.refreshCsrf();
 		await this.httpClient
 			.post(URL.LOGOUT, {observe: "response"})
@@ -111,7 +109,6 @@ export class AuthService {
 	}
 
 	private async retrieveAndSetUser(headers: HttpHeaders = new HttpHeaders()): Promise<UserSession> {
-		this.sessionService.load();
 		const response = await this.httpClient.get<UserSession>(
 			URL.USERS, {
 				observe: "response",

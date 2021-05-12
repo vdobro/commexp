@@ -19,30 +19,28 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {User} from '@app/model/user';
+import {generateColor} from '@app/util/AvatarUtils';
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.05.12
  */
-@Injectable({
-	providedIn: 'root'
-})
-export class NavigationService {
+export const AVATAR_FORM = 'circle';
 
-	constructor(private readonly router: Router) {
-	}
-
-	async home(): Promise<void> {
-		await this.router.navigate(['']);
-	}
-
-	async editGroup(id: string): Promise<void> {
-		await this.router.navigate(['groups', id, 'edit']);
-	}
-
-	async goToGroups(): Promise<void> {
-		await this.router.navigate(['groups']);
-	}
+export function getAvatarStyle(user: User): any {
+	return {
+		'background-color': getColor(user),
+		color: AVATAR_LETTER_COLOR,
+	};
 }
+
+export function getAvatarLabel(user: User): string {
+	return user.name.substr(0, 1).toUpperCase();
+}
+
+function getColor(user: User): string {
+	return generateColor(user, 30, 50);
+}
+
+const AVATAR_LETTER_COLOR = '#ffffff';

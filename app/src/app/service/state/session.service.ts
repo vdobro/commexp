@@ -22,8 +22,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {Session, UserSession} from "@app/model/user-session";
-import {RequestStatus} from "@app/model/request-status";
-import {map} from "rxjs/operators";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -34,28 +32,19 @@ import {map} from "rxjs/operators";
 })
 export class SessionService {
 
-	private readonly _session = new BehaviorSubject<SessionState>({
-		session: {},
-		status: RequestStatus.IDLE
-	});
+	private readonly _session = new BehaviorSubject<Session>({});
 
-	readonly state$: Observable<SessionState> = this._session.asObservable();
-	readonly session$: Observable<Session> = this.state$.pipe(map(x => x.session));
+	readonly session$: Observable<Session> = this._session.asObservable();
 
-	reset() {
-		this._session.next({session: {}, status: RequestStatus.IDLE});
+	get current() : Session {
+		return this._session.getValue();
 	}
 
-	load() {
-		this._session.next({session: {}, status: RequestStatus.LOADING})
+	reset() {
+		this._session.next({});
 	}
 
 	setUser(user: UserSession) {
-		this._session.next({session: user, status: RequestStatus.IDLE});
+		this._session.next( user);
 	}
-}
-
-export interface SessionState {
-	status: RequestStatus,
-	session: Session
 }

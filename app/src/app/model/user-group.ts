@@ -24,6 +24,6 @@
  * @since 2021.04.10
  */
 export interface UserGroup {
-	id: string,
-	name: string,
+	id: string;
+	name: string;
 }

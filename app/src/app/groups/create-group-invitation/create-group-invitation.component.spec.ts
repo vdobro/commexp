@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -22,6 +22,8 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CreateGroupInvitationComponent} from './create-group-invitation.component';
+import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -33,9 +35,9 @@ describe('CreateGroupInvitationComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
+			imports: [RouterTestingModule, HttpClientTestingModule],
 			declarations: [CreateGroupInvitationComponent]
-		})
-			.compileComponents();
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

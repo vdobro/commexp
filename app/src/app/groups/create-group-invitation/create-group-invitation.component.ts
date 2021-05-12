@@ -19,12 +19,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {UserGroupService} from "@app/service/user-group.service";
-import {GROUP_ID_PARAM} from "@app/groups/links";
-import {UserGroup} from "@app/model/user-group";
-import {Clipboard} from "@angular/cdk/clipboard";
+import {Component, Inject, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {UserGroupService} from '@app/service/user-group.service';
+import {GROUP_ID_PARAM, INVITATION_CODE_PARAM} from '@app/groups/links';
+import {UserGroup} from '@app/model/user-group';
+import {Clipboard} from '@angular/cdk/clipboard';
+import {DOCUMENT} from '@angular/common';
+import {HttpParams} from '@angular/common/http';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -40,12 +42,16 @@ export class CreateGroupInvitationComponent implements OnInit {
 	initializing = false;
 	group: UserGroup | null = null;
 
-	invitationId: string | null = null;
+	invitationLink: string | null = null;
 	loadingCode = false;
 
+	private readonly baseUrl: string;
+
 	constructor(private readonly route: ActivatedRoute,
-	            private readonly groupService: UserGroupService,
-	            private readonly clipboard: Clipboard) {
+				@Inject(DOCUMENT) document: any,
+				private readonly groupService: UserGroupService,
+				private readonly clipboard: Clipboard) {
+		this.baseUrl = document.location.origin + '/#/groups/join?';
 	}
 
 	ngOnInit(): void {
@@ -54,25 +60,30 @@ export class CreateGroupInvitationComponent implements OnInit {
 		});
 	}
 
-	private async loadGroup(groupId: string) {
-		this.initializing = true;
-		this.group = await this.groupService.get(groupId);
-		this.initializing = false;
-	}
-
-	async requestInvitation() {
+	async requestInvitation(): Promise<void> {
 		if (!this.group) {
 			return;
 		}
 		this.loadingCode = true;
 		const result = await this.groupService.inviteUser(this.group);
-		this.invitationId = result.code;
+		this.buildLink(result.code);
 		this.loadingCode = false;
 	}
 
-	copyCode() {
-		if (this.invitationId != null) {
-			this.clipboard.copy(this.invitationId);
+	copyCode(): void {
+		if (this.invitationLink != null) {
+			this.clipboard.copy(this.invitationLink);
 		}
+	}
+
+	private async loadGroup(groupId: string): Promise<void> {
+		this.initializing = true;
+		this.group = await this.groupService.get(groupId);
+		this.initializing = false;
+	}
+
+	private buildLink(key: string): void {
+		const params = new HttpParams().append(INVITATION_CODE_PARAM, key);
+		this.invitationLink = this.baseUrl + params.toString();
 	}
 }

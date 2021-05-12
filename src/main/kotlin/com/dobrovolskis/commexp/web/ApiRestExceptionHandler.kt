@@ -1,19 +1,19 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
- * This file is part of xks.
+ * This file is part of commexp.
  *
- * xks is free software: you can redistribute it and/or modify
+ * commexp is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, version 3 of the License.
  *
- * xks is distributed in the hope that it will be useful,
+ * commexp is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with xks; see the file LICENSE. If not,
+ * along with commexp; see the file LICENSE. If not,
  * see <https://www.gnu.org/licenses/>.
  *
  * SPDX-License-Identifier: AGPL-3.0-only
@@ -25,6 +25,7 @@ import com.dobrovolskis.commexp.exception.ResourceAccessError
 import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.FORBIDDEN
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.HttpStatus.UNAUTHORIZED
@@ -44,7 +45,7 @@ class ApiRestExceptionHandler : ResponseEntityExceptionHandler() {
 
 	@ExceptionHandler(IllegalArgumentException::class)
 	protected fun handleException(e: IllegalArgumentException, request: WebRequest): ResponseEntity<Any> =
-		handle(e, FORBIDDEN, request)
+		handle(e, BAD_REQUEST, request)
 
 	@ExceptionHandler(ResourceNotFoundError::class)
 	protected fun handleException(e: ResourceNotFoundError, request: WebRequest): ResponseEntity<Any> =

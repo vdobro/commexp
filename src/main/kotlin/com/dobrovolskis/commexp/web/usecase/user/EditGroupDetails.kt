@@ -19,30 +19,26 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+package com.dobrovolskis.commexp.web.usecase.user
+
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.service.UserGroupService
+import com.dobrovolskis.commexp.web.dto.UserGroupDto
+import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.05.12
  */
-@Injectable({
-	providedIn: 'root'
-})
-export class NavigationService {
-
-	constructor(private readonly router: Router) {
-	}
-
-	async home(): Promise<void> {
-		await this.router.navigate(['']);
-	}
-
-	async editGroup(id: string): Promise<void> {
-		await this.router.navigate(['groups', id, 'edit']);
-	}
-
-	async goToGroups(): Promise<void> {
-		await this.router.navigate(['groups']);
+@Service
+@Transactional
+class EditGroupDetails(private val groupService: UserGroupService) : BaseRequestHandler<UserGroupDto, Unit> {
+	override operator fun invoke(currentUser: User, request: UserGroupDto) {
+		val group = groupService.find(request.id)
+		verifyAccessToGroup(currentUser, group)
+		groupService.renameGroup(group, request.name)
 	}
 }

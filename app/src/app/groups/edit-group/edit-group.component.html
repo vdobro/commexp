@@ -1,1 +1,44 @@
-<h2>Edit group</h2>
+<div *ngIf="group">
+	<h2>{{group.name}}</h2>
+	<p-panel header="Settings">
+		<form #groupForm="ngForm" (ngSubmit)="saveGroupChanges()" class="p-fluid">
+			<div class="p-field">
+				<label for="group-name">Name</label>
+				<input id="group-name" type="text" pInputText
+					   name="group-name"
+					   [(ngModel)]="group.name">
+			</div>
+			<div class="p-field p-my-1">
+				<p-button type="submit"
+						  label="Save changes"
+						  [loading]="savingChanges"
+						  [disabled]="!groupForm.form.valid"></p-button>
+			</div>
+		</form>
+	</p-panel>
+	<p-panel header="User management" styleClass="p-mt-2">
+		<p-table [value]="groupUsers">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Name</th>
+					<th style="width: 4rem"></th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-user>
+				<tr>
+					<td>
+						<app-user-avatar [user]="user"></app-user-avatar>
+						<span class="p-ml-2">{{user.name}}</span>
+					</td>
+					<td><button pButton
+					            icon="pi pi-minus"
+					            (click)="deleteUser(user)"
+					            class="p-button-outlined p-button-rounded p-button-danger p-button-sm"></button>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+		<p-button label="Leave group" styleClass="p-button-danger p-mt-3" (onClick)="leaveGroup()"></p-button>
+		<p-confirmDialog header="Leave group" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+	</p-panel>
+</div>

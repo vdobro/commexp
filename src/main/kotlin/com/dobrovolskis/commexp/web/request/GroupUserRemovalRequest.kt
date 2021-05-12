@@ -19,30 +19,15 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+package com.dobrovolskis.commexp.web.request
+
+import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.05.12
  */
-@Injectable({
-	providedIn: 'root'
-})
-export class NavigationService {
-
-	constructor(private readonly router: Router) {
-	}
-
-	async home(): Promise<void> {
-		await this.router.navigate(['']);
-	}
-
-	async editGroup(id: string): Promise<void> {
-		await this.router.navigate(['groups', id, 'edit']);
-	}
-
-	async goToGroups(): Promise<void> {
-		await this.router.navigate(['groups']);
-	}
-}
+data class GroupUserRemovalRequest(
+	val username: String,
+	val groupId: UUID
+)

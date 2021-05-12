@@ -20,8 +20,9 @@
  */
 
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from "@app/model/user";
-import {generateColor} from "@app/util/AvatarUtils";
+
+import {User} from '@app/model/user';
+import {AVATAR_FORM, getAvatarLabel, getAvatarStyle} from '@app/shared/avatar-utils';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -34,8 +35,11 @@ import {generateColor} from "@app/util/AvatarUtils";
 })
 export class UserAvatarGroupComponent implements OnInit {
 
+	SHAPE = AVATAR_FORM;
+
 	@Input()
 	users: User[] = [];
+
 
 	constructor() {
 	}
@@ -43,7 +47,11 @@ export class UserAvatarGroupComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
-	getColor(user: User): string {
-		return generateColor(user, 30, 50);
+	getStyle(user: User): string {
+		return getAvatarStyle(user);
+	}
+
+	getLabel(user: User): string {
+		return getAvatarLabel(user);
 	}
 }

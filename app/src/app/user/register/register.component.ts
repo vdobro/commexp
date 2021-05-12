@@ -21,9 +21,6 @@
 
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "@app/service/auth.service";
-import {SessionService} from "@app/service/state/session.service";
-import {map} from "rxjs/operators";
-import {RequestStatus} from "@app/model/request-status";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -49,11 +46,7 @@ export class RegisterComponent implements OnInit {
 	error: string = '';
 	loading = false;
 
-	constructor(private readonly authService: AuthService,
-	            private readonly sessionService: SessionService) {
-		this.sessionService.state$
-			.pipe(map(x => x.status === RequestStatus.LOADING))
-			.subscribe(x => this.loading = x);
+	constructor(private readonly authService: AuthService) {
 	}
 
 	ngOnInit(): void {
@@ -61,10 +54,16 @@ export class RegisterComponent implements OnInit {
 
 	async submit() {
 		if (this.model.password == this.model.passwordConfirmation) {
-			await this.authService.createNew(
-				this.model.name,
-				this.model.username,
-				this.model.password);
+			this.loading = true;
+			try {
+				await this.authService.createNew(
+					this.model.name,
+					this.model.username,
+					this.model.password);
+			} catch (e) {
+				this.error = e.message;
+			}
+			this.loading = false;
 		} else {
 			this.passwordMismatch = true;
 		}

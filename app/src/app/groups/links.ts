@@ -24,10 +24,10 @@
  * @since 2021.05.10
  */
 
-export const GROUP_ID_PARAM = "groupId";
+export const GROUP_ID_PARAM = 'groupId';
+export const INVITATION_CODE_PARAM = 'invitation';
 
 export const links = {
 	createGroup: `:${GROUP_ID_PARAM}/invite`,
 	editGroup: `:${GROUP_ID_PARAM}/edit`,
-
-}
+};

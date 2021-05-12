@@ -20,6 +20,12 @@
  */
 
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {SessionService} from '@app/service/state/session.service';
+import {isUser} from '@app/util/SessionUtils';
+import {UserGroupService} from '@app/service/user-group.service';
+import {NavigationService} from '@app/service/navigation.service';
+import {INVITATION_CODE_PARAM} from '@app/groups/links';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -36,15 +42,52 @@ export class AcceptGroupInvitationComponent implements OnInit {
 		invitationId: ''
 	};
 
-	tokenError: boolean = false;
+	loggedIn = false;
+	tokenError = false;
+	joinSuccess = false;
+	groupName = '';
 
-	constructor() {
+	constructor(private readonly route: ActivatedRoute,
+				private readonly session: SessionService,
+				private readonly groupService: UserGroupService,
+				private readonly navigation: NavigationService) {
+		this.session.session$.subscribe(async current => {
+			this.loggedIn = isUser(current);
+			await this.trySubmit();
+		});
+		this.route.queryParams.subscribe(async params => {
+			const token = params[INVITATION_CODE_PARAM];
+			if (token) {
+				this.model.invitationId = token;
+				await this.trySubmit();
+			}
+		});
 	}
 
 	ngOnInit(): void {
 	}
 
-	async submit() {
+	private async trySubmit(): Promise<void> {
+		if (this.loggedIn && this.model.invitationId) {
+			await this.submit();
+		}
+	}
 
+	async submit(): Promise<void> {
+		try {
+			const group = await this.groupService.joinGroup(this.model.invitationId);
+			this.groupName = group.name;
+			this.joinSuccess = true;
+		} catch (e) {
+			this.tokenError = true;
+		}
+	}
+
+	async quit(): Promise<void> {
+		await this.navigation.goToGroups();
+	}
+
+	resetError(): void {
+		this.tokenError = false;
 	}
 }

@@ -1,11 +1,11 @@
 <div *ngIf="group">
 	<h2>Invite to group {{group.name}}</h2>
-	<p-button *ngIf="!invitationId"
+	<p-button *ngIf="!invitationLink"
 	          label="Create code"
 	          (click)="requestInvitation()"
 	          [loading]="loadingCode"></p-button>
-	<p *ngIf="invitationId">Code: {{invitationId}}</p>
-	<p-button *ngIf="invitationId"
+	<p *ngIf="invitationLink">Link to join the group: <a [href]="invitationLink">{{invitationLink}}</a></p>
+	<p-button *ngIf="invitationLink"
 	          label="Copy code"
 	          (click)="copyCode()"></p-button>
 </div>

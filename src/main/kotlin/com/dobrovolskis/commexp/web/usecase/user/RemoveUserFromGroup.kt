@@ -19,25 +19,34 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.web
+package com.dobrovolskis.commexp.web.usecase.user
 
 import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.service.UserGroupService
 import com.dobrovolskis.commexp.service.UserService
-import org.springframework.security.core.context.SecurityContextHolder
+import com.dobrovolskis.commexp.web.request.GroupUserRemovalRequest
+import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2021.05.12
  */
 @Service
-@Transactional(readOnly = true)
-class ControllerUtils(private val userService: UserService) {
-	fun getCurrentUser(): User {
-		val principal = SecurityContextHolder.getContext().authentication.principal as User
-		return userService.findByUsername(principal.username)
+@Transactional
+class RemoveUserFromGroup(
+	private val groupService: UserGroupService,
+	private val userService: UserService
+) : BaseRequestHandler<GroupUserRemovalRequest, Unit> {
+	override fun invoke(currentUser: User, request: GroupUserRemovalRequest) {
+		val group = groupService.find(request.groupId)
+		val user = userService.findByUsername(request.username)
+
+		verifyAccessToGroup(currentUser, group)
+
+		//TODO: last user in group should not be able to remove themselves without deleting the group
+		groupService.removeUser(group, user)
 	}
 }
-
-const val ID_PATH = "/{id}"
