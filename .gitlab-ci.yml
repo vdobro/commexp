@@ -15,6 +15,7 @@ cache:
   paths:
     - .m2/repository/
     - target/
+    - app/node_modules/
 
 build:
   stage: build
