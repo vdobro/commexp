@@ -19,38 +19,41 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {SessionService} from '@app/service/state/session.service';
 import {isUser} from '@app/util/SessionUtils';
 import {UserGroupService} from '@app/service/user-group.service';
 import {NavigationService} from '@app/service/navigation.service';
 import {INVITATION_CODE_PARAM} from '@app/groups/links';
+import {HeaderService} from "@app/service/state/header.service";
 
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2021.01.10
  */
 @Component({
-	selector: 'app-accept-group-invitation',
-	templateUrl: './accept-group-invitation.component.html',
-	styleUrls: ['./accept-group-invitation.component.scss']
+	selector: 'app-join-group',
+	templateUrl: './join-group.component.html',
+	styleUrls: ['./join-group.component.scss']
 })
-export class AcceptGroupInvitationComponent implements OnInit {
+export class JoinGroupComponent implements OnInit, OnDestroy {
 
-	model = {
-		invitationId: ''
-	};
-
-	loggedIn = false;
-	tokenError = false;
-	joinSuccess = false;
+	invitation = '';
 	groupName = '';
 
+	loggedIn = false;
+	useExistingUser = true;
+
+	tokenError = false;
+	loading = false;
+	joinSuccess = false;
+
 	constructor(private readonly route: ActivatedRoute,
-				private readonly session: SessionService,
-				private readonly groupService: UserGroupService,
-				private readonly navigation: NavigationService) {
+	            private readonly session: SessionService,
+	            private readonly groupService: UserGroupService,
+	            private readonly headerService: HeaderService,
+	            private readonly navigation: NavigationService) {
 		this.session.session$.subscribe(async current => {
 			this.loggedIn = isUser(current);
 			await this.trySubmit();
@@ -58,24 +61,30 @@ export class AcceptGroupInvitationComponent implements OnInit {
 		this.route.queryParams.subscribe(async params => {
 			const token = params[INVITATION_CODE_PARAM];
 			if (token) {
-				this.model.invitationId = token;
-				await this.trySubmit();
+				this.invitation = token;
+				this.headerService.enableLoginAndLogout(false);
+			} else {
+				this.headerService.updateAll(this.session.current);
 			}
 		});
 	}
 
-	ngOnInit(): void {
+	async ngOnInit(): Promise<void> {
+		await this.trySubmit();
+	}
+
+	ngOnDestroy() {
 	}
 
 	private async trySubmit(): Promise<void> {
-		if (this.loggedIn && this.model.invitationId) {
+		if (this.loggedIn && this.invitation) {
 			await this.submit();
 		}
 	}
 
 	async submit(): Promise<void> {
 		try {
-			const group = await this.groupService.joinGroup(this.model.invitationId);
+			const group = await this.groupService.joinGroup(this.invitation);
 			this.groupName = group.name;
 			this.joinSuccess = true;
 		} catch (e) {
@@ -85,6 +94,10 @@ export class AcceptGroupInvitationComponent implements OnInit {
 
 	async quit(): Promise<void> {
 		await this.navigation.goToGroups();
+	}
+
+	toggleLoginMode(): void {
+		this.useExistingUser = !this.useExistingUser;
 	}
 
 	resetError(): void {

@@ -1,4 +1,9 @@
-<app-header></app-header>
-<div class="p-pt-1 p-m-2">
-	<router-outlet></router-outlet>
+<div class="root-container p-d-flex p-flex-column">
+	<div class="app-content-wrapper">
+		<app-header></app-header>
+		<div class="p-m-2">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+	<div appFooter></div>
 </div>

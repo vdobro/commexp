@@ -20,13 +20,15 @@
  */
 
 import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {UserGroupService} from '@app/service/user-group.service';
-import {GROUP_ID_PARAM, INVITATION_CODE_PARAM} from '@app/groups/links';
-import {UserGroup} from '@app/model/user-group';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {DOCUMENT} from '@angular/common';
 import {HttpParams} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+
+import {UserGroupService} from '@app/service/user-group.service';
+import {GROUP_ID_PARAM, INVITATION_CODE_PARAM} from '@app/groups/links';
+import {UserGroup} from '@app/model/user-group';
+import {NavigationService} from "@app/service/navigation.service";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -44,13 +46,15 @@ export class CreateGroupInvitationComponent implements OnInit {
 
 	invitationLink: string | null = null;
 	loadingCode = false;
+	linkCopied = false;
 
 	private readonly baseUrl: string;
 
 	constructor(private readonly route: ActivatedRoute,
 				@Inject(DOCUMENT) document: any,
 				private readonly groupService: UserGroupService,
-				private readonly clipboard: Clipboard) {
+				private readonly clipboard: Clipboard,
+	            private readonly navigation: NavigationService) {
 		this.baseUrl = document.location.origin + '/#/groups/join?';
 	}
 
@@ -73,7 +77,12 @@ export class CreateGroupInvitationComponent implements OnInit {
 	copyCode(): void {
 		if (this.invitationLink != null) {
 			this.clipboard.copy(this.invitationLink);
+			this.linkCopied = true;
 		}
+	}
+
+	async goBack() {
+		await this.navigation.goBack();
 	}
 
 	private async loadGroup(groupId: string): Promise<void> {

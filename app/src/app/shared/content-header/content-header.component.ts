@@ -19,15 +19,35 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.05.10
+ * @since 2021.05.14
  */
+@Component({
+	selector: 'app-content-header',
+	templateUrl: './content-header.component.html',
+	styleUrls: ['./content-header.component.scss']
+})
+export class ContentHeaderComponent implements OnInit {
 
-export const GROUP_ID_PARAM = 'groupId';
-export const INVITATION_CODE_PARAM = 'invitation';
+	@Input()
+	title : string = '';
 
-export const links = {
-	invite: `:${GROUP_ID_PARAM}/invite`,
-	edit: `:${GROUP_ID_PARAM}/edit`,
-};
+	@Input()
+	enableNavigation: boolean = true;
+
+	@Output()
+	onReturn = new EventEmitter();
+
+	constructor() {
+	}
+
+	ngOnInit(): void {
+	}
+
+	returnHandler() {
+		this.onReturn.emit();
+	}
+}

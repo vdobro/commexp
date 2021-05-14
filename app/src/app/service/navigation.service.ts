@@ -20,7 +20,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -31,7 +31,16 @@ import {Router} from '@angular/router';
 })
 export class NavigationService {
 
+	private lastLocation : string | null = null;
+	private currentLocation : string | null = null;
+
 	constructor(private readonly router: Router) {
+		this.router.events.subscribe((event) => {
+			if (event instanceof NavigationEnd) {
+				this.lastLocation = this.currentLocation;
+				this.currentLocation = event.urlAfterRedirects;
+			}
+		});
 	}
 
 	async home(): Promise<void> {
@@ -44,5 +53,13 @@ export class NavigationService {
 
 	async goToGroups(): Promise<void> {
 		await this.router.navigate(['groups']);
+	}
+
+	async goBack() : Promise<void> {
+		if (this.lastLocation) {
+			await this.router.navigateByUrl(this.lastLocation);
+			this.currentLocation = this.lastLocation;
+			this.lastLocation = null;
+		}
 	}
 }

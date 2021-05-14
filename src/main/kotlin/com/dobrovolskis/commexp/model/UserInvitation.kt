@@ -69,4 +69,8 @@ class UserInvitation(
 
 	@Column(name = "accepted")
 	var accepted: ZonedDateTime? = null
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "accepted_by")
+	var acceptedBy: User? = null
 }

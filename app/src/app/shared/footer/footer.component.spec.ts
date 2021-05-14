@@ -19,15 +19,31 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+
+import {FooterComponent} from './footer.component';
+
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.05.10
+ * @since 2021.05.14
  */
+describe('FooterComponent', () => {
+	let component: FooterComponent;
+	let fixture: ComponentFixture<FooterComponent>;
 
-export const GROUP_ID_PARAM = 'groupId';
-export const INVITATION_CODE_PARAM = 'invitation';
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			declarations: [FooterComponent]
+		}).compileComponents();
+	});
 
-export const links = {
-	invite: `:${GROUP_ID_PARAM}/invite`,
-	edit: `:${GROUP_ID_PARAM}/edit`,
-};
+	beforeEach(() => {
+		fixture = TestBed.createComponent(FooterComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
+});

@@ -10,6 +10,16 @@
 	font-family: $font-family;
 }
 
+html {
+	height: 100%;
+}
+
 body {
+	height: 100%;
+	margin: 0;
+}
+
+app-root {
+	height: 100%;
 	margin: 0;
 }

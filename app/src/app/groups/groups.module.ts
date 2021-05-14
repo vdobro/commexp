@@ -33,15 +33,18 @@ import {MessageModule} from 'primeng/message';
 import {SkeletonModule} from 'primeng/skeleton';
 import {TableModule} from 'primeng/table';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ProgressBarModule} from 'primeng/progressbar';
 
 import {SharedModule} from '@app/shared/shared.module';
 
 import {GroupsRoutingModule} from './groups-routing.module';
 import {GroupListComponent} from './group-list/group-list.component';
 import {CreateGroupComponent} from './create-group/create-group.component';
-import {AcceptGroupInvitationComponent} from './accept-group-invitation/accept-group-invitation.component';
+import {JoinGroupComponent} from './join-group/join-group.component';
 import {CreateGroupInvitationComponent} from './create-group-invitation/create-group-invitation.component';
 import {EditGroupComponent} from './edit-group/edit-group.component';
+import {UserModule} from "@app/user/user.module";
+import {GroupListEntryComponent} from './group-list-entry/group-list-entry.component';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -51,9 +54,10 @@ import {EditGroupComponent} from './edit-group/edit-group.component';
 	declarations: [
 		GroupListComponent,
 		CreateGroupComponent,
-		AcceptGroupInvitationComponent,
+		JoinGroupComponent,
 		CreateGroupInvitationComponent,
-		EditGroupComponent
+		EditGroupComponent,
+		GroupListEntryComponent
 	],
 	imports: [
 		ButtonModule,
@@ -70,6 +74,8 @@ import {EditGroupComponent} from './edit-group/edit-group.component';
 		SkeletonModule,
 		TableModule,
 		ConfirmDialogModule,
+		ProgressBarModule,
+		UserModule,
 	]
 })
 export class GroupsModule {

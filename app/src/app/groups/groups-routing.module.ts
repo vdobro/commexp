@@ -27,7 +27,7 @@ import {links} from '@app/groups/links';
 
 import {GroupListComponent} from './group-list/group-list.component';
 import {CreateGroupComponent} from './create-group/create-group.component';
-import {AcceptGroupInvitationComponent} from './accept-group-invitation/accept-group-invitation.component';
+import {JoinGroupComponent} from './join-group/join-group.component';
 import {CreateGroupInvitationComponent} from './create-group-invitation/create-group-invitation.component';
 
 const routes: Routes = [
@@ -38,13 +38,13 @@ const routes: Routes = [
 		path: 'new', component: CreateGroupComponent,
 	},
 	{
-		path: links.createGroup, component: CreateGroupInvitationComponent,
+		path: links.invite, component: CreateGroupInvitationComponent,
 	},
 	{
-		path: links.editGroup, component: EditGroupComponent,
+		path: links.edit, component: EditGroupComponent,
 	},
 	{
-		path: 'join', component: AcceptGroupInvitationComponent,
+		path: 'join', component: JoinGroupComponent,
 	}
 ];
 

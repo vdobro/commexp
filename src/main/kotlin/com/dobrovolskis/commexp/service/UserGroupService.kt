@@ -59,19 +59,24 @@ class UserGroupService(
 	)
 
 	fun addUser(group: UserGroup, user: User): UserGroup {
-		require (!group.users().contains(user)) {
+		require(!group.users().contains(user)) {
 			"User already in group"
 		}
 		group.addUser(user)
 		return repository.save(group)
 	}
 
-	fun removeUser(group: UserGroup, user: User) : UserGroup {
-		require (group.users().contains(user)) {
+	fun removeUser(group: UserGroup, user: User) {
+		require(group.users().contains(user)) {
 			"User not in group"
 		}
 		group.removeUser(user)
-		return repository.save(group)
+		if (group.users().isEmpty()) {
+			group.clearPurchases()
+			repository.delete(group)
+		} else {
+			repository.save(group)
+		}
 	}
 
 	fun createInvitation(
@@ -81,19 +86,23 @@ class UserGroupService(
 		require(invitedBy.isInGroup(group)) {
 			"User cannot invite to a group they are not themselves a part of"
 		}
-		return invitationRepository.save(
-			UserInvitation(
-				creator = invitedBy,
-				group = group
+		return invitationRepository.getFirstByCreatorAndGroupAndAcceptedIsNull(invitedBy, group)
+			?: invitationRepository.save(
+				UserInvitation(
+					creator = invitedBy,
+					group = group
+				)
 			)
-		)
 	}
 
-	fun acceptInvitation(user: User,
-	                     invitation: UserInvitation): UserGroup {
-		val group = invitation.group
+	fun acceptInvitation(
+		user: User,
+		invitation: UserInvitation
+	): UserGroup {
 		invitation.accepted = ZonedDateTime.now()
-		val resultingGroup = addUser(group, user)
+		invitation.acceptedBy = user
+
+		val resultingGroup = addUser(invitation.group, user)
 		invitationRepository.save(invitation)
 		return resultingGroup
 	}

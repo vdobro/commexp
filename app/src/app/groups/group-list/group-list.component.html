@@ -1,20 +1,17 @@
-<div class="p-grid">
-	<div class="p-col">
-		<button pButton icon="pi pi-plus"
+<div class="p-flex p-flex-column">
+	<div class="p-mx-lg-2 p-d-flex p-flex-row p-ai-center">
+		<app-content-header [enableNavigation]=false
+		                    title="My groups"></app-content-header>
+		<button pButton pRipple
+		        style="flex-shrink: 0"
+		        icon="pi pi-plus"
 		        routerLink="new"
-		        label="Create new"></button>
+		        label="New group"></button>
 	</div>
-	<div *ngFor="let group of groups" class="p-col-12">
-		<p-card [header]="group.name">
-			<app-user-avatar-group [users]="group.users"></app-user-avatar-group>
-			<ng-template pTemplate="footer">
-				<button pButton icon="pi pi-user-plus"
-				        routerLink="{{group.id}}/invite"
-				        label="Invite user"></button>
-				<button pButton icon="pi pi-user-edit" class="p-ml-2 p-button-outlined"
-				        routerLink="{{group.id}}/edit"
-				        label="Edit"></button>
-			</ng-template>
-		</p-card>
+	<div class="p-grid p-mx-lg-0">
+		<div *ngFor="let group of groups"
+		     class="p-col-12 p-lg-3 p-md-6">
+			<app-group-card [group]="group"></app-group-card>
+		</div>
 	</div>
 </div>

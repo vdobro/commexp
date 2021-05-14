@@ -31,6 +31,7 @@ import {User} from '@app/model/user';
 import {SessionService} from "@app/service/state/session.service";
 import {isUser} from "@app/util/SessionUtils";
 import {NavigationService} from "@app/service/navigation.service";
+import {last} from "rxjs/operators";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -76,24 +77,24 @@ export class EditGroupComponent implements OnInit {
 		}
 	}
 
-	async deleteUser(user: User): Promise<void> {
-		if (this.group) {
-			await this.groupService.removeUser(this.group, user);
-			this.groupUsers = this.groupUsers.filter(x => x.id !== user.id);
-		}
-	}
-
 	async leaveGroup(): Promise<void> {
 		if (this.group) {
 			const group = this.group!!;
-			this.confirmationService.confirm({
-				message: `Are you sure you want to leave the group ${group.name}? This action is irreversible.`,
-				accept: async () => {
-					await this.groupService.leaveGroup(group);
-					await this.navigationService.goToGroups();
-				}
-			});
+			const lastUser = this.groupUsers.length === 0;
+			this.confirmLeaving(group, lastUser);
 		}
+	}
+
+	confirmRemovingUser(user: User) {
+		const message = `Are you sure you want to kick ${user.name} from the group? `
+			+ 'This action is irreversible.';
+		this.confirmationService.confirm({
+			header: 'Kick out ' + user.name,
+			message: message,
+			accept: async () => {
+				await this.deleteUser(user);
+			}
+		});
 	}
 
 	private async getUsersExceptCurrent(group: UserGroup): Promise<User[]> {
@@ -104,5 +105,31 @@ export class EditGroupComponent implements OnInit {
 			return allUsers.filter((x) => x.id !== currentId);
 		}
 		return [];
+	}
+
+	private confirmLeaving(group: UserGroup, lastUser: boolean) {
+		const message = `Are you sure you want to leave "${group.name}"? `
+			+ (lastUser ? 'Without any users, the group will be deleted. ' : '')
+			+ 'This action is irreversible.';
+		this.confirmationService.confirm({
+			header: 'Leave ' + group.name,
+			message: message,
+			accept: async () => {
+				await this.groupService.leaveGroup(group);
+				await this.navigationService.goToGroups();
+			}
+		});
+	}
+
+
+	private async deleteUser(user: User): Promise<void> {
+		if (this.group) {
+			await this.groupService.removeUser(this.group, user);
+			this.groupUsers = this.groupUsers.filter(x => x.id !== user.id);
+		}
+	}
+
+	async returnToGroups() {
+		await this.navigationService.goToGroups();
 	}
 }

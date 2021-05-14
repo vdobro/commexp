@@ -45,8 +45,6 @@ class RemoveUserFromGroup(
 		val user = userService.findByUsername(request.username)
 
 		verifyAccessToGroup(currentUser, group)
-
-		//TODO: last user in group should not be able to remove themselves without deleting the group
 		groupService.removeUser(group, user)
 	}
 }

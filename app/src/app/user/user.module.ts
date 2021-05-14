@@ -48,6 +48,10 @@ import {RegisterComponent} from './register/register.component';
 		InputTextModule,
 		MessageModule
 	],
+	exports: [
+		LoginComponent,
+		RegisterComponent
+	],
 	providers: [InputTextModule, ButtonModule]
 })
 export class UserModule {

@@ -19,15 +19,22 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {Component, OnInit} from '@angular/core';
+
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.05.10
+ * @since 2021.05.14
  */
+@Component({
+	selector: '[appFooter]',
+	templateUrl: './footer.component.html',
+	styleUrls: ['./footer.component.scss']
+})
+export class FooterComponent implements OnInit {
 
-export const GROUP_ID_PARAM = 'groupId';
-export const INVITATION_CODE_PARAM = 'invitation';
+	constructor() {
+	}
 
-export const links = {
-	invite: `:${GROUP_ID_PARAM}/invite`,
-	edit: `:${GROUP_ID_PARAM}/edit`,
-};
+	ngOnInit(): void {
+	}
+}

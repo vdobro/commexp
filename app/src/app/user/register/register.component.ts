@@ -19,8 +19,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "@app/service/auth.service";
+import {NavigationService} from "@app/service/navigation.service";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -32,6 +33,9 @@ import {AuthService} from "@app/service/auth.service";
 	styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+
+	@Input()
+	goHomeAfterLogin = true;
 
 	model = {
 		name: '',
@@ -46,7 +50,8 @@ export class RegisterComponent implements OnInit {
 	error: string = '';
 	loading = false;
 
-	constructor(private readonly authService: AuthService) {
+	constructor(private readonly authService: AuthService,
+	            private readonly navigationService: NavigationService) {
 	}
 
 	ngOnInit(): void {
@@ -60,6 +65,9 @@ export class RegisterComponent implements OnInit {
 					this.model.name,
 					this.model.username,
 					this.model.password);
+				if (this.goHomeAfterLogin) {
+					await this.navigationService.home();
+				}
 			} catch (e) {
 				this.error = e.message;
 			}

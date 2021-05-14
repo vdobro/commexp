@@ -555,4 +555,19 @@
 				referencedTableName="cx_purchase_item"
 				referencedColumnNames="id"/>
 	</changeSet>
+	<changeSet id="CE-3-a"
+	           author="vd">
+		<addColumn tableName="cx_user_group_invitation">
+			<column name="accepted_by"
+			        type="${type.id}"/>
+		</addColumn>
+	</changeSet>
+	<changeSet id="CE-3-b"
+	           author="vd">
+		<addForeignKeyConstraint baseTableName="cx_user_group_invitation"
+		                         baseColumnNames="accepted_by"
+		                         constraintName="fk_cx_user_group_invitation_accepted_by_cx_user_id"
+		                         referencedTableName="cx_user"
+		                         referencedColumnNames="id"/>
+	</changeSet>
 </databaseChangeLog>

@@ -19,33 +19,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
-import {AcceptGroupInvitationComponent} from './accept-group-invitation.component';
-import {FormsModule} from '@angular/forms';
-
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.05.13
  */
-describe('AcceptGroupInvitationComponent', () => {
-	let component: AcceptGroupInvitationComponent;
-	let fixture: ComponentFixture<AcceptGroupInvitationComponent>;
-
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
-			imports: [FormsModule],
-			declarations: [AcceptGroupInvitationComponent]
-		}).compileComponents();
-	});
-
-	beforeEach(() => {
-		fixture = TestBed.createComponent(AcceptGroupInvitationComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
-});
+export class InternalError extends Error {
+	constructor(message: string = '') {
+		super(message);
+		this.name = 'InternalError';
+	}
+}

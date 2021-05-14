@@ -19,15 +19,32 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {GroupWithUsers} from "@app/groups/group-with-users";
+import {NavigationService} from "@app/service/navigation.service";
+
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.05.10
+ * @since 2021.01.10
  */
+@Component({
+	selector: 'app-group-card',
+	templateUrl: './group-list-entry.component.html',
+	styleUrls: ['./group-list-entry.component.scss'],
+	encapsulation: ViewEncapsulation.None,
+})
+export class GroupListEntryComponent implements OnInit {
 
-export const GROUP_ID_PARAM = 'groupId';
-export const INVITATION_CODE_PARAM = 'invitation';
+	@Input()
+	group: GroupWithUsers | null = null;
 
-export const links = {
-	invite: `:${GROUP_ID_PARAM}/invite`,
-	edit: `:${GROUP_ID_PARAM}/edit`,
-};
+	constructor(private readonly navService: NavigationService) {
+	}
+
+	ngOnInit(): void {
+	}
+
+	async editGroup(group: GroupWithUsers) {
+		await this.navService.editGroup(group.id);
+	}
+}

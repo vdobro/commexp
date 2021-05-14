@@ -21,6 +21,8 @@
 
 package com.dobrovolskis.commexp.repository
 
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.model.UserGroup
 import com.dobrovolskis.commexp.model.UserInvitation
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
@@ -32,4 +34,5 @@ import java.util.UUID
  */
 @Repository
 interface UserInvitationRepository : CrudRepository<UserInvitation, UUID> {
+	fun getFirstByCreatorAndGroupAndAcceptedIsNull(creator: User, group: UserGroup) : UserInvitation?
 }

@@ -1,12 +1,27 @@
-<div *ngIf="group">
-	<h2>Invite to group {{group.name}}</h2>
-	<p-button *ngIf="!invitationLink"
-	          label="Create code"
-	          (click)="requestInvitation()"
-	          [loading]="loadingCode"></p-button>
-	<p *ngIf="invitationLink">Link to join the group: <a [href]="invitationLink">{{invitationLink}}</a></p>
-	<p-button *ngIf="invitationLink"
-	          label="Copy code"
-	          (click)="copyCode()"></p-button>
+<div *ngIf="!initializing && group">
+	<app-content-header
+		(onReturn)="goBack()"
+		title="Invite user to {{group.name}}"></app-content-header>
+	<div class="p-d-flex p-mx-lg-2 p-mt-2 p-flex-column">
+		<div *ngIf="!invitationLink">
+			<p-button pRipple
+			          label="Create invitation"
+			          (click)="requestInvitation()"
+			          [loading]="loadingCode"></p-button>
+		</div>
+		<div *ngIf="invitationLink">
+			<p>Link to join the group has been created.</p>
+			<p>Click below to copy it into your clipboard so you can share it:</p>
+		</div>
+		<div *ngIf="invitationLink" class="p-d-inline-flex p-ai-center">
+			<button pButton pRipple type="button"
+			        label="Copy to clipboard"
+			        icon="pi pi-share-alt"
+			        (click)="copyCode()"></button>
+			<p-message *ngIf="linkCopied"
+			           styleClass="p-ml-2"
+			           severity="success" text="Link copied!"></p-message>
+		</div>
+	</div>
 </div>
 <p-skeleton *ngIf="initializing"></p-skeleton>

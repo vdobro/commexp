@@ -19,15 +19,31 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+
+import {GroupListEntryComponent} from './group-list-entry.component';
+
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.05.10
+ * @since 2021.05.13
  */
+describe('GroupListEntryComponent', () => {
+	let component: GroupListEntryComponent;
+	let fixture: ComponentFixture<GroupListEntryComponent>;
 
-export const GROUP_ID_PARAM = 'groupId';
-export const INVITATION_CODE_PARAM = 'invitation';
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			declarations: [GroupListEntryComponent]
+		}).compileComponents();
+	});
 
-export const links = {
-	invite: `:${GROUP_ID_PARAM}/invite`,
-	edit: `:${GROUP_ID_PARAM}/edit`,
-};
+	beforeEach(() => {
+		fixture = TestBed.createComponent(GroupListEntryComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
+});

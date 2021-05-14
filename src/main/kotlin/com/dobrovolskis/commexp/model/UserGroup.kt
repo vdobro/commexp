@@ -104,4 +104,7 @@ class UserGroup(
 		_users.remove(user)
 	}
 
+	fun clearPurchases() {
+		this._purchases.clear();
+	}
 }

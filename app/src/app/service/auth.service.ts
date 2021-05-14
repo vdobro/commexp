@@ -64,7 +64,6 @@ export class AuthService {
 			}
 		);
 		await this.retrieveAndSetUser(headers);
-		await this.navigationService.home();
 	}
 
 	async createNew(name: string,

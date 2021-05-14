@@ -27,6 +27,7 @@ import {Session} from "@app/model/user-session";
 import {isUser} from "@app/util/SessionUtils";
 import {PATH_LOGIN, PATH_REGISTER, ROOT_GROUPS, ROOT_USER} from "@app/util/UrlConfig";
 import {NavigationService} from "@app/service/navigation.service";
+import {BehaviorSubject, Observable} from "rxjs";
 
 const LOGIN = `/${ROOT_USER}/${PATH_LOGIN}`;
 const REGISTER = `/${ROOT_USER}/${PATH_REGISTER}`;
@@ -78,20 +79,20 @@ export class HeaderService {
 		private readonly navigationService: NavigationService,
 		private readonly sessionService: SessionService,
 		private readonly authService: AuthService) {
-		this.updateButtons({});
+		this.updateAll({});
 		sessionService.session$.subscribe(user => {
-			this.updateButtons(user);
+			this.updateAll(user);
 		});
 	}
 
-	private updateButtons(session: Session) {
+	updateAll(session: Session) {
 		const loggedIn = isUser(session);
 		this.enableLoginAndLogout(!loggedIn);
 		this.toggleLogout(loggedIn);
 		this.toggleAppSections(loggedIn);
 	}
 
-	private enableLoginAndLogout(enable: boolean) {
+	enableLoginAndLogout(enable: boolean) {
 		this.loginButton.visible = enable;
 		this.registerButton.visible = enable;
 	}
@@ -102,9 +103,5 @@ export class HeaderService {
 
 	private toggleAppSections(enable: boolean) {
 		this.groupsButton.visible = enable;
-	}
-
-	removeItem(item: MenuItem): void {
-		item.visible = false;
 	}
 }

@@ -61,4 +61,8 @@ export class CreateGroupComponent implements OnInit {
 		}
 		this.loading = false;
 	}
+
+	async goBack() {
+		await this.navigationService.goToGroups();
+	}
 }
