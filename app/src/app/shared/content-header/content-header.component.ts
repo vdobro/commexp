@@ -33,7 +33,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class ContentHeaderComponent implements OnInit {
 
 	@Input()
-	title : string = '';
+	title: string = '';
+
+	@Input()
+	loading = false;
 
 	@Input()
 	enableNavigation: boolean = true;

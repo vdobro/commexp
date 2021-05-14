@@ -36,8 +36,9 @@ import {HeaderComponent} from '@app/shared/header/header.component';
 import {UserAvatarComponent} from './user-avatar/user-avatar.component';
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
-import { ContentHeaderComponent } from './content-header/content-header.component';
-import { FooterComponent } from './footer/footer.component';
+import {ContentHeaderComponent} from './content-header/content-header.component';
+import {FooterComponent} from './footer/footer.component';
+import {ProgressBarModule} from "primeng/progressbar";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -69,6 +70,7 @@ import { FooterComponent } from './footer/footer.component';
 		AvatarGroupModule,
 		ButtonModule,
 		RippleModule,
+		ProgressBarModule,
 	]
 })
 export class SharedModule {

@@ -41,7 +41,6 @@ import {NavigationService} from "@app/service/navigation.service";
 })
 export class CreateGroupInvitationComponent implements OnInit {
 
-	initializing = false;
 	group: UserGroup | null = null;
 
 	invitationLink: string | null = null;
@@ -86,9 +85,7 @@ export class CreateGroupInvitationComponent implements OnInit {
 	}
 
 	private async loadGroup(groupId: string): Promise<void> {
-		this.initializing = true;
 		this.group = await this.groupService.get(groupId);
-		this.initializing = false;
 	}
 
 	private buildLink(key: string): void {

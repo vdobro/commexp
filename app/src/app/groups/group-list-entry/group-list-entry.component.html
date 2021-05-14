@@ -8,11 +8,16 @@
 			        routerLink="{{group.id}}/edit"></button>
 		</div>
 	</ng-template>
-	<div class="p-d-inline-flex">
-		<app-user-avatar-group (click)="editGroup(group)"
-		                       [users]="group.users"></app-user-avatar-group>
-		<button pButton pRipple icon="pi pi-plus" type="button"
-		        class="p-button-text p-button-outlined p-button-sm"
-		        routerLink="{{group.id}}/invite"></button>
+	<div>
+		<div *ngIf="!loading" class="p-d-inline-flex">
+			<app-user-avatar-group (click)="editGroup(group)"
+			                       [users]="users"></app-user-avatar-group>
+			<button pButton pRipple icon="pi pi-plus" type="button"
+			        class="p-button-text p-button-outlined p-button-sm"
+			        routerLink="{{group.id}}/invite"></button>
+		</div>
+		<div *ngIf="loading">
+			<p-skeleton></p-skeleton>
+		</div>
 	</div>
 </p-card>
