@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,7 +21,17 @@
 
 import {Injectable} from '@angular/core';
 import {MenuItem} from "primeng/api";
-import {BehaviorSubject} from "rxjs";
+import {SessionService} from "@app/service/state/session.service";
+import {AuthService} from "@app/service/auth.service";
+import {Session} from "@app/model/user-session";
+import {isUser} from "@app/util/SessionUtils";
+import {PATH_LOGIN, PATH_REGISTER, ROOT_GROUPS, ROOT_USER} from "@app/util/UrlConfig";
+import {NavigationService} from "@app/service/navigation.service";
+import {BehaviorSubject, Observable} from "rxjs";
+
+const LOGIN = `/${ROOT_USER}/${PATH_LOGIN}`;
+const REGISTER = `/${ROOT_USER}/${PATH_REGISTER}`;
+const GROUPS = `/${ROOT_GROUPS}`;
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -32,43 +42,66 @@ import {BehaviorSubject} from "rxjs";
 })
 export class HeaderService {
 
-	private readonly _items = new BehaviorSubject<MenuItem[]>([]);
-
-	readonly $items = this._items.asObservable();
-
-	private get items(): MenuItem[] {
-		return this._items.getValue();
+	private readonly loginButton: MenuItem = {
+		label: 'Login',
+		icon: 'pi pi-unlock',
+		routerLink: LOGIN,
+	};
+	private readonly registerButton: MenuItem = {
+		label: 'Register',
+		icon: 'pi pi-user-plus',
+		routerLink: REGISTER,
+	};
+	private readonly logoutButton: MenuItem = {
+		label: 'Log out',
+		icon: 'pi pi-power-off',
+		command: async _ => {
+			await this.authService.logout();
+			await this.navigationService.home();
+		}
+	};
+	private readonly groupsButton: MenuItem = {
+		label: 'Groups',
+		icon: 'pi pi-users',
+		routerLink: GROUPS,
 	}
 
-	private set items(val: MenuItem[]) {
-		this._items.next(val);
+	get items(): MenuItem[] {
+		return [
+			this.groupsButton,
+			this.loginButton,
+			this.registerButton,
+			this.logoutButton,
+		];
 	}
 
-	constructor() {
-
+	constructor(
+		private readonly navigationService: NavigationService,
+		private readonly sessionService: SessionService,
+		private readonly authService: AuthService) {
+		this.updateAll({});
+		sessionService.session$.subscribe(user => {
+			this.updateAll(user);
+		});
 	}
 
-	replaceItems(v: MenuItem[]): void {
-		this.items = v;
+	updateAll(session: Session) {
+		const loggedIn = isUser(session);
+		this.enableLoginAndLogout(!loggedIn);
+		this.toggleLogout(loggedIn);
+		this.toggleAppSections(loggedIn);
 	}
 
-	addItem(item: MenuItem, at: number): void {
-		const current = this.items;
-		current.splice(at, 0, item);
-		this.items = current;
+	enableLoginAndLogout(enable: boolean) {
+		this.loginButton.visible = enable;
+		this.registerButton.visible = enable;
 	}
 
-	append(item: MenuItem): void {
-		const current = this.items;
-		current.push(item);
-		this.items = current;
+	private toggleLogout(enable: boolean) {
+		this.logoutButton.visible = enable;
 	}
 
-	removeItem(item: MenuItem): void {
-		this.items = this.items.filter(x => x.id !== item.id);
-	}
-
-	clearItems(): void {
-		this.items = [];
+	private toggleAppSections(enable: boolean) {
+		this.groupsButton.visible = enable;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,7 +21,6 @@
 
 package com.dobrovolskis.commexp.web.usecase.user
 
-import com.dobrovolskis.commexp.exception.ResourceAccessError
 import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserGroup
@@ -32,7 +31,6 @@ import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.ZonedDateTime
 import java.util.UUID
 
 /**
@@ -41,26 +39,19 @@ import java.util.UUID
  */
 @Service
 @Transactional
-class AcceptInvitationToGroup(
+class JoinGroupWithInvitation(
 	private val invitationRepository: UserInvitationRepository,
 	private val userGroupService: UserGroupService
 ) : BaseRequestHandler<UUID, UserGroup> {
 
 	override fun invoke(currentUser: User, request: UUID): UserGroup {
-		val invitation = validate(currentUser, request)
-		val group = invitation.group
-		invitation.accepted = ZonedDateTime.now()
-		val resultingGroup = userGroupService.addUser(group, currentUser)
-		invitationRepository.save(invitation)
-		return resultingGroup
+		val invitation = validateAndFind(request)
+		return userGroupService.acceptInvitation(currentUser, invitation)
 	}
 
-	private fun validate(user: User, request: UUID): UserInvitation {
+	private fun validateAndFind(request: UUID): UserInvitation {
 		val invitation = invitationRepository.findByIdOrNull(request)
 			?: throw ResourceNotFoundError("Invitation $request not found")
-		if (invitation.target != user) {
-			throw ResourceAccessError("User denied access to invitation")
-		}
 
 		require(invitation.accepted == null) {
 			"Invitation already accepted"

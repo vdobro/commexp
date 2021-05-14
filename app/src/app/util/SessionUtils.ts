@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -27,7 +27,7 @@ import {Session, UserSession} from "@app/model/user-session";
  */
 
 export function isUser(user: Session): user is UserSession {
-	return (user as UserSession).id !== undefined;
+	return user != null && (user as UserSession).id !== undefined;
 }
 
 export class UsernameError extends Error {
@@ -41,5 +41,12 @@ export class CredentialsError extends Error {
 	constructor(message: string = '') {
 		super(message);
 		this.name = "CredentialsError";
+	}
+}
+
+export class NameCollisionError extends Error {
+	constructor(message : string = '') {
+		super(message);
+		this.name = "NameCollisionError";
 	}
 }

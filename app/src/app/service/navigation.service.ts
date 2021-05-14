@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -20,10 +20,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Router} from "@angular/router";
-import {UserHeaderService} from "@app/service/state/user-header.service";
-import {SessionService} from "@app/service/state/session.service";
-import {isUser} from "@app/util/SessionUtils";
+import {NavigationEnd, Router} from '@angular/router';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -34,26 +31,35 @@ import {isUser} from "@app/util/SessionUtils";
 })
 export class NavigationService {
 
-	constructor(private readonly router: Router,
-	            private readonly sessionService: SessionService,
-	            private readonly userHeaderService: UserHeaderService) {
-		sessionService.session$.subscribe(async (session) => {
-			if (isUser(session)) {
-				await this.navigateToLast();
+	private lastLocation : string | null = null;
+	private currentLocation : string | null = null;
+
+	constructor(private readonly router: Router) {
+		this.router.events.subscribe((event) => {
+			if (event instanceof NavigationEnd) {
+				this.lastLocation = this.currentLocation;
+				this.currentLocation = event.urlAfterRedirects;
 			}
-		})
+		});
 	}
 
-	async home() {
+	async home(): Promise<void> {
 		await this.router.navigate(['']);
 	}
 
-	private async navigateToLast() {
-		const nav = this.router.getCurrentNavigation();
-		if (!nav || !nav.previousNavigation) {
-			await this.home();
-		} else {
-			await this.router.navigateByUrl(nav.previousNavigation.finalUrl || '/');
+	async editGroup(id: string): Promise<void> {
+		await this.router.navigate(['groups', id, 'edit']);
+	}
+
+	async goToGroups(): Promise<void> {
+		await this.router.navigate(['groups']);
+	}
+
+	async goBack() : Promise<void> {
+		if (this.lastLocation) {
+			await this.router.navigateByUrl(this.lastLocation);
+			this.currentLocation = this.lastLocation;
+			this.lastLocation = null;
 		}
 	}
 }

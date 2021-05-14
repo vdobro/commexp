@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -20,6 +20,9 @@
  */
 
 import {Component, OnInit} from '@angular/core';
+import {UserGroupService} from "@app/service/user-group.service";
+import {NameCollisionError} from "@app/util/SessionUtils";
+import {NavigationService} from "@app/service/navigation.service";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -32,10 +35,34 @@ import {Component, OnInit} from '@angular/core';
 })
 export class CreateGroupComponent implements OnInit {
 
-	constructor() {
+	model = {
+		name: ''
+	};
+
+	loading = false;
+	nameError = false;
+
+	constructor(private readonly groupService: UserGroupService,
+	            private readonly navigationService: NavigationService) {
 	}
 
 	ngOnInit(): void {
 	}
 
+	async submit() {
+		this.loading = true;
+		try {
+			const group = await this.groupService.create(this.model.name);
+			await this.navigationService.editGroup(group.id);
+		} catch (e) {
+			if (e instanceof NameCollisionError) {
+				this.nameError = true;
+			}
+		}
+		this.loading = false;
+	}
+
+	async goBack() {
+		await this.navigationService.goToGroups();
+	}
 }

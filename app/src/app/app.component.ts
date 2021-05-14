@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -20,7 +20,6 @@
  */
 
 import {Component} from '@angular/core';
-import {NavigationService} from "@app/service/navigation.service";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -34,7 +33,6 @@ import {NavigationService} from "@app/service/navigation.service";
 export class AppComponent {
 	title = 'commexp';
 
-	constructor(
-		private readonly navigation: NavigationService) {
+	constructor() {
 	}
 }

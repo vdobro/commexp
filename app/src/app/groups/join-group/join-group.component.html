@@ -1,0 +1,24 @@
+<div *ngIf="loggedIn" class="p-mx-lg-2">
+	<div *ngIf="tokenError">
+		<h2>Error joining a group</h2>
+		<p>Check your link for mistakes and try again.</p>
+		<p-button label="Back to my groups" (onClick)="quit()"></p-button>
+	</div>
+	<div *ngIf="loading">
+		<h2>Joining group...</h2>
+		<p-progressBar mode="indeterminate"></p-progressBar>
+	</div>
+	<div *ngIf="joinSuccess">
+		<h2>Welcome to <b>{{groupName}}</b>!</h2>
+		<p>You can now return to your groups.</p>
+		<p-button label="Group list" (onClick)="quit()"></p-button>
+	</div>
+</div>
+<div *ngIf="!loggedIn">
+	<app-login *ngIf="useExistingUser" [goHomeAfterLogin]="false"></app-login>
+	<app-register *ngIf="!useExistingUser" [goHomeAfterLogin]="false"></app-register>
+	<button pButton pRipple
+	        class="p-button-text p-mt-2" type="button"
+	        (click)="toggleLoginMode()"
+	        [label]="useExistingUser ? 'A new user? Sign up here' : 'Already a user? Log in instead'"></button>
+</div>

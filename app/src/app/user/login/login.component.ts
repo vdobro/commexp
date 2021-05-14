@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,9 +19,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CredentialsError} from "@app/util/SessionUtils";
 import {AuthService} from "@app/service/auth.service";
+import {NavigationService} from "@app/service/navigation.service";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -39,11 +40,15 @@ export class LoginComponent implements OnInit {
 		password: '',
 	};
 
+	@Input()
+	goHomeAfterLogin = true;
+
+	isLoading = false;
 	credentialsError = false;
 	serverError = false;
 
-	constructor(private readonly authService: AuthService) {
-
+	constructor(private readonly authService: AuthService,
+	            private readonly navigationService: NavigationService) {
 	}
 
 	ngOnInit(): void {
@@ -51,8 +56,11 @@ export class LoginComponent implements OnInit {
 
 	async submit() {
 		try {
-			await this.authService.tryLogin(this.model.username,
-				this.model.password)
+			this.isLoading = true;
+			await this.authService.tryLogin(this.model.username, this.model.password);
+			if (this.goHomeAfterLogin) {
+				await this.navigationService.home();
+			}
 		} catch (e) {
 			if (e instanceof CredentialsError) {
 				this.credentialsError = true;
@@ -60,5 +68,6 @@ export class LoginComponent implements OnInit {
 				this.serverError = true;
 			}
 		}
+		this.isLoading = false;
 	}
 }

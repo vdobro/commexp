@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -20,7 +20,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Session, UserSession} from "@app/model/user-session";
 
 /**
@@ -34,24 +34,17 @@ export class SessionService {
 
 	private readonly _session = new BehaviorSubject<Session>({});
 
-	readonly session$ = this._session.asObservable();
+	readonly session$: Observable<Session> = this._session.asObservable();
 
-	get currentSession(): Session {
+	get current() : Session {
 		return this._session.getValue();
 	}
 
-	constructor() {
-	}
-
 	reset() {
-		this.setSession({});
+		this._session.next({});
 	}
 
-	async setUser(user: UserSession) {
-		this.setSession(user);
-	}
-
-	private setSession(val: Session) {
-		this._session.next(val);
+	setUser(user: UserSession) {
+		this._session.next( user);
 	}
 }

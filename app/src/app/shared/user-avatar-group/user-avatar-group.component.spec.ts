@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,25 +21,24 @@
 
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {AcceptGroupInvitationComponent} from './accept-group-invitation.component';
+import {UserAvatarGroupComponent} from './user-avatar-group.component';
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.04.28
  */
-describe('AcceptGroupInvitationComponent', () => {
-	let component: AcceptGroupInvitationComponent;
-	let fixture: ComponentFixture<AcceptGroupInvitationComponent>;
+describe('UserAvatarGroupComponent', () => {
+	let component: UserAvatarGroupComponent;
+	let fixture: ComponentFixture<UserAvatarGroupComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AcceptGroupInvitationComponent]
-		})
-			.compileComponents();
+			declarations: [UserAvatarGroupComponent]
+		}).compileComponents();
 	});
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(AcceptGroupInvitationComponent);
+		fixture = TestBed.createComponent(UserAvatarGroupComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

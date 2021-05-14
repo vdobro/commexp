@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -30,6 +30,7 @@ import {CredentialsError} from "@app/util/SessionUtils";
 import {catchError} from "rxjs/operators";
 import {SessionService} from "@app/service/state/session.service";
 import {NetworkError} from "@app/util/NetworkError";
+import {InternalError} from "@app/util/InternalError";
 
 @Injectable({providedIn: 'root'})
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -51,8 +52,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 		if (err.status === 401 || err.status === 403) {
 			this.sessionService.reset();
 			return throwError(new CredentialsError());
-		} else {
-			return throwError(new NetworkError());
+		} else if (err.status == 500) {
+			return throwError(new InternalError());
 		}
+		return throwError(new NetworkError());
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -22,20 +22,22 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
+
+import {InputTextModule} from "primeng/inputtext";
+import {SharedModule} from "primeng/api";
+
+import {HttpErrorInterceptor} from "@app/util/HttpErrorInterceptor";
+import {XsrfInterceptor} from "@app/util/XsrfInterceptor";
+import {SharedModule as CommonModule} from "@app/shared/shared.module";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {DropdownModule} from "primeng/dropdown";
-import {HeaderComponent} from './header/header.component';
-import {MenubarModule} from "primeng/menubar";
 import {HomeComponent} from './home/home.component';
-import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
-import {InputTextModule} from "primeng/inputtext";
-import {SharedModule} from "primeng/api";
-import {HttpErrorInterceptor} from "@app/util/HttpErrorInterceptor";
-import {XsrfInterceptor} from "@app/util/XsrfInterceptor";
-import {FormsModule} from "@angular/forms";
+import {NotFoundComponent} from './not-found/not-found.component';
+import {ButtonModule} from "primeng/button";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -44,20 +46,20 @@ import {FormsModule} from "@angular/forms";
 @NgModule({
 	declarations: [
 		AppComponent,
-		HeaderComponent,
-		HomeComponent
+		HomeComponent,
+  NotFoundComponent,
 	],
 	imports: [
 		BrowserModule,
 		BrowserAnimationsModule,
-		DropdownModule,
 		HttpClientModule,
 		HttpClientXsrfModule,
 		AppRoutingModule,
-		MenubarModule,
 		InputTextModule,
 		SharedModule,
-		FormsModule
+		FormsModule,
+		CommonModule,
+		ButtonModule,
 	],
 	providers: [
 		{provide: LocationStrategy, useClass: HashLocationStrategy},

@@ -22,6 +22,7 @@
 import {TestBed} from '@angular/core/testing';
 
 import {UserGroupService} from './user-group.service';
+import {HttpClientModule} from '@angular/common/http';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -31,7 +32,9 @@ describe('UserGroupService', () => {
 	let service: UserGroupService;
 
 	beforeEach(() => {
-		TestBed.configureTestingModule({});
+		TestBed.configureTestingModule({
+			imports: [HttpClientModule],
+		});
 		service = TestBed.inject(UserGroupService);
 	});
 

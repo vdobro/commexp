@@ -1,0 +1,12 @@
+.footer-credits {
+	flex-shrink: 0;
+}
+
+.heart {
+	color: red;
+	font-size: 1.25rem;
+
+	&.pi-heart {
+		font-size: 1.1rem;
+	}
+}

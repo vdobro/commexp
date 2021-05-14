@@ -1,1 +1,24 @@
-<p>create-group works!</p>
+<app-content-header title="New group" (onReturn)="goBack()"></app-content-header>
+<div class="p-grid">
+	<div class="p-col-12 p-lg-3 p-md-4 p-sm-6">
+		<form #joinForm="ngForm" (ngSubmit)="submit()" class="p-fluid">
+			<span class="p-float-label p-mt-3">
+				<input id="name"
+				       required
+				       type="text"
+				       [(ngModel)]="model.name"
+				       name="username"
+				       pInputText>
+				<label for="name">Group name</label>
+				<small *ngIf="nameError"
+				       id="username-help"
+				       class="p-error">Name must not be empty and should not be the same as of another group of yours.</small>
+			</span>
+			<p-button styleClass="p-mt-3"
+			          type="submit"
+			          label="Create"
+			          [loading]="loading"
+			          [disabled]="!joinForm.form.valid"></p-button>
+		</form>
+	</div>
+</div>

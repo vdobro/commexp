@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,23 +19,20 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {Component, OnInit} from '@angular/core';
+import {User} from "@app/model/user";
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.10
+ * @since 2021.04.28
  */
-@Component({
-	selector: 'app-accept-group-invitation',
-	templateUrl: './accept-group-invitation.component.html',
-	styleUrls: ['./accept-group-invitation.component.scss']
-})
-export class AcceptGroupInvitationComponent implements OnInit {
-
-	constructor() {
+export function generateColor(user: User, saturation: number, lightness: number): string {
+	let hash = 0;
+	let base = user.id.replace('-', '') + user.username;
+	for (let i = 0; i < base.length; i++) {
+		hash = base.charCodeAt(i) + ((hash << 5) - hash);
 	}
-
-	ngOnInit(): void {
-	}
-
+	let h = hash % 360;
+	let s = Math.min(saturation, 100);
+	let l = Math.min(lightness, 100);
+	return `hsl(${h}, ${s}%, ${l}%)`;
 }

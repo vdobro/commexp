@@ -1,0 +1,13 @@
+<p-menubar [baseZIndex]=2000
+           [model]="menuItems"
+           styleClass="p-shadow-3">
+	<ng-template pTemplate="end">
+		<button *ngIf="false" pButton pRipple type="button"
+		        class="p-mr-1 p-button-rounded p-button-text"
+		        icon="pi pi-shopping-cart"></button>
+		<app-group-switcher class="p-mx-lg-2"
+		                    *ngIf="userLoggedIn && !hideGroupSwitcher"
+		                    (groupSelect)="changeActiveGroup($event)">
+		</app-group-switcher>
+	</ng-template>
+</p-menubar>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -30,6 +30,7 @@ import com.dobrovolskis.commexp.repository.UserInvitationRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.ZonedDateTime
 import java.util.UUID
 
 /**
@@ -53,45 +54,56 @@ class UserGroupService(
 		)
 	)
 
+	fun renameGroup(group: UserGroup, name: String) = repository.save(
+		group.also { it.name = name }
+	)
+
 	fun addUser(group: UserGroup, user: User): UserGroup {
-		require(repository.existsById(group.id()!!)) {
-			"Group does not exist"
-		}
-		if (group.users().contains(user)) {
-			return group
+		require(!group.users().contains(user)) {
+			"User already in group"
 		}
 		group.addUser(user)
 		return repository.save(group)
 	}
 
-	fun inviteUser(
+	fun removeUser(group: UserGroup, user: User) {
+		require(group.users().contains(user)) {
+			"User not in group"
+		}
+		group.removeUser(user)
+		if (group.users().isEmpty()) {
+			group.clearPurchases()
+			repository.delete(group)
+		} else {
+			repository.save(group)
+		}
+	}
+
+	fun createInvitation(
 		group: UserGroup,
 		invitedBy: User,
-		userToInvite: User
 	): UserInvitation {
-		require(!userToInvite.isInGroup(group)) {
-			"User is already in the group"
-		}
-		require(
-			!invitationRepository.existsByTargetAndGroupAndAcceptedIsNull(
-				target = userToInvite,
-				group = group
-			)
-		) {
-			"User already invited to the group"
-		}
 		require(invitedBy.isInGroup(group)) {
-			"User cannot invite to a group they are not a part of"
+			"User cannot invite to a group they are not themselves a part of"
 		}
-		require(invitedBy != userToInvite) {
-			"User cannot invite themselves"
-		}
-		return invitationRepository.save(
-			UserInvitation(
-				creator = invitedBy,
-				target = userToInvite,
-				group = group
+		return invitationRepository.getFirstByCreatorAndGroupAndAcceptedIsNull(invitedBy, group)
+			?: invitationRepository.save(
+				UserInvitation(
+					creator = invitedBy,
+					group = group
+				)
 			)
-		)
+	}
+
+	fun acceptInvitation(
+		user: User,
+		invitation: UserInvitation
+	): UserGroup {
+		invitation.accepted = ZonedDateTime.now()
+		invitation.acceptedBy = user
+
+		val resultingGroup = addUser(invitation.group, user)
+		invitationRepository.save(invitation)
+		return resultingGroup
 	}
 }

@@ -1,0 +1,6 @@
+<p-dropdown *ngIf="groups.length > 0"
+            [options]="groups"
+            [(ngModel)]="activeGroup"
+            (onChange)="onChangeSelection()"
+            optionLabel="name">
+</p-dropdown>

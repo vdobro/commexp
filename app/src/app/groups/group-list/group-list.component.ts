@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,6 +21,12 @@
 
 import {Component, OnInit} from '@angular/core';
 
+import {UserGroupService} from "@app/service/user-group.service";
+
+import {UserGroup} from "@app/model/user-group";
+import {GroupWithUsers} from "@app/groups/group-with-users";
+import {NavigationService} from "@app/service/navigation.service";
+
 /**
  * @author Vitalijus Dobrovolskis
  * @since 2021.01.10
@@ -28,14 +34,30 @@ import {Component, OnInit} from '@angular/core';
 @Component({
 	selector: 'app-groups',
 	templateUrl: './group-list.component.html',
-	styleUrls: ['./group-list.component.scss']
+	styleUrls: ['./group-list.component.scss'],
 })
 export class GroupListComponent implements OnInit {
 
-	constructor() {
+	groups: GroupWithUsers[] = [];
+
+	constructor(private readonly groupService: UserGroupService,
+	            private readonly navService: NavigationService) {
 	}
 
-	ngOnInit(): void {
+	async ngOnInit() {
+		const groups = await this.groupService.getMyGroups();
+		this.groups = await Promise.all(groups.map(group => this.mapToGroupWithUsers(group)));
 	}
 
+	private async mapToGroupWithUsers(group: UserGroup): Promise<GroupWithUsers> {
+		return {
+			id: group.id,
+			name: group.name,
+			users: await this.groupService.getUsers(group)
+		};
+	}
+
+	async goBack() {
+		await this.navService.home();
+	}
 }

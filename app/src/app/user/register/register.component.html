@@ -1,3 +1,4 @@
+<h2>Create a new account</h2>
 <div class="p-grid">
 	<div class="p-col-12 p-lg-3 p-md-4 p-sm-6">
 		<form #registrationForm="ngForm" (ngSubmit)="submit()" class="p-fluid">
@@ -5,51 +6,49 @@
 				<input id="name"
 				       required
 				       type="text"
+				       [disabled]="loading"
 				       [(ngModel)]="model.name"
 				       name="name"
 				       pInputText>
-				<label for="username">Anzeigename</label>
+				<label for="username">Your actual name</label>
 			</span>
 			<span class="p-float-label p-mt-4">
 				<input id="username"
 				       required
 				       type="text"
+				       [disabled]="loading"
 				       [(ngModel)]="model.username"
 				       name="username"
 				       pInputText>
-				<label for="username">Nutzername</label>
+				<label for="username">Username</label>
 				<small *ngIf="usernameUnavailable"
 				       id="username-help"
-				       class="p-error">Nutzername nicht verfügbar.</small>
+				       class="p-error">Username not available.</small>
 			</span>
 			<span class="p-float-label p-mt-4">
-				<input id="password"
-				       type="password"
-				       required
-				       [(ngModel)]="model.password"
-				       name="password"
-				       pInputText>
-				<label for="password">Passwort</label>
+				<p-password id="password" required [toggleMask]="true"
+				            placeholder="Password"
+				            [disabled]="loading"
+				            [(ngModel)]="model.password"
+				            name="password"></p-password>
 			</span>
 			<span class="p-float-label p-my-4">
-				<input id="password-confirmation"
-				       type="password"
-				       required
-				       [(ngModel)]="model.passwordConfirmation"
-				       name="passwordConfirmation"
-				       pInputText>
-				<label for="password-confirmation">Passwort wiederholen</label>
+				<p-password id="password-confirmation" required
+				            placeholder="Repeat password"
+				            [disabled]="loading"
+				            [(ngModel)]="model.passwordConfirmation"
+				            name="passwordConfirmation"></p-password>
 				<small *ngIf="passwordMismatch"
 				       id="password-help"
-				       class="p-error">Passwörter müssen übereinstimmen.</small>
+				       class="p-error">Passwords must match.</small>
 			</span>
-			<p-message *ngIf="error" severity="error"
+			<p-message *ngIf="error && !loading" severity="error"
 			           class="p-mb-4"
 			           text="{{error}}"></p-message>
-			<button pButton
-			        type="submit"
-			        label="Anmelden"
-			        [disabled]="!registrationForm.form.valid"></button>
+			<p-button type="submit"
+			          label="Sign up"
+			          [loading]="loading"
+			          [disabled]="!registrationForm.form.valid"></p-button>
 		</form>
 	</div>
 </div>

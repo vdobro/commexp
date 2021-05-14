@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -26,22 +26,30 @@ import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserGroup
 import com.dobrovolskis.commexp.model.UserInvitation
 import com.dobrovolskis.commexp.web.ControllerUtils
+import com.dobrovolskis.commexp.web.ID_PATH
 import com.dobrovolskis.commexp.web.assembler.InvitationAssembler
+import com.dobrovolskis.commexp.web.assembler.UserAssembler
 import com.dobrovolskis.commexp.web.assembler.UserGroupAssembler
+import com.dobrovolskis.commexp.web.dto.UserDto
 import com.dobrovolskis.commexp.web.dto.UserGroupDto
 import com.dobrovolskis.commexp.web.dto.UserInvitationDto
 import com.dobrovolskis.commexp.web.request.GroupCreationRequest
-import com.dobrovolskis.commexp.web.request.GroupUserRequest
-import com.dobrovolskis.commexp.web.usecase.user.AcceptInvitationToGroup
+import com.dobrovolskis.commexp.web.request.GroupInvitationRequest
+import com.dobrovolskis.commexp.web.request.GroupUserRemovalRequest
 import com.dobrovolskis.commexp.web.usecase.user.CreateGroup
+import com.dobrovolskis.commexp.web.usecase.user.CreateInvitationToGroup
+import com.dobrovolskis.commexp.web.usecase.user.EditGroupDetails
 import com.dobrovolskis.commexp.web.usecase.user.FindGroup
 import com.dobrovolskis.commexp.web.usecase.user.GetDefaultGroup
 import com.dobrovolskis.commexp.web.usecase.user.GetUserGroupList
-import com.dobrovolskis.commexp.web.usecase.user.InviteUserToGroup
+import com.dobrovolskis.commexp.web.usecase.user.GetUsersInGroup
+import com.dobrovolskis.commexp.web.usecase.user.JoinGroupWithInvitation
+import com.dobrovolskis.commexp.web.usecase.user.RemoveUserFromGroup
 import com.dobrovolskis.commexp.web.usecase.user.SetDefaultGroup
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod.DELETE
 import org.springframework.web.bind.annotation.RequestMethod.GET
 import org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.web.bind.annotation.RequestMethod.PUT
@@ -57,56 +65,104 @@ import javax.validation.Valid
 @RequestMapping(value = [PATH_USER_GROUPS])
 class UserGroupController(
 	private val createGroup: CreateGroup,
-	private val inviteUser: InviteUserToGroup,
-	private val acceptInvitationToGroup: AcceptInvitationToGroup,
+	private val editGroupDetails: EditGroupDetails,
+	private val createInvitationToGroup: CreateInvitationToGroup,
+	private val joinGroupWithInvitation: JoinGroupWithInvitation,
 	private val getUserGroupList: GetUserGroupList,
 	private val findGroup: FindGroup,
 	private val getDefaultGroup: GetDefaultGroup,
 	private val setDefaultGroup: SetDefaultGroup,
+	private val getUsersInGroup: GetUsersInGroup,
+	private val removeUserFromGroup: RemoveUserFromGroup,
 	private val controllerUtils: ControllerUtils,
 	private val groupAssembler: UserGroupAssembler,
 	private val invitationAssembler: InvitationAssembler,
+	private val userAssembler: UserAssembler,
 ) {
 
 	@RequestMapping(method = [POST])
 	fun createNew(@RequestBody creationRequest: GroupCreationRequest): UserGroupDto =
 		mapToDto(createGroup(getUser(), creationRequest))
 
+	@RequestMapping(method = [PUT], path = [ID_PATH])
+	fun editGroup(
+		@RequestBody editRequest: GroupCreationRequest,
+		@PathVariable id: UUID
+	) {
+		editGroupDetails(
+			getUser(), UserGroupDto(
+				id = id,
+				name = editRequest.name
+			)
+		)
+	}
+
+	@RequestMapping(method = [DELETE], path = ["$ID_PATH/users/{username}"])
+	fun removeUser(
+		@PathVariable id: UUID,
+		@PathVariable username: String
+	) {
+		removeUserFromGroup(
+			getUser(), GroupUserRemovalRequest(
+				groupId = id,
+				username = username
+			)
+		)
+	}
+
+	@RequestMapping(method = [POST], path = ["$ID_PATH/leave"])
+	fun leaveGroup(@PathVariable id: UUID) {
+		val user = getUser()
+		removeUserFromGroup(
+			user, GroupUserRemovalRequest(
+				groupId = id,
+				username = user.username
+			)
+		)
+	}
+
 	@RequestMapping(method = [GET])
 	fun getMyGroups(): List<UserGroupDto> =
 		getUserGroupList(getUser()).map(this::mapToDto)
 
-	@RequestMapping(method = [GET], path = ["/{id}"])
-	fun get(@PathVariable id: UUID) : UserGroupDto {
+	@RequestMapping(method = [GET], path = [ID_PATH])
+	fun get(@PathVariable id: UUID): UserGroupDto {
 		return mapToDto(findGroup(getUser(), id))
 	}
 
+	@RequestMapping(method = [GET], path = ["$ID_PATH/users"])
+	fun getUsers(@PathVariable id: UUID): List<UserDto> {
+		return getUsersInGroup(getUser(), id).map { mapToDto(it) }
+	}
+
 	@RequestMapping(method = [GET], path = ["/default"])
-	fun getDefault() : UserGroupDto? {
+	fun getDefault(): UserGroupDto? {
 		val group = getDefaultGroup(getUser())
 		return group?.let { mapToDto(it) }
 	}
 
-	@RequestMapping(method = [PUT], path = ["/default/{id}"])
+	@RequestMapping(method = [PUT], path = ["/default$ID_PATH"])
 	fun setDefault(@PathVariable id: UUID) = setDefaultGroup(getUser(), id)
 
 	@RequestMapping(
 		method = [POST],
 		path = ["/invite"]
 	)
-	fun inviteUserToGroup(@RequestBody @Valid request: GroupUserRequest): UserInvitationDto =
-		mapToDto(inviteUser(getUser(), request))
+	fun createInvitation(@RequestBody @Valid request: GroupInvitationRequest): UserInvitationDto =
+		mapToDto(createInvitationToGroup(getUser(), request))
 
 	@RequestMapping(
 		method = [POST],
 		path = ["/join/{invitationId}"]
 	)
 	fun acceptInvitation(@PathVariable invitationId: UUID): UserGroupDto =
-		mapToDto(acceptInvitationToGroup(getUser(), invitationId))
+		mapToDto(joinGroupWithInvitation(getUser(), invitationId))
 
 	private fun mapToDto(userGroup: UserGroup) = groupAssembler.toDto(userGroup)
 
 	private fun mapToDto(invitation: UserInvitation) = invitationAssembler.toDto(invitation)
+
+	private fun mapToDto(user: User) = userAssembler.toDto(user)
 
 	private fun getUser(): User = controllerUtils.getCurrentUser()
 }

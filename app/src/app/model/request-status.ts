@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,28 +19,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
-import {HeaderComponent} from './header.component';
-
-describe('HeaderComponent', () => {
-	let component: HeaderComponent;
-	let fixture: ComponentFixture<HeaderComponent>;
-
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
-			declarations: [HeaderComponent]
-		})
-			.compileComponents();
-	});
-
-	beforeEach(() => {
-		fixture = TestBed.createComponent(HeaderComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
-
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
-});
+/**
+ * @author Vitalijus Dobrovolskis
+ * @since 2021.05.10
+ */
+export enum RequestStatus {
+	IDLE,
+	LOADING,
+}

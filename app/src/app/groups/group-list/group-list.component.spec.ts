@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -22,6 +22,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {GroupListComponent} from './group-list.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -33,6 +34,7 @@ describe('GroupsComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
+			imports: [HttpClientTestingModule],
 			declarations: [GroupListComponent]
 		}).compileComponents();
 	});

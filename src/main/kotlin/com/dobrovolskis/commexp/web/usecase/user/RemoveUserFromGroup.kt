@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -22,10 +22,9 @@
 package com.dobrovolskis.commexp.web.usecase.user
 
 import com.dobrovolskis.commexp.model.User
-import com.dobrovolskis.commexp.model.UserInvitation
 import com.dobrovolskis.commexp.service.UserGroupService
 import com.dobrovolskis.commexp.service.UserService
-import com.dobrovolskis.commexp.web.request.GroupUserRequest
+import com.dobrovolskis.commexp.web.request.GroupUserRemovalRequest
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
 import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
 import org.springframework.stereotype.Service
@@ -33,26 +32,19 @@ import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.06
+ * @since 2021.05.12
  */
 @Service
 @Transactional
-class InviteUserToGroup(
+class RemoveUserFromGroup(
 	private val groupService: UserGroupService,
-	private val userService: UserService,
-) : BaseRequestHandler<GroupUserRequest, UserInvitation> {
-	override fun invoke(currentUser: User, request: GroupUserRequest): UserInvitation {
+	private val userService: UserService
+) : BaseRequestHandler<GroupUserRemovalRequest, Unit> {
+	override fun invoke(currentUser: User, request: GroupUserRemovalRequest) {
 		val group = groupService.find(request.groupId)
-		verifyAccessToGroup(currentUser, group)
+		val user = userService.findByUsername(request.username)
 
-		require(currentUser.username != request.username) {
-			"User cannot add themselves to another group"
-		}
-		val userToInvite = userService.findByUsername(request.username)
-		return groupService.inviteUser(
-			group = group,
-			invitedBy = currentUser,
-			userToInvite = userToInvite
-		)
+		verifyAccessToGroup(currentUser, group)
+		groupService.removeUser(group, user)
 	}
 }

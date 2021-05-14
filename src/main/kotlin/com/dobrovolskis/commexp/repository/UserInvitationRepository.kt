@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -34,5 +34,5 @@ import java.util.UUID
  */
 @Repository
 interface UserInvitationRepository : CrudRepository<UserInvitation, UUID> {
-	fun existsByTargetAndGroupAndAcceptedIsNull(target: User, group: UserGroup): Boolean
+	fun getFirstByCreatorAndGroupAndAcceptedIsNull(creator: User, group: UserGroup) : UserInvitation?
 }

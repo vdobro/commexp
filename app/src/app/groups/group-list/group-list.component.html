@@ -1,1 +1,17 @@
-<h5>Gruppen</h5>
+<div class="p-flex p-flex-column">
+	<div class="p-mx-lg-2 p-d-flex p-flex-row p-ai-center">
+		<app-content-header [enableNavigation]=false
+		                    title="My groups"></app-content-header>
+		<button pButton pRipple
+		        style="flex-shrink: 0"
+		        icon="pi pi-plus"
+		        routerLink="new"
+		        label="New group"></button>
+	</div>
+	<div class="p-grid p-mx-lg-0">
+		<div *ngFor="let group of groups"
+		     class="p-col-12 p-lg-3 p-md-6">
+			<app-group-card [group]="group"></app-group-card>
+		</div>
+	</div>
+</div>

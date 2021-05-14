@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -23,6 +23,8 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {SessionService} from "@app/service/state/session.service";
 import {map} from "rxjs/operators";
+import {isUser} from "@app/util/SessionUtils";
+import {environment} from "@environments/environment.prod";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -35,12 +37,16 @@ import {map} from "rxjs/operators";
 })
 export class HomeComponent implements OnInit {
 
+	appVersion = environment.appVersion;
+
 	authenticated: Observable<boolean>;
+	displayName: Observable<string>;
 
 	constructor(private readonly session: SessionService) {
 		this.authenticated = this.session.session$.pipe(
-			map(user => user != null)
-		);
+			map(user => isUser(user)));
+		this.displayName = this.session.session$.pipe(
+			map(user => isUser(user) ? user.name : ''));
 	}
 
 	ngOnInit(): void {

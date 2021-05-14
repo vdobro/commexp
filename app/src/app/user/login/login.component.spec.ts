@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -22,6 +22,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {LoginComponent} from './login.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {FormsModule} from '@angular/forms';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -33,9 +36,9 @@ describe('LoginComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
+			imports: [HttpClientTestingModule, RouterTestingModule, FormsModule],
 			declarations: [LoginComponent]
-		})
-			.compileComponents();
+		}).compileComponents();
 	});
 
 	beforeEach(() => {

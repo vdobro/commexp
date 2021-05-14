@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -26,6 +26,7 @@ import {UsernameError} from "@app/util/SessionUtils";
 import {NetworkError} from "@app/util/NetworkError";
 import {environment} from "@environments/environment";
 import {UserSession} from "@app/model/user-session";
+import {NavigationService} from "@app/service/navigation.service";
 
 const URL = {
 	USERS: environment.apiUrl + "/user",
@@ -43,16 +44,16 @@ const URL = {
 export class AuthService {
 
 	constructor(private readonly httpClient: HttpClient,
-	            private readonly sessionService: SessionService) {
+	            private readonly sessionService: SessionService,
+	            private readonly navigationService: NavigationService) {
 		this.retrieveAndSetUser()
 			.then(user => {
 				console.log(`Resuming saved user session for ${user.username}.`);
 			}).catch(_ => {
-			this.sessionService.reset();
-			this.logout().then(_ => {
-				console.log("No session to resume or previous session expired.");
+				this.logout().then(_ => {
+					console.log("No session to resume or previous session expired.");
+				});
 			});
-		});
 	}
 
 	async tryLogin(username: string, password: string) {
@@ -82,23 +83,24 @@ export class AuthService {
 				}
 			).toPromise();
 		} catch (e) {
-			this.sessionService.reset();
+			await this.sessionService.reset();
 			throw new UsernameError();
 		}
 		if (response.ok) {
 			await this.tryLogin(username, password);
 		} else {
+			await this.sessionService.reset();
 			throw new NetworkError();
 		}
 	}
 
 	async logout() {
-		this.sessionService.reset();
 		await this.refreshCsrf();
 		await this.httpClient
 			.post(URL.LOGOUT, {observe: "response"})
 			.toPromise();
 		await this.refreshCsrf();
+		await this.sessionService.reset();
 	}
 
 	private async refreshCsrf() {
@@ -114,7 +116,7 @@ export class AuthService {
 		).toPromise();
 
 		const user = response.body!!;
-		await this.sessionService.setUser(user);
+		this.sessionService.setUser(user);
 		return user;
 	}
 }

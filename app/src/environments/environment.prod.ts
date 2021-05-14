@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,7 +19,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {version} from '../../package.json';
+
 export const environment = {
+	appVersion: version,
 	production: true,
 	apiUrl: '/api',
 };

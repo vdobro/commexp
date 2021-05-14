@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,19 +19,31 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {UserHeaderService} from './user-header.service';
+import {UserAvatarComponent} from './user-avatar.component';
 
-describe('UserHeaderService', () => {
-	let service: UserHeaderService;
+/**
+ * @author Vitalijus Dobrovolskis
+ * @since 2021.05.12
+ */
+describe('UserAvatarComponent', () => {
+	let component: UserAvatarComponent;
+	let fixture: ComponentFixture<UserAvatarComponent>;
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({});
-		service = TestBed.inject(UserHeaderService);
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			declarations: [UserAvatarComponent]
+		}).compileComponents();
 	});
 
-	it('should be created', () => {
-		expect(service).toBeTruthy();
+	beforeEach(() => {
+		fixture = TestBed.createComponent(UserAvatarComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it('should create', () => {
+		expect(component).toBeTruthy();
 	});
 });

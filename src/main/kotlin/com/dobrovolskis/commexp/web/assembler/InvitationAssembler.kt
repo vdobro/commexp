@@ -35,7 +35,6 @@ import org.springframework.transaction.annotation.Transactional
 class InvitationAssembler {
 	fun toDto(invitation: UserInvitation) = UserInvitationDto(
 		code = invitation.id()!!.toString(),
-		invitedUser = invitation.target.id()!!,
 		groupName = invitation.group.name
 	)
 }

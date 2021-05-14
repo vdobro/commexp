@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -98,10 +98,13 @@ class UserGroup(
 	}
 
 	fun removeUser(user: User) {
-		if (containsUser(user)) {
+		if (!containsUser(user)) {
 			return
 		}
 		_users.remove(user)
 	}
 
+	fun clearPurchases() {
+		this._purchases.clear();
+	}
 }

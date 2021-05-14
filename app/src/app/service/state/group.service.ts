@@ -43,36 +43,31 @@ export class GroupSessionService {
 	readonly activeGroup$ = this._activeGroup.asObservable();
 	readonly myGroups$ = this._myGroups.asObservable();
 
-	get activeGroup(): Group {
-		return this._activeGroup.getValue();
-	}
-
 	constructor(private readonly groupService: UserGroupService,
 	            private readonly sessionService: SessionService,) {
 		this.sessionService.session$.subscribe(async session => {
 			if (isUser(session)) {
 				await this.update();
 			} else {
-				this._myGroups.next([]);
-				this.setGroup(null);
+				this.setGroups([]);
+				this.setActive(null);
 			}
-		})
+		});
+		this.groupService.$groupsChanged.subscribe(async _ => {
+			await this.update();
+		});
 	}
 
 	async selectGroup(group: UserGroup) {
-		this.setGroup(group);
+		this.setActive(group);
 		await this.rememberLast(group);
 	}
 
-	private async update() {
-		const groups = await this.groupService.getMyGroups();
-		this._myGroups.next(groups);
+	async update() {
+		const groups: UserGroup[] = await this.groupService.getMyGroups();
+		this.setGroups(groups);
 
 		await this.restoreLast(groups);
-	}
-
-	private setGroup(group: Group) {
-		this._activeGroup.next(group);
 	}
 
 	private async rememberLast(group: Group) {
@@ -84,9 +79,17 @@ export class GroupSessionService {
 	private async restoreLast(groups: UserGroup[]) {
 		const group = await this.groupService.getDefault();
 		if (group) {
-			this.setGroup(group);
+			this.setActive(group);
 		} else if (groups.length > 0) {
 			await this.selectGroup(groups[0]);
 		}
+	}
+
+	private setGroups(groups: UserGroup[]) {
+		this._myGroups.next(groups);
+	}
+
+	private setActive(group: Group) {
+		this._activeGroup.next(group);
 	}
 }

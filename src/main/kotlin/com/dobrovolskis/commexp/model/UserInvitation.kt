@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -52,15 +52,6 @@ class UserInvitation(
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(
-		name = "target_user_id",
-		nullable = false,
-		updatable = false
-	)
-	var target: User,
-
-	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(
 		name = "group_id",
 		nullable = false,
 		updatable = false
@@ -78,4 +69,8 @@ class UserInvitation(
 
 	@Column(name = "accepted")
 	var accepted: ZonedDateTime? = null
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "accepted_by")
+	var acceptedBy: User? = null
 }

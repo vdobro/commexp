@@ -60,7 +60,13 @@ class BatchImporter(
 		import(request, user, csvParserUtil::parsePurchases, this::handlePurchaseEntry)
 
 	fun importItems(request: ImportRequest, user: User) =
-		import(request, user, csvParserUtil::parseItems, this::handlePurchaseItemEntry)
+		import(request, user, csvParserUtil::parseItems) { entry, _, group, session ->
+			this.handlePurchaseItemEntry(
+				entry,
+				group,
+				session
+			)
+		}
 
 	private inline fun <reified T> import(
 		request: ImportRequest,
@@ -107,7 +113,6 @@ class BatchImporter(
 
 	private fun handlePurchaseItemEntry(
 		entry: PurchaseItemEntry,
-		creator: User,
 		group: UserGroup,
 		session: BatchImport,
 	): ImportedEntity {

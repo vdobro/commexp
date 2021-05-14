@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -39,3 +39,5 @@ class ControllerUtils(private val userService: UserService) {
 		return userService.findByUsername(principal.username)
 	}
 }
+
+const val ID_PATH = "/{id}"

@@ -20,17 +20,19 @@
  */
 
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "@environments/environment";
-import {UserGroup} from "@app/model/user-group";
-import {User} from "@app/model/user";
+import {HttpClient} from '@angular/common/http';
+import {environment} from '@environments/environment';
+import {UserGroup} from '@app/model/user-group';
+import {User} from '@app/model/user';
+import {Observable, Subject} from 'rxjs';
 
-const GROUP_ROOT = environment.apiUrl + "/group";
+const GROUP_ROOT = environment.apiUrl + '/group';
 const GROUP_LIST = GROUP_ROOT;
 const GROUP_CREATE = GROUP_ROOT;
-const GROUP_INVITE_USER = GROUP_ROOT + "/invite";
-const GROUP_JOIN = GROUP_ROOT + "/join";
-const GROUP_DEFAULT = GROUP_ROOT + "/default";
+const GROUP_EDIT = GROUP_ROOT;
+const GROUP_INVITE_USER = GROUP_ROOT + '/invite';
+const GROUP_JOIN = GROUP_ROOT + '/join';
+const GROUP_DEFAULT = GROUP_ROOT + '/default';
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -41,7 +43,11 @@ const GROUP_DEFAULT = GROUP_ROOT + "/default";
 })
 export class UserGroupService {
 
-	constructor(private readonly httpClient: HttpClient,) {
+	private readonly _groupsChanged = new Subject<any>();
+
+	readonly $groupsChanged: Observable<any> = this._groupsChanged.asObservable();
+
+	constructor(private readonly httpClient: HttpClient) {
 	}
 
 	async getMyGroups(): Promise<UserGroup[]> {
@@ -49,38 +55,63 @@ export class UserGroupService {
 	}
 
 	async create(name: string): Promise<UserGroup> {
-		return await this.httpClient.post<UserGroup>(GROUP_CREATE, {
-			name: name
+		const result = await this.httpClient.post<UserGroup>(GROUP_CREATE, {
+			name
 		}).toPromise();
+		this._groupsChanged.next();
+		return result;
 	}
 
 	async get(id: string): Promise<UserGroup> {
 		return await this.httpClient.get<UserGroup>(`${GROUP_ROOT}/${id}`).toPromise();
 	}
 
-	async inviteUser(group: UserGroup, user: User): Promise<InvitationDetails> {
+	async inviteUser(group: UserGroup): Promise<InvitationDetails> {
 		return await this.httpClient.post<InvitationDetails>(GROUP_INVITE_USER, {
-			username: user.username,
 			groupId: group.id,
 		}).toPromise();
 	}
 
-	async acceptInvitation(invitation: string): Promise<UserGroup> {
-		return await this.httpClient.post<UserGroup>(`${GROUP_JOIN}/${invitation}`, {}).toPromise();
+	async getUsers(group: UserGroup): Promise<User[]> {
+		return await this.httpClient.get<User[]>(`${GROUP_ROOT}/${group.id}/users`).toPromise();
+	}
+
+	async joinGroup(invitation: string): Promise<UserGroup> {
+		const result = await this.httpClient.post<UserGroup>(`${GROUP_JOIN}/${invitation}`, {}).toPromise();
+		this._groupsChanged.next();
+		return result;
 	}
 
 	async getDefault(): Promise<UserGroup | null> {
 		return await this.httpClient.get<UserGroup | null>(GROUP_DEFAULT).toPromise();
 	}
 
-	async setDefault(group: UserGroup) {
+	async setDefault(group: UserGroup): Promise<void> {
 		const id = group.id;
 		await this.httpClient.put(`${GROUP_DEFAULT}/${id}`, {}).toPromise();
+	}
+
+	async renameGroup(group: UserGroup, name: string): Promise<void> {
+		const id = group.id;
+		await this.httpClient.put(`${GROUP_EDIT}/${id}`, {
+			name
+		}).toPromise();
+		this._groupsChanged.next();
+	}
+
+	async removeUser(group: UserGroup, user: User) : Promise<void> {
+		const id = group.id;
+		await this.httpClient.delete(`${GROUP_ROOT}/${id}/users/${user.username}`).toPromise();
+	}
+
+	async leaveGroup(group: UserGroup) : Promise<void> {
+		const id = group.id;
+		await this.httpClient.post(`${GROUP_ROOT}/${id}/leave`, {}).toPromise();
+		this._groupsChanged.next();
 	}
 }
 
 export interface InvitationDetails {
-	code: string,
-	invitedUser: string,
-	groupName: string,
+	code: string;
+	groupName: string;
 }
