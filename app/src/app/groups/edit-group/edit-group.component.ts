@@ -31,7 +31,6 @@ import {User} from '@app/model/user';
 import {SessionService} from "@app/service/state/session.service";
 import {isUser} from "@app/util/SessionUtils";
 import {NavigationService} from "@app/service/navigation.service";
-import {last} from "rxjs/operators";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -46,6 +45,8 @@ import {last} from "rxjs/operators";
 export class EditGroupComponent implements OnInit {
 
 	group: UserGroup | null = null;
+
+	groupName = '';
 
 	initializing = false;
 	savingChanges = false;
@@ -67,6 +68,7 @@ export class EditGroupComponent implements OnInit {
 	private async loadGroup(groupId: string): Promise<void> {
 		this.initializing = true;
 		this.group = await this.groupService.get(groupId);
+		this.groupName = this.group.name;
 		this.groupUsers = await this.getUsersExceptCurrent(this.group);
 		this.initializing = false;
 	}
@@ -74,6 +76,7 @@ export class EditGroupComponent implements OnInit {
 	async saveGroupChanges(): Promise<void> {
 		if (this.group) {
 			await this.groupService.renameGroup(this.group, this.group.name);
+			this.groupName = this.group.name;
 		}
 	}
 

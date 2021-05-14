@@ -24,7 +24,6 @@ import {Component, OnInit} from '@angular/core';
 import {UserGroupService} from "@app/service/user-group.service";
 
 import {UserGroup} from "@app/model/user-group";
-import {GroupWithUsers} from "@app/groups/group-with-users";
 import {NavigationService} from "@app/service/navigation.service";
 
 /**
@@ -38,23 +37,18 @@ import {NavigationService} from "@app/service/navigation.service";
 })
 export class GroupListComponent implements OnInit {
 
-	groups: GroupWithUsers[] = [];
+	groups: UserGroup[] = [];
+
+	loading = true;
 
 	constructor(private readonly groupService: UserGroupService,
 	            private readonly navService: NavigationService) {
 	}
 
 	async ngOnInit() {
-		const groups = await this.groupService.getMyGroups();
-		this.groups = await Promise.all(groups.map(group => this.mapToGroupWithUsers(group)));
-	}
+		this.groups = await this.groupService.getMyGroups();
 
-	private async mapToGroupWithUsers(group: UserGroup): Promise<GroupWithUsers> {
-		return {
-			id: group.id,
-			name: group.name,
-			users: await this.groupService.getUsers(group)
-		};
+		this.loading = false;
 	}
 
 	async goBack() {

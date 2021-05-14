@@ -1,8 +1,16 @@
-<div class="p-d-inline-flex p-ai-center">
-	<button *ngIf="enableNavigation"
-	        pButton pRipple
-	        class="p-button-text p-button-sm"
-	        icon="pi pi-chevron-left"
-	        (click)="returnHandler()"></button>
-	<h2>{{title}}</h2>
+<div class="p-mx-lg-2 p-d-flex p-flex-row p-ai-center">
+	<div class="header-text p-d-inline-flex p-ai-center">
+		<button *ngIf="enableNavigation"
+		        pButton pRipple
+		        class="p-button-text p-button-sm"
+		        icon="pi pi-chevron-left"
+		        (click)="returnHandler()"></button>
+		<h2>{{title}}</h2>
+	</div>
+	<ng-content></ng-content>
+</div>
+<div *ngIf="loading" class="p-mx-lg-0 p-mb-3">
+	<p-progressBar mode="indeterminate"
+	               [style]="{'height': '10px'}">
+	</p-progressBar>
 </div>

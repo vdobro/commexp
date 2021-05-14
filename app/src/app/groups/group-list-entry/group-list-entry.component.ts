@@ -20,8 +20,11 @@
  */
 
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {GroupWithUsers} from "@app/groups/group-with-users";
+
 import {NavigationService} from "@app/service/navigation.service";
+import {UserGroup} from "@app/model/user-group";
+import {User} from "@app/model/user";
+import {UserGroupService} from "@app/service/user-group.service";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -36,15 +39,28 @@ import {NavigationService} from "@app/service/navigation.service";
 export class GroupListEntryComponent implements OnInit {
 
 	@Input()
-	group: GroupWithUsers | null = null;
+	group: UserGroup | null = null;
 
-	constructor(private readonly navService: NavigationService) {
+	loading = true;
+	users: User[] = [];
+
+	constructor(private readonly navService: NavigationService,
+	            private readonly groupService: UserGroupService) {
 	}
 
-	ngOnInit(): void {
+	async ngOnInit() {
+		await this.loadUsers();
+
+		this.loading = false;
 	}
 
-	async editGroup(group: GroupWithUsers) {
+	async editGroup(group: UserGroup) {
 		await this.navService.editGroup(group.id);
+	}
+
+	async loadUsers() {
+		if (this.group) {
+			this.users = await this.groupService.getUsers(this.group);
+		}
 	}
 }

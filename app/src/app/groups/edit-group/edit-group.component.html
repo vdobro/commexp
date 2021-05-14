@@ -1,5 +1,7 @@
 <div *ngIf="group">
-	<app-content-header [title]="group.name" (onReturn)="returnToGroups()"></app-content-header>
+	<app-content-header [title]="groupName"
+	                    [loading]="initializing"
+	                    (onReturn)="returnToGroups()"></app-content-header>
 	<div class="p-grid p-mx-lg-0">
 		<div class="p-col-12 p-lg-3 p-md-6">
 			<p-panel header="Settings">

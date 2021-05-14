@@ -1,7 +1,8 @@
 <div *ngIf="loggedIn" class="p-mx-lg-2">
 	<div *ngIf="tokenError">
-		<h2>Error joining a group</h2>
-		<p>Check your link for mistakes and try again.</p>
+		<h2>Error</h2>
+		<p>Could not join the group, you may be part of it already, though.</p>
+		<p>Otherwise, check your link for mistakes and try again.</p>
 		<p-button label="Back to my groups" (onClick)="quit()"></p-button>
 	</div>
 	<div *ngIf="loading">
