@@ -19,42 +19,29 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-package com.dobrovolskis.commexp.service
+package com.dobrovolskis.commexp.web.usecase.purchase
 
-import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import com.dobrovolskis.commexp.model.Shop
-import com.dobrovolskis.commexp.model.UserGroup
-import com.dobrovolskis.commexp.repository.ShopRepository
-import org.springframework.data.repository.findByIdOrNull
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.service.ShopService
+import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.verifyAccessToShop
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.09
+ * @since 2021.05.20
  */
 @Service
 @Transactional
-class ShopService(private val repository: ShopRepository) {
+class FindShop(private val shopService: ShopService) :
+	BaseRequestHandler<UUID, Shop> {
 
-	fun createNew(
-		group: UserGroup,
-		name: String
-	): Shop = repository.save(
-		Shop(
-			name = name,
-			group = group
-		)
-	)
-
-	fun getAllForGroup(group: UserGroup): List<Shop> =
-		repository.getAllByGroup(group)
-
-	fun getById(id: UUID) : Shop =
-		repository.findByIdOrNull(id) ?: throw ResourceNotFoundError("Shop [$id] not found")
-
-	fun findOrCreate(name: String, group: UserGroup): Shop =
-		repository.findByGroupAndName(userGroup = group, name = name)
-			?: createNew(group = group, name = name)
+	override operator fun invoke(currentUser: User, request: UUID): Shop {
+		val shop = shopService.getById(request)
+		verifyAccessToShop(shop, user = currentUser)
+		return shop
+	}
 }

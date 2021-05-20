@@ -35,7 +35,6 @@ import {HeaderComponent} from '@app/shared/header/header.component';
 
 import {UserAvatarComponent} from './user-avatar/user-avatar.component';
 import {ButtonModule} from "primeng/button";
-import {RippleModule} from "primeng/ripple";
 import {ContentHeaderComponent} from './content-header/content-header.component';
 import {FooterComponent} from './footer/footer.component';
 import {ProgressBarModule} from "primeng/progressbar";
@@ -69,7 +68,6 @@ import {ProgressBarModule} from "primeng/progressbar";
 		MenubarModule,
 		AvatarGroupModule,
 		ButtonModule,
-		RippleModule,
 		ProgressBarModule,
 	]
 })

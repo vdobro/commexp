@@ -18,28 +18,27 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {HomeComponent} from "@app/home/home.component";
-import {ROOT_GROUPS, ROOT_SHOPPING, ROOT_USER} from "@app/util/UrlConfig";
-import {NotFoundComponent} from "@app/not-found/not-found.component";
+import {RouterModule, Routes} from "@angular/router";
+import {NgModule} from "@angular/core";
+import {PurchaseListComponent} from "@app/shopping/purchase-list/purchase-list.component";
+import {links, paramLinks} from "@app/shopping/links";
+import {PurchaseViewComponent} from "@app/shopping/purchase-view/purchase-view.component";
+import {ShopViewComponent} from "@app/shopping/shop-view/shop-view.component";
 
 const routes: Routes = [
-	{path: ROOT_GROUPS, loadChildren: () => import('./groups/groups.module').then(m => m.GroupsModule)},
-	{path: ROOT_USER, loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
-	{path: ROOT_SHOPPING, loadChildren: () => import('./shopping/shopping.module').then(m => m.ShoppingModule)},
-	{path: '', component: HomeComponent, pathMatch: 'full'},
-	{path: '**', component: NotFoundComponent}
+	{path: '', component: PurchaseListComponent},
+	{path: links.lists, component: PurchaseListComponent},
+	{path: paramLinks.list, component: PurchaseViewComponent},
+	{path: paramLinks.shop, component: ShopViewComponent},
 ];
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2020.12.05
+ * @since 2021.05.20
  */
 @NgModule({
-	imports: [RouterModule.forRoot(routes, {useHash: true})],
+	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule]
 })
-export class AppRoutingModule {
+export class ShoppingRoutingModule {
 }

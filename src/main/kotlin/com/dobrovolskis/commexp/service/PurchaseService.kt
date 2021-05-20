@@ -52,7 +52,7 @@ class PurchaseService(
 	}
 
 	fun getAllForGroup(group: UserGroup): List<Purchase> {
-		return repository.findAllByGroup(group)
+		return repository.findAllByGroupOrderByShoppingTimeDesc(group)
 	}
 
 	fun createNew(

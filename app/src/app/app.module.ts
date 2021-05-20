@@ -20,7 +20,7 @@
  */
 
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {DEFAULT_CURRENCY_CODE, NgModule} from '@angular/core';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
@@ -47,7 +47,7 @@ import {ButtonModule} from "primeng/button";
 	declarations: [
 		AppComponent,
 		HomeComponent,
-  NotFoundComponent,
+		NotFoundComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -65,6 +65,7 @@ import {ButtonModule} from "primeng/button";
 		{provide: LocationStrategy, useClass: HashLocationStrategy},
 		{provide: HTTP_INTERCEPTORS, useClass: XsrfInterceptor, multi: true},
 		{provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
+		{provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR'}
 	],
 	bootstrap: [AppComponent]
 })

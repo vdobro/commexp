@@ -18,7 +18,7 @@
 <div *ngIf="!loggedIn">
 	<app-login *ngIf="useExistingUser" [goHomeAfterLogin]="false"></app-login>
 	<app-register *ngIf="!useExistingUser" [goHomeAfterLogin]="false"></app-register>
-	<button pButton pRipple
+	<button pButton
 	        class="p-button-text p-mt-2" type="button"
 	        (click)="toggleLoginMode()"
 	        [label]="useExistingUser ? 'A new user? Sign up here' : 'Already a user? Log in instead'"></button>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,14 +19,27 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+package com.dobrovolskis.commexp.web.usecase.model
+
+import com.dobrovolskis.commexp.model.PurchaseItem
+import com.dobrovolskis.commexp.model.Shop
+import com.dobrovolskis.commexp.model.User
+import com.dobrovolskis.commexp.model.UserGroup
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.UUID
+
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.13
+ * @since 2021.05.21
  */
-
-export const ROOT_USER = 'user';
-export const ROOT_GROUPS = 'groups';
-export const ROOT_SHOPPING = 'shopping';
-
-export const PATH_REGISTER = 'register';
-export const PATH_LOGIN = 'login';
+data class PurchaseWithItems(
+	val id: UUID,
+	var shop: Shop,
+	var doneBy: User,
+	var createdBy: User,
+	var group: UserGroup,
+	val shoppingTime: LocalDate,
+	var created: LocalDateTime,
+	val items: List<PurchaseItem>
+)

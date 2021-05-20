@@ -8,7 +8,7 @@
 			<p>Click below to create a new invitation.</p>
 			<p>Any <i>single</i> user that you share this link with can join this group.</p>
 			<div class="p-d-flex p-flex-row-reverse">
-				<p-button pRipple
+				<p-button
 				          label="Create invitation"
 				          (click)="requestInvitation()"
 				          [loading]="loadingCode"></p-button>
@@ -18,7 +18,7 @@
 			<p>Link to join the group has been created.</p>
 			<p>Click below to copy it into your clipboard so you can share it:</p>
 			<div class="p-d-flex p-flex-row p-flex-row-reverse p-ai-center">
-				<button pButton pRipple type="button"
+				<button pButton type="button"
 				        label="Copy to clipboard"
 				        icon="pi pi-share-alt"
 				        (click)="copyCode()"></button>

@@ -21,11 +21,11 @@
 
 package com.dobrovolskis.commexp.web.usecase.purchase
 
-import com.dobrovolskis.commexp.model.Purchase
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.service.PurchaseService
 import com.dobrovolskis.commexp.service.UserGroupService
 import com.dobrovolskis.commexp.web.usecase.BaseRequestHandler
+import com.dobrovolskis.commexp.web.usecase.model.PurchaseWithItems
 import com.dobrovolskis.commexp.web.usecase.verifyAccessToGroup
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -40,11 +40,22 @@ import java.util.UUID
 class GetPurchasesInGroup(
 	private val groupService: UserGroupService,
 	private val purchaseService: PurchaseService
-) : BaseRequestHandler<UUID, List<Purchase>> {
-	override operator fun invoke(currentUser: User, request: UUID): List<Purchase> {
+) : BaseRequestHandler<UUID, List<PurchaseWithItems>> {
+	override operator fun invoke(currentUser: User, request: UUID): List<PurchaseWithItems> {
 		val group = groupService.find(request)
 		verifyAccessToGroup(user = currentUser, group = group)
 
-		return purchaseService.getAllForGroup(group)
+		val all = purchaseService.getAllForGroup(group)
+
+		return all.map { PurchaseWithItems(
+			id = it.id()!!,
+			shop = it.shop,
+			doneBy = it.doneBy,
+			createdBy = it.createdBy,
+			group = it.group,
+			shoppingTime =  it.shoppingTime,
+			created = it.created,
+			items = it.items()
+		) }
 	}
 }

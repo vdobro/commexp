@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,12 +21,9 @@
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.13
+ * @since 2021.05.20
  */
-
-export const ROOT_USER = 'user';
-export const ROOT_GROUPS = 'groups';
-export const ROOT_SHOPPING = 'shopping';
-
-export const PATH_REGISTER = 'register';
-export const PATH_LOGIN = 'login';
+export interface Shop {
+	id: string,
+	name: string,
+}

@@ -2,7 +2,7 @@
 	<ng-template pTemplate="header">
 		<div class="p-d-flex p-ai-center">
 			<h2 style="flex-grow: 1">{{group.name}}</h2>
-			<button pButton pRipple icon="pi pi-pencil" type="button"
+			<button pButton icon="pi pi-pencil" type="button"
 			        style="flex-shrink: 0"
 			        class="p-mr-3 p-button-text p-button-outlined p-button-sm"
 			        routerLink="{{group.id}}/edit"></button>
@@ -12,7 +12,7 @@
 		<div *ngIf="!loading" class="p-d-inline-flex">
 			<app-user-avatar-group (click)="editGroup(group)"
 			                       [users]="users"></app-user-avatar-group>
-			<button pButton pRipple icon="pi pi-plus" type="button"
+			<button pButton icon="pi pi-plus" type="button"
 			        class="p-button-text p-button-outlined p-button-sm"
 			        routerLink="{{group.id}}/invite"></button>
 		</div>

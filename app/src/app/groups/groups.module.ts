@@ -27,7 +27,6 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
 import {PanelModule} from 'primeng/panel';
 import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
-import {RippleModule} from 'primeng/ripple';
 import {InputTextModule} from 'primeng/inputtext';
 import {MessageModule} from 'primeng/message';
 import {SkeletonModule} from 'primeng/skeleton';
@@ -67,7 +66,6 @@ import {GroupListEntryComponent} from './group-list-entry/group-list-entry.compo
 		PanelModule,
 		CardModule,
 		SharedModule,
-		RippleModule,
 		FormsModule,
 		InputTextModule,
 		MessageModule,

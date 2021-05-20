@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,14 +19,23 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {TestBed} from '@angular/core/testing';
+
+import {ShopService} from './shop.service';
+
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.13
+ * @since 2021.05.20
  */
+describe('ShopService', () => {
+	let service: ShopService;
 
-export const ROOT_USER = 'user';
-export const ROOT_GROUPS = 'groups';
-export const ROOT_SHOPPING = 'shopping';
+	beforeEach(() => {
+		TestBed.configureTestingModule({});
+		service = TestBed.inject(ShopService);
+	});
 
-export const PATH_REGISTER = 'register';
-export const PATH_LOGIN = 'login';
+	it('should be created', () => {
+		expect(service).toBeTruthy();
+	});
+});

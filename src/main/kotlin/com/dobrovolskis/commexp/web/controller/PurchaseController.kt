@@ -31,6 +31,7 @@ import com.dobrovolskis.commexp.web.dto.PurchaseDto
 import com.dobrovolskis.commexp.web.request.ImportRequest
 import com.dobrovolskis.commexp.web.request.PurchaseCreationRequest
 import com.dobrovolskis.commexp.web.usecase.BatchImporter
+import com.dobrovolskis.commexp.web.usecase.model.PurchaseWithItems
 import com.dobrovolskis.commexp.web.usecase.purchase.CreatePurchase
 import com.dobrovolskis.commexp.web.usecase.purchase.GetPurchasesInGroup
 import com.dobrovolskis.commexp.web.usecase.purchase.RemovePurchase
@@ -55,10 +56,10 @@ import javax.validation.Valid
 class PurchaseController(
 	private val createPurchase: CreatePurchase,
 	private val importer: BatchImporter,
-	private val purchaseList: GetPurchasesInGroup,
+	private val getAllInGroup: GetPurchasesInGroup,
 	private val controllerUtils: ControllerUtils,
 	private val removePurchase: RemovePurchase,
-	private val assembler: PurchaseAssembler,
+	private val assembler: PurchaseAssembler
 ) {
 	@PostMapping
 	fun createNew(@RequestBody @Valid creationRequest: PurchaseCreationRequest): PurchaseDto {
@@ -79,7 +80,7 @@ class PurchaseController(
 	@GetMapping
 	fun getAll(@RequestParam(required = true) groupId: UUID): List<PurchaseDto> {
 		val user = getUser()
-		val result = purchaseList(user, groupId)
+		val result = getAllInGroup(user, groupId)
 		return result.map { mapToDto(user, it) }
 	}
 
@@ -89,6 +90,8 @@ class PurchaseController(
 	}
 
 	private fun mapToDto(user: User, purchase: Purchase) = assembler.toDto(user, purchase)
+
+	private fun mapToDto(user: User, purchase: PurchaseWithItems) = assembler.toDto(user, purchase)
 
 	private fun getUser(): User = controllerUtils.getCurrentUser()
 }

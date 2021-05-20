@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -21,12 +21,20 @@
 
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.13
+ * @since 2021.05.20
  */
 
-export const ROOT_USER = 'user';
-export const ROOT_GROUPS = 'groups';
-export const ROOT_SHOPPING = 'shopping';
+export const params = {
+	LIST_ID : 'listId',
+	SHOP_ID : 'shopId',
+};
 
-export const PATH_REGISTER = 'register';
-export const PATH_LOGIN = 'login';
+export const links = {
+	shops: 'shops',
+	lists: 'lists',
+};
+
+export const paramLinks = {
+	list: `${links.lists}/:${params.SHOP_ID}/invite`,
+	shop: `${links.shops}/:${params.LIST_ID}/edit`,
+};

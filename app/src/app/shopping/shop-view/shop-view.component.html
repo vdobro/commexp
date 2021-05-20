@@ -1,0 +1,24 @@
+<div *ngIf="shop">
+	<app-content-header [title]="shopName"
+	                    [loading]="initializing"></app-content-header>
+	<div class="p-grid p-mx-lg-0">
+		<div class="p-col-12 p-lg-3 p-md-6">
+			<p-panel header="Shop">
+				<form #groupForm="ngForm" (ngSubmit)="saveShopChanges()" class="p-fluid">
+					<div class="p-field">
+						<label for="group-name">Name</label>
+						<input id="group-name" type="text"
+						       pInputText
+						       name="group-name"
+						       [(ngModel)]="shop.name">
+					</div>
+					<div class="p-field p-my-1">
+						<p-button type="submit"
+						          label="Save changes"
+						          [loading]="savingChanges"
+						          [disabled]="!groupForm.form.valid"></p-button>
+					</div>
+				</form>
+			</p-panel>
+		</div>
+</div>

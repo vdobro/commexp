@@ -1,0 +1,16 @@
+.p-card {
+	.p-card-header {
+		padding-left: 1rem;
+	}
+	.p-card-body {
+		padding-top: 0;
+		padding-bottom: 0;
+
+		.p-card-content {
+			padding-top: 0;
+		}
+	}
+	.p-card-footer {
+		padding-top: 0;
+	}
+}

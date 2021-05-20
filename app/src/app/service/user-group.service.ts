@@ -25,6 +25,7 @@ import {environment} from '@environments/environment';
 import {UserGroup} from '@app/model/user-group';
 import {User} from '@app/model/user';
 import {Observable, Subject} from 'rxjs';
+import {ROOT_USER} from "@app/util/UrlConfig";
 
 const GROUP_ROOT = environment.apiUrl + '/group';
 const GROUP_LIST = GROUP_ROOT;
@@ -108,6 +109,10 @@ export class UserGroupService {
 		const id = group.id;
 		await this.httpClient.post(`${GROUP_ROOT}/${id}/leave`, {}).toPromise();
 		this._groupsChanged.next();
+	}
+
+	async getUser(userId: string): Promise<User> {
+		return await this.httpClient.get<User>(`${environment.apiUrl}/user/${userId}`).toPromise();
 	}
 }
 

@@ -2,7 +2,9 @@
            [model]="menuItems"
            styleClass="p-shadow-3">
 	<ng-template pTemplate="end">
-		<button *ngIf="false" pButton pRipple type="button"
+		<button *ngIf="userLoggedIn"
+		        pButton type="button"
+		        (click)="goShopping()"
 		        class="p-mr-1 p-button-rounded p-button-text"
 		        icon="pi pi-shopping-cart"></button>
 		<app-group-switcher class="p-mx-lg-2"

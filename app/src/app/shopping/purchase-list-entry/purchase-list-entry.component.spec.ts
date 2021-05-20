@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,14 +19,31 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+
+import {PurchaseListEntryComponent} from './purchase-list-entry.component';
+
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.13
+ * @since 2021.05.20
  */
+describe('PurchaseListItemComponent', () => {
+	let component: PurchaseListEntryComponent;
+	let fixture: ComponentFixture<PurchaseListEntryComponent>;
 
-export const ROOT_USER = 'user';
-export const ROOT_GROUPS = 'groups';
-export const ROOT_SHOPPING = 'shopping';
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			declarations: [PurchaseListEntryComponent]
+		}).compileComponents();
+	});
 
-export const PATH_REGISTER = 'register';
-export const PATH_LOGIN = 'login';
+	beforeEach(() => {
+		fixture = TestBed.createComponent(PurchaseListEntryComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
+});

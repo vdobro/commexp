@@ -24,6 +24,7 @@ package com.dobrovolskis.commexp.web.usecase
 import com.dobrovolskis.commexp.exception.ResourceAccessError
 import com.dobrovolskis.commexp.model.Purchase
 import com.dobrovolskis.commexp.model.PurchaseItem
+import com.dobrovolskis.commexp.model.Shop
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.model.UserGroup
 
@@ -46,5 +47,11 @@ fun verifyAccessToItem(user: User, purchaseItem: PurchaseItem) {
 fun verifyAccessToPurchase(purchase: Purchase, user: User) {
 	if (!user.isInGroup(purchase.group)) {
 		throw ResourceAccessError("Access denied to purchase")
+	}
+}
+
+fun verifyAccessToShop(shop: Shop, user: User) {
+	if (!user.isInGroup(shop.group)) {
+		throw ResourceAccessError("Access denied to shop")
 	}
 }

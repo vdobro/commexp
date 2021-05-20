@@ -22,6 +22,8 @@
 package com.dobrovolskis.commexp.web.controller
 
 import com.dobrovolskis.commexp.config.PATH_USERS
+import com.dobrovolskis.commexp.exception.ResourceAccessError
+import com.dobrovolskis.commexp.exception.ResourceNotFoundError
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.service.UserService
 import com.dobrovolskis.commexp.web.ControllerUtils
@@ -30,11 +32,13 @@ import com.dobrovolskis.commexp.web.dto.PasswordChangeRequest
 import com.dobrovolskis.commexp.web.dto.UserDto
 import com.dobrovolskis.commexp.web.request.UserCreationRequest
 import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod.GET
 import org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 import javax.validation.Valid
 
 /**
@@ -57,6 +61,14 @@ class UserController(
 			username = request.username,
 			password = request.password
 		)
+	}
+
+	@RequestMapping(method = [GET], path = ["/{userId}"])
+	fun getUser(@PathVariable userId: UUID): UserDto {
+		if (!userService.anyGroupsShared(controllerUtils.getCurrentUser(), userId)) {
+			throw ResourceAccessError("Cannot access user")
+		}
+		return mapUserToDto(userService.getById(userId))
 	}
 
 	@RequestMapping(method = [GET])

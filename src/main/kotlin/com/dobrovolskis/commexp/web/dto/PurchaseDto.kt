@@ -37,4 +37,5 @@ data class PurchaseDto(
 	val creation: LocalDateTime,
 	val doneBy: UUID,
 	val sum: BigDecimal,
+	val items: List<PurchaseItemDto>
 )

@@ -1,7 +1,7 @@
 <div class="p-flex p-flex-column">
 	<app-content-header [enableNavigation]=false
 	                    [loading]="loading"
-	                    title="My groups">
+	                    title="Purchases">
 		<button pButton
 		        style="flex-shrink: 0"
 		        icon="pi pi-plus"
@@ -10,9 +10,9 @@
 	</app-content-header>
 	<div *ngIf="!loading"
 	     class="p-grid p-mx-lg-0">
-		<div *ngFor="let group of groups"
+		<div *ngFor="let purchase of purchases"
 		     class="p-col-12 p-lg-3 p-md-6">
-			<app-group-card [group]="group"></app-group-card>
+			<app-purchase-list-entry [entry]="purchase"></app-purchase-list-entry>
 		</div>
 	</div>
 </div>

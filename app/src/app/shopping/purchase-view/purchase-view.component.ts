@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,14 +19,27 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {Component, Input, OnInit} from '@angular/core';
+import {ShopService} from "@app/service/shop.service";
+import {Purchase} from "@app/model/purchase";
+
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.13
+ * @since 2021.05.20
  */
+@Component({
+	selector: 'app-purchase-view',
+	templateUrl: './purchase-view.component.html',
+	styleUrls: ['./purchase-view.component.scss']
+})
+export class PurchaseViewComponent implements OnInit {
 
-export const ROOT_USER = 'user';
-export const ROOT_GROUPS = 'groups';
-export const ROOT_SHOPPING = 'shopping';
+	@Input()
+	shoppingList: Purchase | null = null;
 
-export const PATH_REGISTER = 'register';
-export const PATH_LOGIN = 'login';
+	constructor(private readonly shopService: ShopService) {
+	}
+
+	ngOnInit(): void {
+	}
+}

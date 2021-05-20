@@ -55,6 +55,10 @@ export class NavigationService {
 		await this.router.navigate(['groups']);
 	}
 
+	async goToShopping(): Promise<void> {
+		await this.router.navigate(['shopping']);
+	}
+
 	async goBack() : Promise<void> {
 		if (this.lastLocation) {
 			await this.router.navigateByUrl(this.lastLocation);

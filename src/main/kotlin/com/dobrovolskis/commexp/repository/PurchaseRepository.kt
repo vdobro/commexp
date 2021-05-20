@@ -33,5 +33,5 @@ import java.util.UUID
  */
 @Repository
 interface PurchaseRepository : CrudRepository<Purchase, UUID> {
-	fun findAllByGroup(userGroup: UserGroup): List<Purchase>
+	fun findAllByGroupOrderByShoppingTimeDesc(userGroup: UserGroup): List<Purchase>
 }

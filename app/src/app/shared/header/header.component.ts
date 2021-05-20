@@ -27,6 +27,8 @@ import {Session} from "@app/model/user-session";
 import {MenuItem} from "primeng/api";
 import {HeaderService} from "@app/service/state/header.service";
 import {UserGroupService} from "@app/service/user-group.service";
+import {NavigationService} from "@app/service/navigation.service";
+import {GroupSessionService} from "@app/service/state/group.service";
 
 /**
  * @author Vitalijus Dobrovolskis
@@ -50,7 +52,8 @@ export class HeaderComponent implements OnInit {
 
 	constructor(private readonly sessionService: SessionService,
 	            private readonly headerService: HeaderService,
-	            private readonly groupService: UserGroupService,
+	            private readonly groupService: GroupSessionService,
+	            private readonly navService: NavigationService,
 	            private readonly cdr: ChangeDetectorRef,
 	) {
 		this.menuItems = this.headerService.items;
@@ -70,6 +73,10 @@ export class HeaderComponent implements OnInit {
 	}
 
 	async changeActiveGroup(group: UserGroup) {
-		await this.groupService.setDefault(group);
+		await this.groupService.selectGroup(group);
+	}
+
+	async goShopping() {
+		await this.navService.goToShopping();
 	}
 }

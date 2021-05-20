@@ -26,8 +26,10 @@ import com.dobrovolskis.commexp.model.Shop
 import com.dobrovolskis.commexp.web.ControllerUtils
 import com.dobrovolskis.commexp.web.dto.ShopDto
 import com.dobrovolskis.commexp.web.request.ShopCreationRequest
+import com.dobrovolskis.commexp.web.usecase.purchase.FindShop
 import com.dobrovolskis.commexp.web.usecase.purchase.GetShopsInGroup
 import com.dobrovolskis.commexp.web.usecase.purchase.RegisterShop
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod.GET
@@ -46,8 +48,13 @@ import javax.validation.Valid
 class ShopController(
 	private val getShopsInGroup: GetShopsInGroup,
 	private val registerShop: RegisterShop,
+	private val findShop: FindShop,
 	private val controllerUtils: ControllerUtils
 ) {
+	@RequestMapping(method = [GET], path = ["/{shopId}"])
+	fun getById(@PathVariable(required = true) shopId: UUID) : ShopDto =
+		mapToDto(findShop(getUser(), shopId))
+
 	@RequestMapping(method = [GET])
 	fun getInMyGroup(@RequestParam(required = true) groupId: UUID): List<ShopDto> =
 		getShopsInGroup(getUser(), groupId).map(this::mapToDto)

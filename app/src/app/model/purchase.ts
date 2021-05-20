@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Vitalijus Dobrovolskis
+ * Copyright (C) 2021 Vitalijus Dobrovolskis
  *
  * This file is part of commexp.
  *
@@ -19,14 +19,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {PurchaseItem} from "@app/model/purchase-item";
+
 /**
  * @author Vitalijus Dobrovolskis
- * @since 2021.01.13
+ * @since 2021.05.20
  */
-
-export const ROOT_USER = 'user';
-export const ROOT_GROUPS = 'groups';
-export const ROOT_SHOPPING = 'shopping';
-
-export const PATH_REGISTER = 'register';
-export const PATH_LOGIN = 'login';
+export interface Purchase {
+	id: string,
+	shopId: string,
+	time: string,
+	creation: string,
+	doneBy: string,
+	sum: number,
+	items: PurchaseItem[]
+}

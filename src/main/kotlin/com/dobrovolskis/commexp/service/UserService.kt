@@ -81,6 +81,12 @@ class UserService(
 		repository.save(user)
 	}
 
+	fun anyGroupsShared(current: User, userId: UUID) : Boolean {
+		val groups = getById(current.id()!!).userGroups.toSet()
+		val other = getById(userId)
+		return other.userGroups.toSet().intersect(groups).isNotEmpty()
+	}
+
 	fun changePassword(username: String,
 	                   oldPassword: String,
 	                   newPassword: String) {

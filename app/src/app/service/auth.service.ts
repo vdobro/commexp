@@ -44,8 +44,7 @@ const URL = {
 export class AuthService {
 
 	constructor(private readonly httpClient: HttpClient,
-	            private readonly sessionService: SessionService,
-	            private readonly navigationService: NavigationService) {
+	            private readonly sessionService: SessionService) {
 		this.retrieveAndSetUser()
 			.then(user => {
 				console.log(`Resuming saved user session for ${user.username}.`);

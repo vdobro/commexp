@@ -24,6 +24,7 @@ package com.dobrovolskis.commexp.web.assembler
 import com.dobrovolskis.commexp.model.Purchase
 import com.dobrovolskis.commexp.model.User
 import com.dobrovolskis.commexp.web.dto.PurchaseDto
+import com.dobrovolskis.commexp.web.usecase.model.PurchaseWithItems
 import com.dobrovolskis.commexp.web.usecase.purchase.GetTotalSum
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -34,13 +35,27 @@ import org.springframework.transaction.annotation.Transactional
  */
 @Service
 @Transactional(readOnly = true)
-class PurchaseAssembler(private val getSum: GetTotalSum) {
+class PurchaseAssembler(
+	private val getSum: GetTotalSum,
+	private val itemAssembler: PurchaseItemAssembler
+) {
 	fun toDto(user: User, purchase: Purchase) = PurchaseDto(
 		id = purchase.id()!!,
 		shopId = purchase.shop.id()!!,
 		time = purchase.shoppingTime,
 		creation = purchase.created,
 		doneBy = purchase.doneBy.id()!!,
-		sum = getSum(currentUser = user, request = purchase.id()!!)
+		sum = getSum(currentUser = user, request = purchase.id()!!),
+		items = emptyList()
+	)
+
+	fun toDto(user: User, purchase: PurchaseWithItems) = PurchaseDto(
+		id = purchase.id,
+		shopId = purchase.shop.id()!!,
+		time = purchase.shoppingTime,
+		creation = purchase.created,
+		doneBy = purchase.doneBy.id()!!,
+		sum = getSum(currentUser = user, request = purchase.id),
+		items = purchase.items.map { itemAssembler.toDto(it) }
 	)
 }

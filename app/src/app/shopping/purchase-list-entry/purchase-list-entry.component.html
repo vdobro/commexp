@@ -1,0 +1,25 @@
+<p-card *ngIf="entry">
+	<ng-template pTemplate="header">
+		<div class="p-d-flex p-ai-center">
+			<div style="flex-grow: 1" class="p-d-inline-flex p-flex-row p-ai-center">
+				<app-user-avatar *ngIf="doneBy"
+				                 class="p-mr-2"
+				                 [user]="doneBy"></app-user-avatar>
+				<h2>{{entry.time | date}}</h2>
+				<h3 class="p-ml-2" *ngIf="shop">{{shop.name}}</h3>
+			</div>
+			<button pButton icon="pi pi-pencil" type="button"
+			        style="flex-shrink: 0"
+			        class="p-mr-3 p-button-text p-button-outlined p-button-sm"
+			        routerLink="{{entry.id}}/edit"></button>
+		</div>
+	</ng-template>
+	<div>
+		<div class="p-d-flex p-flex-row-reverse">
+			<div class="p-d-inline-flex p-flex-column">
+				<span style="text-align: end"><b>{{entry.sum | currency }}</b></span>
+				<span>{{entry.items.length}} items</span>
+			</div>
+		</div>
+	</div>
+</p-card>
