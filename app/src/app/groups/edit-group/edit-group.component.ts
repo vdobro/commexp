@@ -82,9 +82,8 @@ export class EditGroupComponent implements OnInit {
 
 	async leaveGroup(): Promise<void> {
 		if (this.group) {
-			const group = this.group!!;
 			const lastUser = this.groupUsers.length === 0;
-			this.confirmLeaving(group, lastUser);
+			this.confirmLeaving(this.group, lastUser);
 		}
 	}
 

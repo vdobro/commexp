@@ -54,12 +54,12 @@ const val ID_COLUMN_NAME = "id"
 
 object Constraints {
 	object Strings {
-		const val LENGTH_LONG = 1000
-		const val LENGTH_MEDIUM = 5000
+		const val LENGTH_MIN = 20
 		const val LENGTH_SHORT = 200
+		const val LENGTH_MEDIUM = 500
+		const val LENGTH_LONG = 1000
 		const val LENGTH_NOT_NULL = 1
 		const val PASSWORD_LENGTH = 8
-		const val LENGTH_MIN = 20
 		const val DIGITS_INTEGER = 10
 		const val DIGITS_FRACTION = 2
 	}

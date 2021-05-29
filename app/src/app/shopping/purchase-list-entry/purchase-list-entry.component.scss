@@ -1,6 +1,7 @@
 .p-card {
 	.p-card-header {
 		padding-left: 1rem;
+		padding-right: 1rem;
 	}
 	.p-card-body {
 		padding-top: 0;
@@ -8,6 +9,11 @@
 
 		.p-card-content {
 			padding-top: 0;
+
+			.cost-label {
+				margin-bottom: 0;
+				margin-top: 0;
+			}
 		}
 	}
 	.p-card-footer {

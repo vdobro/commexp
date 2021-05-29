@@ -5,21 +5,20 @@
 				<app-user-avatar *ngIf="doneBy"
 				                 class="p-mr-2"
 				                 [user]="doneBy"></app-user-avatar>
-				<h2>{{entry.time | date}}</h2>
-				<h3 class="p-ml-2" *ngIf="shop">{{shop.name}}</h3>
+				<h3>{{entry.time | date}}</h3>
+				<h4 *ngIf="shop"
+				    class="p-ml-2">{{shop.name}}</h4>
 			</div>
 			<button pButton icon="pi pi-pencil" type="button"
 			        style="flex-shrink: 0"
-			        class="p-mr-3 p-button-text p-button-outlined p-button-sm"
+			        class="p-button-outlined p-button-sm"
 			        routerLink="{{entry.id}}/edit"></button>
 		</div>
 	</ng-template>
 	<div>
-		<div class="p-d-flex p-flex-row-reverse">
-			<div class="p-d-inline-flex p-flex-column">
-				<span style="text-align: end"><b>{{entry.sum | currency }}</b></span>
-				<span>{{entry.items.length}} items</span>
-			</div>
+		<div class="p-d-flex p-flex-row p-ai-center">
+			<h2 class="cost-label" style="flex-grow: 1">{{entry.sum | currency }}</h2>
+			<span>{{entry.items.length}} item{{entry.items.length > 1 ? 's' : ''}}</span>
 		</div>
 	</div>
 </p-card>

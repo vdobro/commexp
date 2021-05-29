@@ -25,6 +25,10 @@ import {Observable, Subject} from "rxjs";
 import {environment} from "@environments/environment";
 import {Purchase} from "@app/model/purchase";
 import {UserGroup} from "@app/model/user-group";
+import {Shop} from "@app/model/shop";
+import {UserSession} from "@app/model/user-session";
+import {SessionService} from "@app/service/state/session.service";
+import {GroupSessionService} from "@app/service/state/group.service";
 
 const URL_ROOT = environment.apiUrl + '/purchase';
 
@@ -37,16 +41,46 @@ const URL_ROOT = environment.apiUrl + '/purchase';
 })
 export class PurchaseService {
 
-	private readonly _purchasesChanged = new Subject<any>();
+	private readonly _purchasesChanged = new Subject<UserGroup>();
+	private readonly _purchases: Map<UserGroup, Purchase[]> = new Map<UserGroup, Purchase[]>();
 
-	readonly $purchasesChanged: Observable<any> = this._purchasesChanged.asObservable();
+	readonly $purchasesChanged: Observable<UserGroup> = this._purchasesChanged.asObservable();
 
-	constructor(private readonly httpClient: HttpClient) {
+	constructor(private readonly httpClient: HttpClient,
+	            private readonly userSession: SessionService,
+	            private readonly session: GroupSessionService) {
+		this.session.myGroups$.subscribe(async groups => {
+			if (groups.length == 0) {
+				this._purchases.clear();
+
+			} else {
+				for (let group of groups) {
+					await this.getAll(group);
+				}
+			}
+		});
+		this.$purchasesChanged.subscribe(async group => {
+			await this.getAll(group);
+		});
 	}
 
-	async getAll(group: UserGroup) : Promise<Purchase[]> {
+	async getAll(group: UserGroup): Promise<Purchase[]> {
 		const params = new HttpParams().append('groupId', group.id);
 		const url = URL_ROOT + "?" + params.toString();
-		return this.httpClient.get<Purchase[]>(url).toPromise();
+		const purchases = await this.httpClient.get<Purchase[]>(url).toPromise()
+		this._purchases.set(group, purchases);
+		return purchases;
+	}
+
+	async create(group: UserGroup, shop: Shop, time: Date) {
+		const user = this.userSession.current as UserSession;
+		await this.httpClient.post<Purchase>(URL_ROOT, {
+			groupId: group.id,
+			shopId: shop.id,
+			doneBy: user.id,
+			shoppingTime: time.toISOString().substring(0, 10)
+		});
+
+		this._purchasesChanged.next(group);
 	}
 }

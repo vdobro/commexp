@@ -44,15 +44,21 @@ const GROUP_DEFAULT = GROUP_ROOT + '/default';
 })
 export class UserGroupService {
 
+	private _groups : UserGroup[] = [];
+
 	private readonly _groupsChanged = new Subject<any>();
 
 	readonly $groupsChanged: Observable<any> = this._groupsChanged.asObservable();
 
 	constructor(private readonly httpClient: HttpClient) {
+		this._groupsChanged.subscribe(async _ => {
+			await this.getMyGroups();
+		});
 	}
 
 	async getMyGroups(): Promise<UserGroup[]> {
-		return await this.httpClient.get<UserGroup[]>(GROUP_LIST).toPromise();
+		this._groups = await this.httpClient.get<UserGroup[]>(GROUP_LIST).toPromise();
+		return this._groups;
 	}
 
 	async create(name: string): Promise<UserGroup> {

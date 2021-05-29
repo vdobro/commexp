@@ -52,8 +52,8 @@ export class CreateGroupComponent implements OnInit {
 	async submit() {
 		this.loading = true;
 		try {
-			const group = await this.groupService.create(this.model.name);
-			await this.navigationService.editGroup(group.id);
+			await this.groupService.create(this.model.name);
+			await this.navigationService.goToGroups();
 		} catch (e) {
 			if (e instanceof NameCollisionError) {
 				this.nameError = true;
