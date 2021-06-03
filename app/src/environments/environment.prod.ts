@@ -19,10 +19,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {version} from '../../package.json';
+import packageInfo from '../../package.json';
 
 export const environment = {
-	appVersion: version,
+	appVersion: packageInfo.version,
 	production: true,
 	apiUrl: '/api',
 };
